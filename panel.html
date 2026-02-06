@@ -122,18 +122,11 @@ async function copiarQR(idImg) {
     a.click();
   }
 
-  // 🔍 Zoom QR pantalla completa
-  function zoomQR(src) {
-
-    let div = document.createElement("div");
-    div.classList.add("zoom-bg");
-
-    div.innerHTML = `<img src="${src}" class="zoom-img">`;
-
-    div.onclick = () => div.remove();
-
-    document.body.appendChild(div);
-  }
+ // ✅ Zoom dentro del panel (no pantalla completa)
+function zoomQR(idImg) {
+  let img = document.getElementById(idImg);
+  img.classList.toggle("zoom");
+}
 
   // 🚪 Logout
   function logout() {
@@ -144,12 +137,4 @@ async function copiarQR(idImg) {
 
 </body>
 </html>
-
-function zoomQR(idImg) {
-
-  let img = document.getElementById(idImg);
-
-  // Alternar zoom
-  img.classList.toggle("zoom");
-}
 
