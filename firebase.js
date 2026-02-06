@@ -1,4 +1,8 @@
-// 🔥 Firebase Configuración Oficial
+// firebase.js (MODULAR)
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDhR3XZX9EG1sLuOvBefZ2EA5GVn8-SggQ",
@@ -9,9 +13,6 @@ const firebaseConfig = {
   appId: "1:130186632575:web:135d0352564c290d6d0e4a"
 };
 
-// Inicializar Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Activar servicios
-const auth = firebase.auth();
-const db = firebase.firestore();
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
