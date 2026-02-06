@@ -4,148 +4,158 @@
   <meta charset="UTF-8">
   <title>Panel LAN Center</title>
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background: #050b1a;
+      color: white;
+    }
+
+    .logo {
+      width: 180px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: #0c132a;
+      border-radius: 20px;
+      padding: 30px;
+      margin: 25px auto;
+      width: 80%;
+      max-width: 700px;
+      box-shadow: 0 0 20px cyan;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 8px;
+    }
+
+    .btn-copy {
+      background: cyan;
+    }
+
+    .btn-download {
+      background: orange;
+    }
+
+    img {
+      width: 220px;
+      margin-top: 15px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Zoom grande */
+    .zoom {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .zoom img {
+      width: 450px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px cyan;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- LOGO -->
-<div class="top-logo">
-  <img src="logo.png" class="logo">
-</div>
+<!-- ✅ LOGO -->
+<img src="logo.png" class="logo">
 
-<h1 class="titulo">PANEL LAN CENTER JACKNNIEL</h1>
-<h2 id="rolTexto" class="rol"></h2>
+<h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
 
-<!-- 🔐 ADMIN -->
-<div id="adminPanel" class="admin-box" style="display:none;">
-  <h2>🔐 Admin: Actualizar QR</h2>
-  <p>Solo sube nuevas imágenes al repo con el mismo nombre:</p>
-
-  <div class="files">
-    <span>✅ qr_banco.png</span>
-    <span>✅ qr_yasta.png</span>
-    <span>✅ qr_tigo.png</span>
-    <span>✅ qr_paypal.png</span>
-  </div>
-
-  <a class="btn-repo"
-     href="https://github.com/lancenterjacknniel/panel-jacknniel"
-     target="_blank">
-     👉 Subir QR al Repo
-  </a>
-</div>
-
-<!-- TARJETAS -->
-<div class="grid">
+<div class="card">
+  <h2>👀 Operadores solo ven QR</h2>
 
   <!-- BANCO UNION -->
-  <div class="card-pro">
-    <h2>Banco Unión</h2>
-    <button onclick="mostrarQR('banco')" class="btn">Mostrar QR</button>
+  <h3>Banco Unión</h3>
+  <img id="qrBanco" src="qr_banco.png" onclick="zoomQR(this.src)">
+  <br>
+  <button class="btn-copy" onclick="copiarQR('qrBanco')">📋 Copiar QR</button>
+  <button class="btn-download" onclick="descargarQR('qr_banco.png')">⬇️ Descargar</button>
 
-    <img id="qrBanco" class="qr-img" onclick="zoomQR(this)">
-    <button onclick="copiarQR('qrBanco')" class="btn-copy">📋 Copiar QR</button>
-  </div>
+  <hr><br>
 
   <!-- YASTA -->
-  <div class="card-pro">
-    <h2>Yasta</h2>
-    <button onclick="mostrarQR('yasta')" class="btn">Mostrar QR</button>
+  <h3>Yasta</h3>
+  <img id="qrYasta" src="qr_yasta.png" onclick="zoomQR(this.src)">
+  <br>
+  <button class="btn-copy" onclick="copiarQR('qrYasta')">📋 Copiar QR</button>
+  <button class="btn-download" onclick="descargarQR('qr_yasta.png')">⬇️ Descargar</button>
 
-    <img id="qrYasta" class="qr-img" onclick="zoomQR(this)">
-    <button onclick="copiarQR('qrYasta')" class="btn-copy">📋 Copiar QR</button>
-  </div>
+  <hr><br>
 
-  <!-- TIGO MONEY -->
-  <div class="card-pro">
-    <h2>Tigo Money</h2>
-    <button onclick="mostrarQR('tigo')" class="btn">Mostrar QR</button>
+  <!-- TIGO -->
+  <h3>Tigo Money</h3>
+  <img id="qrTigo" src="qr_tigo.png" onclick="zoomQR(this.src)">
+  <br>
+  <button class="btn-copy" onclick="copiarQR('qrTigo')">📋 Copiar QR</button>
+  <button class="btn-download" onclick="descargarQR('qr_tigo.png')">⬇️ Descargar</button>
 
-    <img id="qrTigo" class="qr-img" onclick="zoomQR(this)">
-    <button onclick="copiarQR('qrTigo')" class="btn-copy">📋 Copiar QR</button>
-  </div>
+  <hr><br>
 
   <!-- PAYPAL -->
-  <div class="card-pro">
-    <h2>PayPal</h2>
-    <button onclick="mostrarQR('paypal')" class="btn">Mostrar QR</button>
-
-    <img id="qrPaypal" class="qr-img" onclick="zoomQR(this)">
-    <button onclick="copiarQR('qrPaypal')" class="btn-copy">📋 Copiar QR</button>
-  </div>
+  <h3>PayPal</h3>
+  <img id="qrPaypal" src="qr_paypal.png" onclick="zoomQR(this.src)">
+  <br>
+  <button class="btn-copy" onclick="copiarQR('qrPaypal')">📋 Copiar QR</button>
+  <button class="btn-download" onclick="descargarQR('qr_paypal.png')">⬇️ Descargar</button>
 
 </div>
 
-<!-- WHATSAPP -->
-<div class="whatsapp">
-  <button onclick="enviarWhatsApp()" class="btn-wsp">
-    📲 Enviar WhatsApp
-  </button>
-</div>
 
-<!-- SALIR -->
-<div class="logout">
-  <button onclick="logout()" class="btn-salir">
-    🚪 Salir
-  </button>
-</div>
-
+<!-- ✅ FUNCIONES -->
 <script>
-  // USUARIO
-  let rol = localStorage.getItem("rol");
-  let user = localStorage.getItem("user");
+  // COPIAR QR
+  function copiarQR(idImg) {
+    let img = document.getElementById(idImg);
 
-  document.getElementById("rolTexto").innerText =
-    "Usuario: " + user + " | Rol: " + rol;
-
-  if (rol === "admin") {
-    document.getElementById("adminPanel").style.display = "block";
+    navigator.clipboard.writeText(img.src)
+      .then(() => alert("✅ QR copiado correctamente"));
   }
 
-  // MOSTRAR QR
-  function mostrarQR(tipo) {
-
-    let time = new Date().getTime();
-
-    if (tipo === "banco") document.getElementById("qrBanco").src = "qr_banco.png?"+time;
-    if (tipo === "yasta") document.getElementById("qrYasta").src = "qr_yasta.png?"+time;
-    if (tipo === "tigo") document.getElementById("qrTigo").src = "qr_tigo.png?"+time;
-    if (tipo === "paypal") document.getElementById("qrPaypal").src = "qr_paypal.png?"+time;
+  // DESCARGAR QR
+  function descargarQR(nombreArchivo) {
+    let link = document.createElement("a");
+    link.href = nombreArchivo;
+    link.download = nombreArchivo;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   // ZOOM QR
-  function zoomQR(img) {
-    img.classList.toggle("zoom");
-  }
+  function zoomQR(src) {
+    let div = document.createElement("div");
+    div.classList.add("zoom");
 
-  // COPIAR QR
-  async function copiarQR(idImg) {
-    const img = document.getElementById(idImg);
+    div.innerHTML = `<img src="${src}">`;
 
-    const response = await fetch(img.src);
-    const blob = await response.blob();
+    div.onclick = () => div.remove();
 
-    await navigator.clipboard.write([
-      new ClipboardItem({ [blob.type]: blob })
-    ]);
-
-    alert("✅ QR Copiado correctamente");
-  }
-
-  // WHATSAPP
-  function enviarWhatsApp() {
-    let numero = "60772546";
-    let mensaje = "Hola, aquí está el QR solicitado ✅";
-
-    window.open(
-      "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje),
-      "_blank"
-    );
-  }
-
-  // LOGOUT
-  function logout() {
-    localStorage.clear();
-    window.location.href = "login.html";
+    document.body.appendChild(div);
   }
 </script>
 
