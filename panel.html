@@ -2,171 +2,61 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel LAN Center JACKNNIEL</title>
+  <title>Panel QR</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
-<h3 id="rolTxt"></h3>
+<p id="rolText"></p>
 
 <div class="contenedor">
 
   <!-- BANCO UNION -->
-  <div class="card">
+  <div class="box">
     <h2>Banco Unión</h2>
 
     <button onclick="mostrarQR('banco_union')">Mostrar QR</button>
 
-    <div id="qr_banco_union" class="qr-box"></div>
-
-    <!-- SOLO ADMIN -->
-    <div class="adminOnly">
-      <input id="input_banco_union" placeholder="Pega link Drive Banco Unión">
-      <button onclick="guardarLink('banco_union')">Guardar</button>
+    <div id="banco_union" class="qr-box">
+      <img id="imgBanco" width="250">
+      <br>
+      <button onclick="copiarImagen('imgBanco')">📌 Copiar QR</button>
+      <button onclick="whatsappBanco()">📲 WhatsApp</button>
     </div>
 
-    <button onclick="copiarQR('banco_union')">📌 Copiar QR</button>
-
-    <button onclick="enviarWhatsApp('banco_union')">
-      📲 WhatsApp
-    </button>
+    <div class="adminOnly">
+      <input id="linkBanco" placeholder="Pega link Drive Banco Unión">
+      <button onclick="guardarLink('banco_union')">Guardar</button>
+    </div>
   </div>
 
+
   <!-- YASTA -->
-  <div class="card">
+  <div class="box">
     <h2>Yasta</h2>
 
     <button onclick="mostrarQR('yasta')">Mostrar QR</button>
 
-    <div id="qr_yasta" class="qr-box"></div>
-
-    <!-- SOLO ADMIN -->
-    <div class="adminOnly">
-      <input id="input_yasta" placeholder="Pega link Drive Yasta">
-      <button onclick="guardarLink('yasta')">Guardar</button>
+    <div id="yasta" class="qr-box">
+      <img id="imgYasta" width="250">
+      <br>
+      <button onclick="copiarImagen('imgYasta')">📌 Copiar QR</button>
+      <button onclick="whatsappYasta()">📲 WhatsApp</button>
     </div>
 
-    <button onclick="copiarQR('yasta')">📌 Copiar QR</button>
-
-    <button onclick="enviarWhatsApp('yasta')">
-      📲 WhatsApp
-    </button>
+    <div class="adminOnly">
+      <input id="linkYasta" placeholder="Pega link Drive Yasta">
+      <button onclick="guardarLink('yasta')">Guardar</button>
+    </div>
   </div>
 
 </div>
 
-<br>
-<button onclick="cerrarSesion()">🚪 Salir</button>
-
-<!-- FIREBASE SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
 
 <script src="app.js"></script>
-
-<script>
-/* ==============================
-   CONFIG ADMIN / OPERADOR
-================================ */
-const rol = localStorage.getItem("rol");
-document.getElementById("rolTxt").innerText = "Rol: " + rol;
-
-if (rol !== "admin") {
-  document.querySelectorAll(".adminOnly").forEach(el => el.style.display = "none");
-}
-
-/* ==============================
-   FIRESTORE QR LINKS
-================================ */
-const coleccion = db.collection("qr_links");
-
-/* Convertir link Drive a imagen directa */
-function convertirDrive(url) {
-  if (!url.includes("drive.google.com")) return url;
-
-  let id = url.split("/d/")[1].split("/")[0];
-  return `https://drive.google.com/uc?export=view&id=${id}`;
-}
-
-/* ==============================
-   GUARDAR LINK (ADMIN)
-================================ */
-async function guardarLink(nombre) {
-  const input = document.getElementById("input_" + nombre);
-  const url = input.value.trim();
-
-  if (url === "") {
-    alert("⚠️ Pegá un link primero");
-    return;
-  }
-
-  await coleccion.doc(nombre).set({ url });
-
-  alert("✅ QR guardado correctamente");
-}
-
-/* ==============================
-   MOSTRAR QR
-================================ */
-async function mostrarQR(nombre) {
-
-  const doc = await coleccion.doc(nombre).get();
-
-  if (!doc.exists) {
-    alert("⚠️ No hay QR cargado todavía");
-    return;
-  }
-
-  const url = convertirDrive(doc.data().url);
-
-  document.getElementById("qr_" + nombre).innerHTML =
-    `<img src="${url}" width="220">`;
-}
-
-/* ==============================
-   COPIAR QR
-================================ */
-async function copiarQR(nombre) {
-
-  const doc = await coleccion.doc(nombre).get();
-  if (!doc.exists) return alert("No hay QR");
-
-  const url = convertirDrive(doc.data().url);
-
-  navigator.clipboard.writeText(url);
-
-  alert("✅ Link del QR copiado");
-}
-
-/* ==============================
-   WHATSAPP AUTOMATICO
-================================ */
-async function enviarWhatsApp(nombre) {
-
-  const doc = await coleccion.doc(nombre).get();
-  if (!doc.exists) return alert("No hay QR");
-
-  const url = convertirDrive(doc.data().url);
-
-  let telefono = "60772546";
-
-  let mensaje = `Hola, aquí está el QR de pago:\n${url}`;
-
-  window.open(
-    `https://wa.me/591${telefono}?text=${encodeURIComponent(mensaje)}`
-  );
-}
-
-/* ==============================
-   SALIR
-================================ */
-function cerrarSesion() {
-  localStorage.clear();
-  window.location = "login.html";
-}
-</script>
 
 </body>
 </html>
