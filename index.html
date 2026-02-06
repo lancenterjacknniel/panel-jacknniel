@@ -3,16 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <title>PANEL LAN CENTER JACKNNIEL</title>
+
+  <style>
+    body {
+      background: #0b0f1a;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 40px;
+      color: cyan;
+    }
+
+    button {
+      margin: 15px;
+      padding: 15px 30px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(90deg, cyan, blue);
+      color: black;
+      font-weight: bold;
+      box-shadow: 0 0 15px cyan;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .qr-box {
+      display: none;
+      margin-top: 20px;
+    }
+
+    img {
+      width: 350px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px magenta;
+    }
+
+    .copy-btn {
+      background: lime;
+      margin-top: 10px;
+      box-shadow: 0 0 15px lime;
+    }
+  </style>
 </head>
-<body style="background:#111;color:white;text-align:center;font-family:Arial;">
+
+<body>
 
   <h1>PANEL LAN CENTER JACKNNIEL</h1>
 
-  <h2>Banco Unión</h2>
-  <img src="qr_banco.png" width="300">
+  <!-- BOTÓN BANCO UNIÓN -->
+  <button onclick="mostrarQR('banco')">Mostrar QR Banco Unión</button>
 
-  <h2>Yasta</h2>
-  <img src="qr_yasta.png" width="300">
+  <div id="banco" class="qr-box">
+    <img id="imgBanco" src="qr_banco.png">
+    <br>
+    <button class="copy-btn" onclick="copiarImagen('imgBanco')">
+      📌 Copiar QR Banco Unión
+    </button>
+  </div>
+
+  <!-- BOTÓN YASTA -->
+  <button onclick="mostrarQR('yasta')">Mostrar QR Yasta</button>
+
+  <div id="yasta" class="qr-box">
+    <img id="imgYasta" src="qr_yasta.png">
+    <br>
+    <button class="copy-btn" onclick="copiarImagen('imgYasta')">
+      📌 Copiar QR Yasta
+    </button>
+  </div>
+
+  <script>
+    function mostrarQR(id) {
+      let box = document.getElementById(id);
+
+      if (box.style.display === "none" || box.style.display === "") {
+        box.style.display = "block";
+      } else {
+        box.style.display = "none";
+      }
+    }
+
+    async function copiarImagen(imgId) {
+      const img = document.getElementById(imgId);
+
+      const response = await fetch(img.src);
+      const blob = await response.blob();
+
+      await navigator.clipboard.write([
+        new ClipboardItem({ [blob.type]: blob })
+      ]);
+
+      alert("✅ QR copiado, ahora puedes pegarlo en WhatsApp");
+    }
+  </script>
 
 </body>
 </html>
