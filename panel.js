@@ -1,53 +1,57 @@
-auth.onAuthStateChanged(user => {
+import { db } from "./firebase.js";
 
-  if (!user) {
-    window.location.href = "login.html";
+import {
+  doc,
+  getDoc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ROL
+const rol = localStorage.getItem("rol");
+
+document.getElementById("rolText").innerText =
+  "Rol: " + rol;
+
+// OCULTAR ADMIN SI NO ES ADMIN
+if (rol !== "admin") {
+  document.getElementById("adminPanel").style.display = "none";
+}
+
+// GUARDAR QR (SOLO ADMIN)
+window.guardarQR = async function (banco) {
+
+  if (rol !== "admin") {
+    alert("❌ No autorizado");
     return;
   }
 
-  // Solo admin ve subir links
-  if (user.email !== "admin@gmail.com") {
-    document.getElementById("adminPanel").style.display = "none";
+  let inputID = banco === "banco_union" ? "linkBanco" : "linkYasta";
+  let url = document.getElementById(inputID).value;
+
+  await setDoc(doc(db, "qr_links", banco), { url });
+
+  alert("✅ QR actualizado");
+};
+
+// VER QR (TODOS)
+window.verQR = async function (banco) {
+
+  const snap = await getDoc(doc(db, "qr_links", banco));
+
+  if (!snap.exists()) {
+    alert("❌ No hay QR guardado");
+    return;
   }
-});
 
+  let url = snap.data().url;
 
-// Guardar link en Firestore
-function guardarQR(tipo) {
+  // Drive directo
+  if (url.includes("drive.google.com")) {
+    let id = url.split("/d/")[1].split("/")[0];
+    url = `https://drive.google.com/uc?export=view&id=${id}`;
+  }
 
-  let link = "";
+  let imgID = banco === "banco_union" ? "imgBanco" : "imgYasta";
 
-  if (tipo === "banco_union") link = document.getElementById("linkBanco").value;
-  if (tipo === "yasta") link = document.getElementById("linkYasta").value;
-
-  db.collection("qr_links").doc(tipo).set({
-    url: link
-  });
-
-  alert("✅ Link guardado correctamente");
-}
-
-
-// Mostrar QR para operadores
-function verQR(tipo) {
-
-  db.collection("qr_links").doc(tipo).get()
-    .then(doc => {
-
-      if (!doc.exists) return alert("No hay link guardado");
-
-      let url = doc.data().url;
-
-      // Convertir Drive a link directo
-      let directo = url.replace("view?usp=sharing", "uc?export=view");
-
-      if (tipo === "banco_union") {
-        document.getElementById("imgBanco").src = directo;
-      }
-
-      if (tipo === "yasta") {
-        document.getElementById("imgYasta").src = directo;
-      }
-
-    });
-}
+  document.getElementById(imgID).src = url;
+};
