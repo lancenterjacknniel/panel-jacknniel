@@ -20,8 +20,51 @@
   <p id="msg"></p>
 </div>
 
-<!-- ✅ SOLO MODULE -->
-<script type="module" src="app.js"></script>
+<!-- ✅ Firebase CDN NORMAL -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+
+<script>
+  // CONFIG
+  const firebaseConfig = {
+    apiKey: "AIzaSyDhR3XZX9EG1sLuOvBefZ2EA5GVn8-SggQ",
+    authDomain: "panel-jacknniel.firebaseapp.com",
+    projectId: "panel-jacknniel",
+    storageBucket: "panel-jacknniel.firebasestorage.app",
+    messagingSenderId: "130186632575",
+    appId: "1:130186632575:web:135d0352564c290d6d0e4a"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  function login() {
+
+    let email = document.getElementById("user").value;
+    let pass = document.getElementById("pass").value;
+
+    auth.signInWithEmailAndPassword(email, pass)
+      .then((userCredential) => {
+
+        let user = userCredential.user.email;
+
+        localStorage.setItem("user", user);
+
+        // ADMIN
+        if (user === "admin@lan.com") {
+          localStorage.setItem("rol", "admin");
+        } else {
+          localStorage.setItem("rol", "operador");
+        }
+
+        window.location.href = "panel.html";
+      })
+      .catch(() => {
+        document.getElementById("msg").innerText =
+          "❌ Usuario o contraseña incorrecta";
+      });
+  }
+</script>
 
 </body>
 </html>
