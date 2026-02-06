@@ -1,2 +1,3 @@
-# panel-jacknniel
-Panel interno LAN Center JACKNNIEL
+# PANEL LAN CENTER JACKNNIEL
+
+Login + Operadores + Subir QR desde panel.

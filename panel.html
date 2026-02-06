@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel QR - JACKNNIEL</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg">
+
+<div class="topbar">
+  <h1>PANEL LAN CENTER JACKNNIEL</h1>
+  <p id="userInfo"></p>
+  <button class="logout" onclick="logout()">Salir</button>
+</div>
+
+<div class="cards">
+
+  <div class="card">
+    <h2>Banco Unión</h2>
+    <input type="file" accept="image/*" onchange="subirQR(event,'banco')">
+    <button onclick="mostrarQR('banco')">Mostrar QR</button>
+    <button onclick="copiarQR('banco')">📋 Copiar QR</button>
+    <button onclick="whatsapp('Banco Unión')">📲 WhatsApp</button>
+    <img id="img_banco" class="qrimg">
+  </div>
+
+  <div class="card">
+    <h2>Yasta</h2>
+    <input type="file" accept="image/*" onchange="subirQR(event,'yasta')">
+    <button onclick="mostrarQR('yasta')">Mostrar QR</button>
+    <button onclick="copiarQR('yasta')">📋 Copiar QR</button>
+    <button onclick="whatsapp('Yasta')">📲 WhatsApp</button>
+    <img id="img_yasta" class="qrimg">
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+body.bg{
+  background:#050b1a;
+  font-family:Arial;
+  color:white;
+  text-align:center;
+}
+
+.login-box{
+  width:350px;
+  margin:100px auto;
+  padding:30px;
+  border-radius:20px;
+  background:#111;
+  box-shadow:0 0 25px cyan;
+}
+
+.login-box input{
+  width:90%;
+  padding:12px;
+  margin:8px;
+  border-radius:10px;
+  border:none;
+}
+
+.login-box button{
+  padding:12px 25px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  background:cyan;
+  font-weight:bold;
+}
+
+.topbar{
+  margin:20px;
+}
+
+.logout{
+  background:red;
+  padding:10px 20px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  color:white;
+}
+
+.cards{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  margin-top:40px;
+}
+
+.card{
+  width:320px;
+  padding:20px;
+  border-radius:20px;
+  background:#111;
+  box-shadow:0 0 25px cyan;
+}
+
+.card button{
+  margin:8px;
+  padding:10px 18px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.qrimg{
+  width:250px;
+  margin-top:15px;
+  display:none;
+  border-radius:12px;
+  box-shadow:0 0 15px lime;
+}
