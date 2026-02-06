@@ -15,12 +15,12 @@
 <div id="adminPanel" style="display:none;" class="card">
   <h2>🔐 Admin: Subir Links QR</h2>
 
-  <input id="linkBanco" placeholder="Link Banco Unión (Drive)">
+  <input id="linkBanco" placeholder="Pega Link Banco Unión (Drive)">
   <button onclick="guardarQR('banco_union')">Guardar Banco Unión</button>
 
   <br><br>
 
-  <input id="linkYasta" placeholder="Link Yasta (Drive)">
+  <input id="linkYasta" placeholder="Pega Link Yasta (Drive)">
   <button onclick="guardarQR('yasta')">Guardar Yasta</button>
 </div>
 
@@ -31,11 +31,13 @@
   <h2>👀 Operadores solo ven QR</h2>
 
   <button onclick="verQR('banco_union')">Mostrar Banco Unión</button>
+  <br>
   <img id="imgBanco" width="250">
 
   <br><br>
 
   <button onclick="verQR('yasta')">Mostrar Yasta</button>
+  <br>
   <img id="imgYasta" width="250">
 </div>
 
@@ -48,6 +50,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script>
+  // ✅ CONFIG FIREBASE
   const firebaseConfig = {
     apiKey: "AIzaSyDhR3XZX9EG1sLuOvBefZ2EA5GVn8-SggQ",
     authDomain: "panel-jacknniel.firebaseapp.com",
@@ -72,6 +75,16 @@
     document.getElementById("adminPanel").style.display = "block";
   }
 
+  // ✅ CONVERTIR LINK DRIVE A IMAGEN DIRECTA
+  function convertirDrive(url) {
+
+    if (!url.includes("/d/")) return url;
+
+    let fileID = url.split("/d/")[1].split("/")[0];
+
+    return "https://drive.google.com/uc?export=view&id=" + fileID;
+  }
+
   // ✅ GUARDAR LINK QR (SOLO ADMIN)
   function guardarQR(banco) {
 
@@ -83,18 +96,27 @@
     let link = "";
 
     if (banco === "banco_union") {
-      link = document.getElementById("linkBanco").value;
+      link = document.getElementById("linkBanco").value.trim();
     }
 
     if (banco === "yasta") {
-      link = document.getElementById("linkYasta").value;
+      link = document.getElementById("linkYasta").value.trim();
     }
 
-    db.collection("qr_links").doc(banco).set({
-      url: link
-    });
+    if (link === "") {
+      alert("❌ Pega un link primero");
+      return;
+    }
 
-    alert("✅ Link guardado correctamente");
+    // Convertir Drive → Imagen directa
+    let linkFinal = convertirDrive(link);
+
+    db.collection("qr_links").doc(banco).set({
+      url: linkFinal
+    })
+    .then(() => {
+      alert("✅ QR guardado correctamente");
+    });
   }
 
   // ✅ VER QR (TODOS)
@@ -104,7 +126,7 @@
       .then((doc) => {
 
         if (!doc.exists) {
-          alert("❌ No hay link guardado todavía");
+          alert("❌ No hay QR guardado todavía");
           return;
         }
 
