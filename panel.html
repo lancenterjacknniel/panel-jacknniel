@@ -15,7 +15,7 @@
 <div id="adminPanel" class="admin-box" style="display:none;">
   <h2>🔐 Admin: Subir QR desde GitHub</h2>
 
-  <p>Para cambiar un QR solo reemplaza estos archivos en el repo:</p>
+  <p>Para cambiar un QR solo reemplaza estos archivos:</p>
 
   <div class="files">
     <span>✅ qr_banco.png</span>
@@ -31,20 +31,21 @@
 
 <hr>
 
-<!-- 👀 OPERADORES -->
+<!-- 👀 PANEL QR -->
 <div class="grid">
 
   <!-- BANCO UNION -->
   <div class="card-pro">
     <h2>Banco Unión</h2>
 
-<img id="imgBanco"
-     class="qr-img"
-     src="qr_banco.png"
-     onclick="zoomQR('imgBanco')">
+    <img id="imgBanco"
+         class="qr-img"
+         src="qr_banco.png"
+         onclick="zoomQR('imgBanco')">
 
+    <br>
 
-    <button class="btn-copy" onclick="copiarQR('qrBanco')">
+    <button class="btn-copy" onclick="copiarQR('imgBanco')">
       📋 Copiar QR
     </button>
 
@@ -57,12 +58,14 @@
   <div class="card-pro">
     <h2>Yasta</h2>
 
-<img id="imgYasta"
-     class="qr-img"
-     src="qr_yasta.png"
-     onclick="zoomQR('imgYasta')">
+    <img id="imgYasta"
+         class="qr-img"
+         src="qr_yasta.png"
+         onclick="zoomQR('imgYasta')">
 
-    <button class="btn-copy" onclick="copiarQR('qrYasta')">
+    <br>
+
+    <button class="btn-copy" onclick="copiarQR('imgYasta')">
       📋 Copiar QR
     </button>
 
@@ -86,33 +89,30 @@
   document.getElementById("rolTexto").innerText =
     "Usuario: " + user + " | Rol: " + rol;
 
-  // Solo admin ve info
+  // Solo admin ve panel superior
   if (rol === "admin") {
     document.getElementById("adminPanel").style.display = "block";
   }
 
-  // 📋 Copiar QR (copia el link)
   // 📋 Copiar Imagen QR real
-async function copiarQR(idImg) {
+  async function copiarQR(idImg) {
 
-  let img = document.getElementById(idImg);
+    let img = document.getElementById(idImg);
 
-  try {
-    // Descargar la imagen como blob
-    const response = await fetch(img.src);
-    const blob = await response.blob();
+    try {
+      const response = await fetch(img.src);
+      const blob = await response.blob();
 
-    // Copiar imagen al portapapeles
-    await navigator.clipboard.write([
-      new ClipboardItem({ [blob.type]: blob })
-    ]);
+      await navigator.clipboard.write([
+        new ClipboardItem({ [blob.type]: blob })
+      ]);
 
-    alert("✅ Imagen QR copiada correctamente");
+      alert("✅ QR copiado como imagen");
 
-  } catch (error) {
-    alert("❌ No se pudo copiar la imagen (usa Chrome)");
+    } catch (error) {
+      alert("❌ No se pudo copiar (solo funciona en Chrome)");
+    }
   }
-}
 
   // ⬇ Descargar QR
   function descargarQR(archivo, nombre) {
@@ -122,11 +122,11 @@ async function copiarQR(idImg) {
     a.click();
   }
 
- // ✅ Zoom dentro del panel (no pantalla completa)
-function zoomQR(idImg) {
-  let img = document.getElementById(idImg);
-  img.classList.toggle("zoom");
-}
+  // 🔍 Zoom dentro del cuadro
+  function zoomQR(idImg) {
+    let img = document.getElementById(idImg);
+    img.classList.toggle("zoom");
+  }
 
   // 🚪 Logout
   function logout() {
@@ -137,4 +137,3 @@ function zoomQR(idImg) {
 
 </body>
 </html>
-
