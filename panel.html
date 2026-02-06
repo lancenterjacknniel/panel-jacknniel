@@ -9,50 +9,45 @@
 
 <h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
 
-<p id="rolText"></p>
+<h2 id="rolTexto"></h2>
 
-<!-- ✅ ADMIN PANEL -->
-<div id="adminPanel" style="display:none;">
-  <h2>👑 Solo Admin puede subir links QR</h2>
+<!-- 🔥 PANEL ADMIN -->
+<div id="adminPanel" style="display:none;" class="card">
+  <h2>🔐 Admin: Subir Links QR</h2>
 
-  <h3>Banco Unión</h3>
-  <input id="linkBanco" placeholder="Pega link Google Drive Banco Unión">
-  <button onclick="guardarQR('banco_union')">Guardar</button>
+  <input id="linkBanco" placeholder="Link Banco Unión (Drive)">
+  <button onclick="guardarQR('banco_union')">Guardar Banco Unión</button>
 
-  <h3>Yasta</h3>
-  <input id="linkYasta" placeholder="Pega link Google Drive Yasta">
-  <button onclick="guardarQR('yasta')">Guardar</button>
+  <br><br>
 
-  <hr>
+  <input id="linkYasta" placeholder="Link Yasta (Drive)">
+  <button onclick="guardarQR('yasta')">Guardar Yasta</button>
 </div>
 
-<!-- ✅ OPERADORES -->
-<h2>📌 Operadores solo pueden ver QR</h2>
+<hr>
 
-<div class="cardQR">
-  <h3>Banco Unión</h3>
-  <button onclick="verQR('banco_union')">Mostrar QR</button>
+<!-- 👀 PANEL OPERADORES -->
+<div class="card">
+  <h2>👀 Operadores solo ven QR</h2>
+
+  <button onclick="verQR('banco_union')">Mostrar Banco Unión</button>
   <img id="imgBanco" width="250">
-</div>
 
-<div class="cardQR">
-  <h3>Yasta</h3>
-  <button onclick="verQR('yasta')">Mostrar QR</button>
+  <br><br>
+
+  <button onclick="verQR('yasta')">Mostrar Yasta</button>
   <img id="imgYasta" width="250">
 </div>
 
-<!-- WhatsApp -->
-<br><br>
-<a id="wspBtn" target="_blank">
-  <button>📲 Enviar WhatsApp</button>
-</a>
+<br>
 
-<!-- Firebase CDN -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+<button onclick="logout()">Salir</button>
+
+<!-- ✅ FIREBASE COMPAT -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script>
-  // CONFIG FIREBASE
   const firebaseConfig = {
     apiKey: "AIzaSyDhR3XZX9EG1sLuOvBefZ2EA5GVn8-SggQ",
     authDomain: "panel-jacknniel.firebaseapp.com",
@@ -65,26 +60,23 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
-  // WHATSAPP
-  const whatsapp = "60772546";
-  document.getElementById("wspBtn").href =
-    "https://wa.me/591" + whatsapp;
-
-  // VER ROL
+  // ✅ VER ROL
   let rol = localStorage.getItem("rol");
+  let user = localStorage.getItem("user");
 
-  document.getElementById("rolText").innerText =
-    "Rol: " + rol;
+  document.getElementById("rolTexto").innerText =
+    "Usuario: " + user + " | Rol: " + rol;
 
+  // SOLO ADMIN VE SUBIDA
   if (rol === "admin") {
     document.getElementById("adminPanel").style.display = "block";
   }
 
-  // GUARDAR QR (solo admin)
+  // ✅ GUARDAR LINK QR (SOLO ADMIN)
   function guardarQR(banco) {
 
     if (rol !== "admin") {
-      alert("❌ Solo el admin puede guardar QR");
+      alert("❌ Solo admin puede subir links");
       return;
     }
 
@@ -102,17 +94,17 @@
       url: link
     });
 
-    alert("✅ QR Guardado correctamente");
+    alert("✅ Link guardado correctamente");
   }
 
-  // VER QR (todos)
+  // ✅ VER QR (TODOS)
   function verQR(banco) {
 
     db.collection("qr_links").doc(banco).get()
       .then((doc) => {
 
         if (!doc.exists) {
-          alert("❌ No hay QR guardado");
+          alert("❌ No hay link guardado todavía");
           return;
         }
 
@@ -127,6 +119,12 @@
         }
 
       });
+  }
+
+  // ✅ LOGOUT
+  function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
   }
 </script>
 
