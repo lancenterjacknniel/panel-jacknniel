@@ -69,15 +69,18 @@ body {
 }
 
 .qr-img {
-  margin-top: 20px;
-  width: 200px;
+  margin-top: 15px;
+  width: 160px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s ease;
+  border-radius: 10px;
 }
 
-.zoom {
-  width: 320px !important;
-  box-shadow: 0 0 30px lime;
+/* ✅ Zoom en el mismo lugar */
+.qr-img.zoom {
+  transform: scale(2);
+  position: relative;
+  z-index: 999;
 }
 
 .admin-box {
