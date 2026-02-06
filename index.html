@@ -6,50 +6,78 @@
 
   <style>
     body {
-      background: #0b0f1a;
-      color: white;
+      background: #070b1a;
       font-family: Arial;
       text-align: center;
+      color: white;
+      margin: 0;
+      padding: 0;
     }
 
     h1 {
-      margin-top: 20px;
-      font-size: 40px;
+      padding: 20px;
+      font-size: 42px;
       color: cyan;
     }
 
-    button {
-      margin: 15px;
-      padding: 15px 30px;
-      font-size: 20px;
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 2px solid cyan;
+      border-radius: 20px;
+      width: 340px;
+      padding: 20px;
+      box-shadow: 0 0 20px cyan;
+    }
+
+    .card h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+      color: yellow;
+    }
+
+    .btn {
+      display: block;
+      width: 90%;
+      margin: 10px auto;
+      padding: 14px;
+      font-size: 18px;
       border: none;
       border-radius: 12px;
       cursor: pointer;
+      font-weight: bold;
+    }
+
+    .show-btn {
       background: linear-gradient(90deg, cyan, blue);
       color: black;
-      font-weight: bold;
-      box-shadow: 0 0 15px cyan;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    .qr-box {
-      display: none;
-      margin-top: 20px;
-    }
-
-    img {
-      width: 350px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px magenta;
     }
 
     .copy-btn {
-      background: lime;
-      margin-top: 10px;
-      box-shadow: 0 0 15px lime;
+      background: linear-gradient(90deg, lime, green);
+      color: black;
+    }
+
+    img {
+      width: 280px;
+      border-radius: 15px;
+      margin-top: 15px;
+      display: none;
+      border: 3px solid white;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 15px;
+      font-size: 14px;
+      opacity: 0.7;
     }
   </style>
 </head>
@@ -58,52 +86,68 @@
 
   <h1>PANEL LAN CENTER JACKNNIEL</h1>
 
-  <!-- BOTÓN BANCO UNIÓN -->
-  <button onclick="mostrarQR('banco')">Mostrar QR Banco Unión</button>
+  <div class="container">
 
-  <div id="banco" class="qr-box">
-    <img id="imgBanco" src="qr_banco.png">
-    <br>
-    <button class="copy-btn" onclick="copiarImagen('imgBanco')">
-      📌 Copiar QR Banco Unión
-    </button>
+    <!-- BANCO UNION -->
+    <div class="card">
+      <h2>Banco Unión</h2>
+
+      <button class="btn show-btn" onclick="toggleQR('qrBanco')">
+        Mostrar QR Banco Unión
+      </button>
+
+      <button class="btn copy-btn" onclick="copiarImagen('qrBanco')">
+        Copiar QR Banco Unión
+      </button>
+
+      <img id="qrBanco" src="qr_banco.png">
+    </div>
+
+    <!-- YASTA -->
+    <div class="card">
+      <h2>Yasta</h2>
+
+      <button class="btn show-btn" onclick="toggleQR('qrYasta')">
+        Mostrar QR Yasta
+      </button>
+
+      <button class="btn copy-btn" onclick="copiarImagen('qrYasta')">
+        Copiar QR Yasta
+      </button>
+
+      <img id="qrYasta" src="qr_yasta.png">
+    </div>
+
   </div>
 
-  <!-- BOTÓN YASTA -->
-  <button onclick="mostrarQR('yasta')">Mostrar QR Yasta</button>
+  <footer>
+    Panel interno exclusivo - LAN Center JACKNNIEL 🚀
+  </footer>
 
-  <div id="yasta" class="qr-box">
-    <img id="imgYasta" src="qr_yasta.png">
-    <br>
-    <button class="copy-btn" onclick="copiarImagen('imgYasta')">
-      📌 Copiar QR Yasta
-    </button>
-  </div>
+<script>
+  function toggleQR(id) {
+    const img = document.getElementById(id);
 
-  <script>
-    function mostrarQR(id) {
-      let box = document.getElementById(id);
-
-      if (box.style.display === "none" || box.style.display === "") {
-        box.style.display = "block";
-      } else {
-        box.style.display = "none";
-      }
+    if (img.style.display === "none" || img.style.display === "") {
+      img.style.display = "block";
+    } else {
+      img.style.display = "none";
     }
+  }
 
-    async function copiarImagen(imgId) {
-      const img = document.getElementById(imgId);
+  async function copiarImagen(imgId) {
+    const img = document.getElementById(imgId);
 
-      const response = await fetch(img.src);
-      const blob = await response.blob();
+    const response = await fetch(img.src);
+    const blob = await response.blob();
 
-      await navigator.clipboard.write([
-        new ClipboardItem({ [blob.type]: blob })
-      ]);
+    await navigator.clipboard.write([
+      new ClipboardItem({ [blob.type]: blob })
+    ]);
 
-      alert("✅ QR copiado, ahora puedes pegarlo en WhatsApp");
-    }
-  </script>
+    alert("✅ QR copiado, ahora pégalo directo en WhatsApp");
+  }
+</script>
 
 </body>
 </html>
