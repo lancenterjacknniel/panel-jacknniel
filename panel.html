@@ -7,18 +7,24 @@
 </head>
 <body>
 
-<h1 class="titulo">🚀 PANEL LAN CENTER JACKNNIEL</h1>
+<!-- LOGO -->
+<div class="top-logo">
+  <img src="logo.png" class="logo">
+</div>
+
+<h1 class="titulo">PANEL LAN CENTER JACKNNIEL</h1>
 <h2 id="rolTexto" class="rol"></h2>
 
-<!-- 🔐 PANEL ADMIN -->
+<!-- 🔐 ADMIN -->
 <div id="adminPanel" class="admin-box" style="display:none;">
   <h2>🔐 Admin: Actualizar QR</h2>
-
-  <p>📌 Para cambiar un QR solo sube una nueva imagen al repo con el mismo nombre:</p>
+  <p>Solo sube nuevas imágenes al repo con el mismo nombre:</p>
 
   <div class="files">
     <span>✅ qr_banco.png</span>
     <span>✅ qr_yasta.png</span>
+    <span>✅ qr_tigo.png</span>
+    <span>✅ qr_paypal.png</span>
   </div>
 
   <a class="btn-repo"
@@ -28,29 +34,43 @@
   </a>
 </div>
 
-<!-- 🏦 TARJETAS QR -->
+<!-- TARJETAS -->
 <div class="grid">
 
   <!-- BANCO UNION -->
   <div class="card-pro">
     <h2>Banco Unión</h2>
+    <button onclick="mostrarQR('banco')" class="btn">Mostrar QR</button>
 
-    <button onclick="mostrarQR('banco')" class="btn">
-      Mostrar QR
-    </button>
-
-    <img id="qrBanco" class="qr-img">
+    <img id="qrBanco" class="qr-img" onclick="zoomQR(this)">
+    <button onclick="copiarQR('qrBanco')" class="btn-copy">📋 Copiar QR</button>
   </div>
 
   <!-- YASTA -->
   <div class="card-pro">
     <h2>Yasta</h2>
+    <button onclick="mostrarQR('yasta')" class="btn">Mostrar QR</button>
 
-    <button onclick="mostrarQR('yasta')" class="btn">
-      Mostrar QR
-    </button>
+    <img id="qrYasta" class="qr-img" onclick="zoomQR(this)">
+    <button onclick="copiarQR('qrYasta')" class="btn-copy">📋 Copiar QR</button>
+  </div>
 
-    <img id="qrYasta" class="qr-img">
+  <!-- TIGO MONEY -->
+  <div class="card-pro">
+    <h2>Tigo Money</h2>
+    <button onclick="mostrarQR('tigo')" class="btn">Mostrar QR</button>
+
+    <img id="qrTigo" class="qr-img" onclick="zoomQR(this)">
+    <button onclick="copiarQR('qrTigo')" class="btn-copy">📋 Copiar QR</button>
+  </div>
+
+  <!-- PAYPAL -->
+  <div class="card-pro">
+    <h2>PayPal</h2>
+    <button onclick="mostrarQR('paypal')" class="btn">Mostrar QR</button>
+
+    <img id="qrPaypal" class="qr-img" onclick="zoomQR(this)">
+    <button onclick="copiarQR('qrPaypal')" class="btn-copy">📋 Copiar QR</button>
   </div>
 
 </div>
@@ -70,33 +90,48 @@
 </div>
 
 <script>
-  // ✅ DATOS USUARIO
+  // USUARIO
   let rol = localStorage.getItem("rol");
   let user = localStorage.getItem("user");
 
   document.getElementById("rolTexto").innerText =
     "Usuario: " + user + " | Rol: " + rol;
 
-  // SOLO ADMIN VE PANEL ADMIN
   if (rol === "admin") {
     document.getElementById("adminPanel").style.display = "block";
   }
 
-  // ✅ MOSTRAR QR
+  // MOSTRAR QR
   function mostrarQR(tipo) {
 
-    if (tipo === "banco") {
-      document.getElementById("qrBanco").src =
-        "qr_banco.png?cache=" + new Date().getTime();
-    }
+    let time = new Date().getTime();
 
-    if (tipo === "yasta") {
-      document.getElementById("qrYasta").src =
-        "qr_yasta.png?cache=" + new Date().getTime();
-    }
+    if (tipo === "banco") document.getElementById("qrBanco").src = "qr_banco.png?"+time;
+    if (tipo === "yasta") document.getElementById("qrYasta").src = "qr_yasta.png?"+time;
+    if (tipo === "tigo") document.getElementById("qrTigo").src = "qr_tigo.png?"+time;
+    if (tipo === "paypal") document.getElementById("qrPaypal").src = "qr_paypal.png?"+time;
   }
 
-  // ✅ WHATSAPP
+  // ZOOM QR
+  function zoomQR(img) {
+    img.classList.toggle("zoom");
+  }
+
+  // COPIAR QR
+  async function copiarQR(idImg) {
+    const img = document.getElementById(idImg);
+
+    const response = await fetch(img.src);
+    const blob = await response.blob();
+
+    await navigator.clipboard.write([
+      new ClipboardItem({ [blob.type]: blob })
+    ]);
+
+    alert("✅ QR Copiado correctamente");
+  }
+
+  // WHATSAPP
   function enviarWhatsApp() {
     let numero = "60772546";
     let mensaje = "Hola, aquí está el QR solicitado ✅";
@@ -107,7 +142,7 @@
     );
   }
 
-  // ✅ LOGOUT
+  // LOGOUT
   function logout() {
     localStorage.clear();
     window.location.href = "login.html";
