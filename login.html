@@ -20,12 +20,12 @@
   <p id="msg"></p>
 </div>
 
-<!-- ✅ Firebase compat -->
+<!-- ✅ Firebase Compat -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
 <script>
-  // CONFIG FIREBASE
+  // 🔥 Config Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyDhR3XZX9EG1sLuOvBefZ2EA5GVn8-SggQ",
     authDomain: "panel-jacknniel.firebaseapp.com",
@@ -38,32 +38,32 @@
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
+  // ✅ Login
   function login() {
 
     let email = document.getElementById("user").value.trim();
-    let pass  = document.getElementById("pass").value.trim();
+    let pass = document.getElementById("pass").value.trim();
 
     auth.signInWithEmailAndPassword(email, pass)
       .then((userCredential) => {
 
-        // EMAIL REAL DEVUELTO POR FIREBASE
         let userEmail = userCredential.user.email;
 
-        // GUARDAR USUARIO
+        // Guardar usuario
         localStorage.setItem("user", userEmail);
 
-        // ✅ ADMIN FIX DEFINITIVO
-        if (userEmail.trim().toLowerCase() === "admin@lan.com") {
+        // Guardar rol
+        if (userEmail === "admin@lan.com") {
           localStorage.setItem("rol", "admin");
         } else {
           localStorage.setItem("rol", "operador");
         }
 
-        // ENTRAR AL PANEL
+        // Entrar al panel
         window.location.href = "panel.html";
 
       })
-      .catch((error) => {
+      .catch(() => {
         document.getElementById("msg").innerText =
           "❌ Usuario o contraseña incorrecta";
       });
