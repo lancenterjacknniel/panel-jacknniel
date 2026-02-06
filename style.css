@@ -1,48 +1,42 @@
 body {
-  background: #050b1a;
-  color: white;
+  background: #050b18;
   font-family: Arial;
   text-align: center;
+  color: white;
 }
 
 h1 {
   color: cyan;
-  margin-top: 30px;
 }
 
-.contenedor {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 50px;
-}
-
-.box {
-  width: 350px;
-  padding: 30px;
+.card {
+  background: #111827;
+  display: inline-block;
+  padding: 25px;
+  margin: 20px;
   border-radius: 20px;
-  background: #0b1225;
-  box-shadow: 0 0 20px cyan;
-}
-
-button {
-  padding: 12px 25px;
-  margin: 10px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.qr-box {
-  display: none;
-  margin-top: 20px;
+  box-shadow: 0 0 15px cyan;
 }
 
 input {
-  padding: 10px;
   width: 90%;
+  padding: 10px;
+  margin: 8px;
   border-radius: 10px;
   border: none;
-  margin-top: 10px;
+}
+
+button {
+  padding: 12px 20px;
+  margin: 8px;
+  border: none;
+  border-radius: 12px;
+  background: cyan;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+img {
+  margin-top: 15px;
+  border-radius: 10px;
 }
