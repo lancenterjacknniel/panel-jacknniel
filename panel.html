@@ -2,39 +2,46 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel QR - JACKNNIEL</title>
+  <title>Panel JACKNNIEL</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg">
+<body>
+  <h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
+  <p id="rol"></p>
 
-<div class="topbar">
-  <h1>PANEL LAN CENTER JACKNNIEL</h1>
-  <p id="userInfo"></p>
-  <button class="logout" onclick="logout()">Salir</button>
-</div>
+  <div class="grid">
 
-<div class="cards">
+    <div class="card">
+      <h2>Banco Unión</h2>
+      <button onclick="toggleQR('banco')">Mostrar QR</button>
+      <div id="banco" class="qr-box">
+        <img id="imgBanco" width="250">
+        <button onclick="copiarImagen('imgBanco')">📌 Copiar QR</button>
+        <button onclick="enviarWhats()">📲 WhatsApp</button>
+      </div>
+      <div id="adminBanco" class="admin-only">
+        <input id="linkBanco" placeholder="Pega link Drive Banco Unión">
+        <button onclick="guardarLink('banco')">Guardar</button>
+      </div>
+    </div>
 
-  <div class="card">
-    <h2>Banco Unión</h2>
-    <input type="file" accept="image/*" onchange="subirQR(event,'banco')">
-    <button onclick="mostrarQR('banco')">Mostrar QR</button>
-    <button onclick="copiarQR('banco')">📋 Copiar QR</button>
-    <button onclick="whatsapp('Banco Unión')">📲 WhatsApp</button>
-    <img id="img_banco" class="qrimg">
+    <div class="card">
+      <h2>Yasta</h2>
+      <button onclick="toggleQR('yasta')">Mostrar QR</button>
+      <div id="yasta" class="qr-box">
+        <img id="imgYasta" width="250">
+        <button onclick="copiarImagen('imgYasta')">📌 Copiar QR</button>
+        <button onclick="enviarWhats()">📲 WhatsApp</button>
+      </div>
+      <div id="adminYasta" class="admin-only">
+        <input id="linkYasta" placeholder="Pega link Drive Yasta">
+        <button onclick="guardarLink('yasta')">Guardar</button>
+      </div>
+    </div>
+
   </div>
 
-  <div class="card">
-    <h2>Yasta</h2>
-    <input type="file" accept="image/*" onchange="subirQR(event,'yasta')">
-    <button onclick="mostrarQR('yasta')">Mostrar QR</button>
-    <button onclick="copiarQR('yasta')">📋 Copiar QR</button>
-    <button onclick="whatsapp('Yasta')">📲 WhatsApp</button>
-    <img id="img_yasta" class="qrimg">
-  </div>
-
-</div>
-
-<script src="app.js"></script>
+<script src="usuarios.js"></script>
+<script src="panel.js"></script>
 </body>
 </html>

@@ -2,34 +2,20 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Login - PANEL LAN CENTER JACKNNIEL</title>
+  <title>Login - Panel JACKNNIEL</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg">
-  <div class="login-box">
-    <h1>PANEL LAN CENTER JACKNNIEL</h1>
-    <h2>Ingreso Operadores</h2>
-
+<body>
+  <h1>🔐 PANEL LAN CENTER JACKNNIEL</h1>
+  <div class="card">
+    <h2>Ingreso</h2>
     <input id="user" placeholder="Usuario">
     <input id="pass" type="password" placeholder="Contraseña">
-    <button onclick="login()">Ingresar</button>
-
+    <button onclick="login()">Entrar</button>
     <p id="msg"></p>
   </div>
 
 <script src="usuarios.js"></script>
-<script>
-function login(){
-  const u=document.getElementById("user").value.trim();
-  const p=document.getElementById("pass").value.trim();
-
-  if(usuarios[u] && usuarios[u]===p){
-    localStorage.setItem("usuario",u);
-    window.location="panel.html";
-  } else {
-    document.getElementById("msg").innerText="❌ Usuario o contraseña incorrectos";
-  }
-}
-</script>
+<script src="app.js"></script>
 </body>
 </html>

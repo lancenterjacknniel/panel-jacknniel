@@ -1,5 +1,5 @@
 const usuarios = {
-  "Lancenterjacknniel": "0000000",
-  "Weymar": "1234",
-  "Javier": "5647"
+  "Lancenterjacknniel": {pass:"0000000", rol:"admin"},
+  "Weymar": {pass:"1234", rol:"operador"},
+  "Javier": {pass:"5647", rol:"operador"}
 };
