@@ -20,12 +20,11 @@
   <p id="msg"></p>
 </div>
 
-<!-- ✅ FIREBASE COMPAT (FUNCIONA EN HTML NORMAL) -->
+<!-- Firebase compat -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
 <script>
-  // CONFIG
   const firebaseConfig = {
     apiKey: "AIzaSyDhR3XZX9EG1sLuOvBefZ2EA5GVn8-SggQ",
     authDomain: "panel-jacknniel.firebaseapp.com",
@@ -40,26 +39,29 @@
 
   function login() {
 
-    let email = document.getElementById("user").value;
-    let pass  = document.getElementById("pass").value;
+    let email = document.getElementById("user").value.trim();
+    let pass = document.getElementById("pass").value.trim();
 
     auth.signInWithEmailAndPassword(email, pass)
       .then((userCredential) => {
 
-        let user = userCredential.user.email;
+        let userEmail = userCredential.user.email;
 
-        localStorage.setItem("user", user);
+        // Guardar usuario
+        localStorage.setItem("user", userEmail);
 
-        // ADMIN
-        if (user === "admin@lan.com") {
+        // Guardar rol
+        if (userEmail === "admin@lan.com") {
           localStorage.setItem("rol", "admin");
         } else {
           localStorage.setItem("rol", "operador");
         }
 
+        // Entrar panel
         window.location.href = "panel.html";
+
       })
-      .catch((error) => {
+      .catch(() => {
         document.getElementById("msg").innerText =
           "❌ Usuario o contraseña incorrecta";
       });
