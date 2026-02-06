@@ -20,9 +20,9 @@
   <p id="msg"></p>
 </div>
 
-<!-- ✅ Firebase CDN NORMAL -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+<!-- ✅ FIREBASE COMPAT (FUNCIONA EN HTML NORMAL) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
 <script>
   // CONFIG
@@ -41,7 +41,7 @@
   function login() {
 
     let email = document.getElementById("user").value;
-    let pass = document.getElementById("pass").value;
+    let pass  = document.getElementById("pass").value;
 
     auth.signInWithEmailAndPassword(email, pass)
       .then((userCredential) => {
@@ -59,7 +59,7 @@
 
         window.location.href = "panel.html";
       })
-      .catch(() => {
+      .catch((error) => {
         document.getElementById("msg").innerText =
           "❌ Usuario o contraseña incorrecta";
       });
