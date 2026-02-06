@@ -5,32 +5,27 @@
   <title>Login - Panel JACKNNIEL</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <h1>🔐 PANEL LAN CENTER JACKNNIEL</h1>
+<h1>🔒 PANEL LAN CENTER JACKNNIEL</h1>
 
-  <div class="card">
-    <h2>Ingreso</h2>
+<div class="card">
+  <h2>Ingreso</h2>
 
-    <input id="user" placeholder="Usuario">
-    <input id="pass" type="password" placeholder="Contraseña">
+  <input id="user" placeholder="Usuario">
+  <input id="pass" type="password" placeholder="Contraseña">
 
-    <button onclick="login()">Entrar</button>
+  <button onclick="login()">Entrar</button>
 
-    <p id="msg"></p>
-  </div>
+  <p id="msg"></p>
+</div>
 
-  <!-- ✅ FIREBASE SDK COMPAT (OBLIGATORIO PARA TU app.js) -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
 
-  <!-- Tus usuarios -->
-  <script src="usuarios.js"></script>
-
-  <!-- Tu lógica principal -->
-  <script src="app.js"></script>
+<script src="usuarios.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
