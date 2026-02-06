@@ -1,46 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>PANEL LAN CENTER JACKNNIEL</title>
-
+  <meta charset="UTF-8">
+  <title>Panel LAN Center JACKNNIEL</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    // 🔥 TU CONFIG (la pondremos luego)
-    const firebaseConfig = {
-      apiKey: "TU_API_KEY",
-      authDomain: "TU_AUTH_DOMAIN",
-      projectId: "TU_PROJECT_ID",
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // 🔥 Cargar QR desde Firestore
-    async function cargarQR(nombreDoc, imgID) {
-      const ref = doc(db, "qr_links", nombreDoc);
-      const snap = await getDoc(ref);
-
-      if (snap.exists()) {
-        document.getElementById(imgID).src = snap.data().url;
-      }
-    }
-
-    window.onload = () => {
-      cargarQR("banco_union", "imgBanco");
-      cargarQR("yasta", "imgYasta");
-    };
-  </script>
 </head>
 
 <body>
 
-<h1>🚀 PANEL OPERADORES JACKNNIEL</h1>
+<h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
+<h3 id="rolTxt"></h3>
 
 <div class="contenedor">
 
@@ -48,55 +17,154 @@
   <div class="card">
     <h2>Banco Unión</h2>
 
-    <button onclick="document.getElementById('imgBanco').style.display='block'">
-      Mostrar QR
+    <button onclick="mostrarQR('banco_union')">Mostrar QR</button>
+
+    <div id="qr_banco_union" class="qr-box"></div>
+
+    <!-- SOLO ADMIN -->
+    <div class="adminOnly">
+      <input id="input_banco_union" placeholder="Pega link Drive Banco Unión">
+      <button onclick="guardarLink('banco_union')">Guardar</button>
+    </div>
+
+    <button onclick="copiarQR('banco_union')">📌 Copiar QR</button>
+
+    <button onclick="enviarWhatsApp('banco_union')">
+      📲 WhatsApp
     </button>
-
-    <img id="imgBanco" style="display:none; width:250px; margin-top:15px;">
-
-    <button onclick="copiarImagen('imgBanco')" class="copy-btn">
-      📌 Copiar QR
-    </button>
-
-    <a class="wa-btn" target="_blank"
-      href="https://wa.me/59160772546?text=Hola%20adjunto%20comprobante%20Banco%20Union">
-      WhatsApp
-    </a>
   </div>
 
   <!-- YASTA -->
   <div class="card">
     <h2>Yasta</h2>
 
-    <button onclick="document.getElementById('imgYasta').style.display='block'">
-      Mostrar QR
+    <button onclick="mostrarQR('yasta')">Mostrar QR</button>
+
+    <div id="qr_yasta" class="qr-box"></div>
+
+    <!-- SOLO ADMIN -->
+    <div class="adminOnly">
+      <input id="input_yasta" placeholder="Pega link Drive Yasta">
+      <button onclick="guardarLink('yasta')">Guardar</button>
+    </div>
+
+    <button onclick="copiarQR('yasta')">📌 Copiar QR</button>
+
+    <button onclick="enviarWhatsApp('yasta')">
+      📲 WhatsApp
     </button>
-
-    <img id="imgYasta" style="display:none; width:250px; margin-top:15px;">
-
-    <button onclick="copiarImagen('imgYasta')" class="copy-btn">
-      📌 Copiar QR
-    </button>
-
-    <a class="wa-btn" target="_blank"
-      href="https://wa.me/59160772546?text=Hola%20adjunto%20comprobante%20Yasta">
-      WhatsApp
-    </a>
   </div>
 
 </div>
 
+<br>
+<button onclick="cerrarSesion()">🚪 Salir</button>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+<script src="app.js"></script>
+
 <script>
-async function copiarImagen(imgId) {
-  const img = document.getElementById(imgId);
-  const response = await fetch(img.src);
-  const blob = await response.blob();
+/* ==============================
+   CONFIG ADMIN / OPERADOR
+================================ */
+const rol = localStorage.getItem("rol");
+document.getElementById("rolTxt").innerText = "Rol: " + rol;
 
-  await navigator.clipboard.write([
-    new ClipboardItem({ [blob.type]: blob })
-  ]);
+if (rol !== "admin") {
+  document.querySelectorAll(".adminOnly").forEach(el => el.style.display = "none");
+}
 
-  alert("✅ QR copiado. Pégalo en WhatsApp.");
+/* ==============================
+   FIRESTORE QR LINKS
+================================ */
+const coleccion = db.collection("qr_links");
+
+/* Convertir link Drive a imagen directa */
+function convertirDrive(url) {
+  if (!url.includes("drive.google.com")) return url;
+
+  let id = url.split("/d/")[1].split("/")[0];
+  return `https://drive.google.com/uc?export=view&id=${id}`;
+}
+
+/* ==============================
+   GUARDAR LINK (ADMIN)
+================================ */
+async function guardarLink(nombre) {
+  const input = document.getElementById("input_" + nombre);
+  const url = input.value.trim();
+
+  if (url === "") {
+    alert("⚠️ Pegá un link primero");
+    return;
+  }
+
+  await coleccion.doc(nombre).set({ url });
+
+  alert("✅ QR guardado correctamente");
+}
+
+/* ==============================
+   MOSTRAR QR
+================================ */
+async function mostrarQR(nombre) {
+
+  const doc = await coleccion.doc(nombre).get();
+
+  if (!doc.exists) {
+    alert("⚠️ No hay QR cargado todavía");
+    return;
+  }
+
+  const url = convertirDrive(doc.data().url);
+
+  document.getElementById("qr_" + nombre).innerHTML =
+    `<img src="${url}" width="220">`;
+}
+
+/* ==============================
+   COPIAR QR
+================================ */
+async function copiarQR(nombre) {
+
+  const doc = await coleccion.doc(nombre).get();
+  if (!doc.exists) return alert("No hay QR");
+
+  const url = convertirDrive(doc.data().url);
+
+  navigator.clipboard.writeText(url);
+
+  alert("✅ Link del QR copiado");
+}
+
+/* ==============================
+   WHATSAPP AUTOMATICO
+================================ */
+async function enviarWhatsApp(nombre) {
+
+  const doc = await coleccion.doc(nombre).get();
+  if (!doc.exists) return alert("No hay QR");
+
+  const url = convertirDrive(doc.data().url);
+
+  let telefono = "60772546";
+
+  let mensaje = `Hola, aquí está el QR de pago:\n${url}`;
+
+  window.open(
+    `https://wa.me/591${telefono}?text=${encodeURIComponent(mensaje)}`
+  );
+}
+
+/* ==============================
+   SALIR
+================================ */
+function cerrarSesion() {
+  localStorage.clear();
+  window.location = "login.html";
 }
 </script>
 
