@@ -1,57 +1,84 @@
-import { db } from "./firebase.js";
+// 🔥 Mostrar usuario y rol
+document.addEventListener("DOMContentLoaded", () => {
 
-import {
-  doc,
-  getDoc,
-  setDoc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  let user = localStorage.getItem("user");
+  let rol = localStorage.getItem("rol");
 
-// ROL
-const rol = localStorage.getItem("rol");
+  // Si no hay login → volver
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
 
-document.getElementById("rolText").innerText =
-  "Rol: " + rol;
+  // Mostrar arriba
+  document.getElementById("infoUser").innerText =
+    `Usuario: ${user} | Rol: ${rol}`;
 
-// OCULTAR ADMIN SI NO ES ADMIN
-if (rol !== "admin") {
-  document.getElementById("adminPanel").style.display = "none";
+  // Solo admin ve panel subir
+  if (rol === "admin") {
+    document.getElementById("adminPanel").style.display = "block";
+  } else {
+    document.getElementById("adminPanel").style.display = "none";
+  }
+});
+
+
+// ✅ Guardar link QR en Firestore
+function guardarQR(tipo) {
+
+  let inputID = tipo === "banco_union" ? "linkBanco" : "linkYasta";
+  let link = document.getElementById(inputID).value.trim();
+
+  if (link === "") {
+    alert("❌ Pega un link Drive primero");
+    return;
+  }
+
+  db.collection("qr_links").doc(tipo).set({
+    url: link
+  })
+  .then(() => {
+    alert("✅ QR Guardado correctamente");
+  })
+  .catch(() => {
+    alert("❌ Error guardando en Firestore");
+  });
 }
 
-// GUARDAR QR (SOLO ADMIN)
-window.guardarQR = async function (banco) {
 
-  if (rol !== "admin") {
-    alert("❌ No autorizado");
-    return;
-  }
+// ✅ Ver QR desde Firestore
+function verQR(tipo) {
 
-  let inputID = banco === "banco_union" ? "linkBanco" : "linkYasta";
-  let url = document.getElementById(inputID).value;
+  db.collection("qr_links").doc(tipo).get()
+    .then((doc) => {
 
-  await setDoc(doc(db, "qr_links", banco), { url });
+      if (!doc.exists) {
+        alert("❌ No hay QR guardado todavía");
+        return;
+      }
 
-  alert("✅ QR actualizado");
-};
+      let url = doc.data().url;
 
-// VER QR (TODOS)
-window.verQR = async function (banco) {
+      // Convertir link Drive → imagen directa
+      let fileID = url.split("/d/")[1].split("/")[0];
+      let finalURL = `https://drive.google.com/uc?export=view&id=${fileID}`;
 
-  const snap = await getDoc(doc(db, "qr_links", banco));
+      // Mostrar imagen
+      if (tipo === "banco_union") {
+        document.getElementById("imgBanco").src = finalURL;
+      } else {
+        document.getElementById("imgYasta").src = finalURL;
+      }
 
-  if (!snap.exists()) {
-    alert("❌ No hay QR guardado");
-    return;
-  }
+    })
+    .catch(() => {
+      alert("❌ Error cargando QR");
+    });
+}
 
-  let url = snap.data().url;
 
-  // Drive directo
-  if (url.includes("drive.google.com")) {
-    let id = url.split("/d/")[1].split("/")[0];
-    url = `https://drive.google.com/uc?export=view&id=${id}`;
-  }
-
-  let imgID = banco === "banco_union" ? "imgBanco" : "imgYasta";
-
-  document.getElementById(imgID).src = url;
-};
+// ✅ Salir
+function salir() {
+  localStorage.clear();
+  window.location.href = "login.html";
+}
