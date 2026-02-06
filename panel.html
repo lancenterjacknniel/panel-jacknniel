@@ -89,11 +89,27 @@
   }
 
   // 📋 Copiar QR (copia el link)
-  function copiarQR(idImg) {
-    let url = document.getElementById(idImg).src;
-    navigator.clipboard.writeText(url);
-    alert("✅ Link del QR copiado");
+  // 📋 Copiar Imagen QR real
+async function copiarQR(idImg) {
+
+  let img = document.getElementById(idImg);
+
+  try {
+    // Descargar la imagen como blob
+    const response = await fetch(img.src);
+    const blob = await response.blob();
+
+    // Copiar imagen al portapapeles
+    await navigator.clipboard.write([
+      new ClipboardItem({ [blob.type]: blob })
+    ]);
+
+    alert("✅ Imagen QR copiada correctamente");
+
+  } catch (error) {
+    alert("❌ No se pudo copiar la imagen (usa Chrome)");
   }
+}
 
   // ⬇ Descargar QR
   function descargarQR(archivo, nombre) {
