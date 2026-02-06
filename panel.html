@@ -1,62 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Panel QR</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<div id="adminPanel">
+  <h3>🔧 Solo Admin puede subir links QR</h3>
 
-<h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
-<p id="rolText"></p>
+  <input id="linkBanco" placeholder="Link Banco Unión">
+  <button onclick="guardarQR('banco_union')">Guardar</button>
 
-<div class="contenedor">
-
-  <!-- BANCO UNION -->
-  <div class="box">
-    <h2>Banco Unión</h2>
-
-    <button onclick="mostrarQR('banco_union')">Mostrar QR</button>
-
-    <div id="banco_union" class="qr-box">
-      <img id="imgBanco" width="250">
-      <br>
-      <button onclick="copiarImagen('imgBanco')">📌 Copiar QR</button>
-      <button onclick="whatsappBanco()">📲 WhatsApp</button>
-    </div>
-
-    <div class="adminOnly">
-      <input id="linkBanco" placeholder="Pega link Drive Banco Unión">
-      <button onclick="guardarLink('banco_union')">Guardar</button>
-    </div>
-  </div>
-
-
-  <!-- YASTA -->
-  <div class="box">
-    <h2>Yasta</h2>
-
-    <button onclick="mostrarQR('yasta')">Mostrar QR</button>
-
-    <div id="yasta" class="qr-box">
-      <img id="imgYasta" width="250">
-      <br>
-      <button onclick="copiarImagen('imgYasta')">📌 Copiar QR</button>
-      <button onclick="whatsappYasta()">📲 WhatsApp</button>
-    </div>
-
-    <div class="adminOnly">
-      <input id="linkYasta" placeholder="Pega link Drive Yasta">
-      <button onclick="guardarLink('yasta')">Guardar</button>
-    </div>
-  </div>
-
+  <input id="linkYasta" placeholder="Link Yasta">
+  <button onclick="guardarQR('yasta')">Guardar</button>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+<hr>
 
-<script src="app.js"></script>
+<h3>📌 Operadores solo ven QR</h3>
 
-</body>
-</html>
+<button onclick="verQR('banco_union')">Mostrar Banco Unión</button>
+<img id="imgBanco" width="250">
+
+<button onclick="verQR('yasta')">Mostrar Yasta</button>
+<img id="imgYasta" width="250">
