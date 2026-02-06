@@ -6,24 +6,66 @@
 
   <style>
     body {
-      background: #070b1a;
-      font-family: Arial;
-      text-align: center;
-      color: white;
       margin: 0;
-      padding: 0;
+      font-family: Arial;
+      background: #050b1a;
+      color: white;
+      text-align: center;
     }
 
     h1 {
-      padding: 20px;
-      font-size: 42px;
+      margin-top: 20px;
+      font-size: 45px;
       color: cyan;
+    }
+
+    /* LOGIN BOX */
+    .login-box {
+      width: 360px;
+      margin: 120px auto;
+      background: #111;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 0 25px cyan;
+    }
+
+    input {
+      width: 90%;
+      padding: 12px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(90deg, cyan, blue);
+      font-weight: bold;
+      color: black;
+      box-shadow: 0 0 15px cyan;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    /* PANEL */
+    .panel {
+      display: none;
+      margin-top: 30px;
     }
 
     .container {
       display: flex;
       justify-content: center;
-      gap: 30px;
+      gap: 25px;
       flex-wrap: wrap;
       padding: 20px;
     }
@@ -32,45 +74,33 @@
       background: rgba(255,255,255,0.05);
       border: 2px solid cyan;
       border-radius: 20px;
-      width: 340px;
+      width: 380px;
       padding: 20px;
       box-shadow: 0 0 20px cyan;
     }
 
     .card h2 {
       font-size: 28px;
-      margin-bottom: 15px;
       color: yellow;
     }
 
-    .btn {
-      display: block;
-      width: 90%;
-      margin: 10px auto;
-      padding: 14px;
-      font-size: 18px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .show-btn {
-      background: linear-gradient(90deg, cyan, blue);
-      color: black;
-    }
-
-    .copy-btn {
-      background: linear-gradient(90deg, lime, green);
-      color: black;
+    .qr-box {
+      display: none;
+      margin-top: 15px;
     }
 
     img {
       width: 280px;
       border-radius: 15px;
       margin-top: 15px;
-      display: none;
       border: 3px solid white;
+      box-shadow: 0 0 20px magenta;
+    }
+
+    .copy-btn {
+      background: linear-gradient(90deg, lime, green);
+      margin-top: 15px;
+      box-shadow: 0 0 15px lime;
     }
 
     footer {
@@ -84,6 +114,21 @@
 
 <body>
 
+<!-- LOGIN -->
+<div class="login-box" id="loginBox">
+  <h2>🔐 Acceso Operadores</h2>
+
+  <input type="text" id="user" placeholder="Usuario">
+  <input type="password" id="pass" placeholder="Contraseña">
+
+  <button onclick="login()">Entrar</button>
+
+  <p id="msg" style="color:red;"></p>
+</div>
+
+<!-- PANEL -->
+<div class="panel" id="panelBox">
+
   <h1>PANEL LAN CENTER JACKNNIEL</h1>
 
   <div class="container">
@@ -92,30 +137,34 @@
     <div class="card">
       <h2>Banco Unión</h2>
 
-      <button class="btn show-btn" onclick="toggleQR('qrBanco')">
-        Mostrar QR Banco Unión
-      </button>
+      <button onclick="toggleQR('qrBanco')">Mostrar QR</button>
 
-      <button class="btn copy-btn" onclick="copiarImagen('qrBanco')">
-        Copiar QR Banco Unión
-      </button>
+      <div id="qrBanco" class="qr-box">
+        <img id="imgBanco"
+          src="https://drive.google.com/uc?export=view&id=1-6Exete5RXO6VMUqu-UE1Afn9CQCG-RS">
+        <br>
 
-      <img id="qrBanco" src="qr_banco.png">
+        <button class="copy-btn" onclick="copiarImagen('imgBanco')">
+          📌 Copiar QR Banco Unión
+        </button>
+      </div>
     </div>
 
     <!-- YASTA -->
     <div class="card">
       <h2>Yasta</h2>
 
-      <button class="btn show-btn" onclick="toggleQR('qrYasta')">
-        Mostrar QR Yasta
-      </button>
+      <button onclick="toggleQR('qrYasta')">Mostrar QR</button>
 
-      <button class="btn copy-btn" onclick="copiarImagen('qrYasta')">
-        Copiar QR Yasta
-      </button>
+      <div id="qrYasta" class="qr-box">
+        <img id="imgYasta"
+          src="https://drive.google.com/uc?export=view&id=1xx_AquEodZ6cDm2lt8bRTPPAnz5EWrQO">
+        <br>
 
-      <img id="qrYasta" src="qr_yasta.png">
+        <button class="copy-btn" onclick="copiarImagen('imgYasta')">
+          📌 Copiar QR Yasta
+        </button>
+      </div>
     </div>
 
   </div>
@@ -124,17 +173,34 @@
     Panel interno exclusivo - LAN Center JACKNNIEL 🚀
   </footer>
 
-<script>
-  function toggleQR(id) {
-    const img = document.getElementById(id);
+</div>
 
-    if (img.style.display === "none" || img.style.display === "") {
-      img.style.display = "block";
+<script>
+  /* LOGIN */
+  function login() {
+    let u = document.getElementById("user").value;
+    let p = document.getElementById("pass").value;
+
+    if (u === "operador" && p === "JACK2026") {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("panelBox").style.display = "block";
     } else {
-      img.style.display = "none";
+      document.getElementById("msg").innerText = "❌ Usuario o clave incorrecta";
     }
   }
 
+  /* MOSTRAR QR */
+  function toggleQR(id) {
+    let box = document.getElementById(id);
+
+    if (box.style.display === "none" || box.style.display === "") {
+      box.style.display = "block";
+    } else {
+      box.style.display = "none";
+    }
+  }
+
+  /* COPIAR IMAGEN */
   async function copiarImagen(imgId) {
     const img = document.getElementById(imgId);
 
@@ -145,7 +211,7 @@
       new ClipboardItem({ [blob.type]: blob })
     ]);
 
-    alert("✅ QR copiado, ahora pégalo directo en WhatsApp");
+    alert("✅ QR copiado, ahora puedes pegarlo en WhatsApp");
   }
 </script>
 
