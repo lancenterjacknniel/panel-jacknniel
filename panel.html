@@ -31,50 +31,63 @@
 
 <hr>
 
-<!-- 👀 PANEL QR -->
-<div class="grid">
+<!-- ✅ BOTÓN PRINCIPAL -->
+<button class="btn" onclick="mostrarPagos()">
+  💳 Métodos de Pago
+</button>
 
-  <!-- BANCO UNION -->
-  <div class="card-pro">
-    <h2>Banco Unión</h2>
+<br><br>
 
-    <img id="imgBanco"
-         class="qr-img"
-         src="qr_banco.png"
-         onclick="zoomQR('imgBanco')">
+<!-- ✅ PANEL OCULTO -->
+<div id="pagosPanel" style="display:none;">
 
-    <br>
+  <div class="grid">
 
-    <button class="btn-copy" onclick="copiarQR('imgBanco')">
-      📋 Copiar QR
-    </button>
+    <!-- BANCO UNION -->
+    <div class="card-pro">
+      <h2>Banco Unión</h2>
 
-    <button class="btn-download" onclick="descargarQR('qr_banco.png','BancoUnion')">
-      ⬇ Descargar
-    </button>
+      <img id="imgBanco"
+           class="qr-img"
+           src="qr_banco.png"
+           onclick="zoomQR('imgBanco')">
+
+      <br>
+
+      <button class="btn-copy" onclick="copiarQR('imgBanco')">
+        📋 Copiar QR
+      </button>
+
+      <button class="btn-download"
+              onclick="descargarQR('qr_banco.png','BancoUnion')">
+        ⬇ Descargar
+      </button>
+    </div>
+
+    <!-- YASTA -->
+    <div class="card-pro">
+      <h2>Yasta</h2>
+
+      <img id="imgYasta"
+           class="qr-img"
+           src="qr_yasta.png"
+           onclick="zoomQR('imgYasta')">
+
+      <br>
+
+      <button class="btn-copy" onclick="copiarQR('imgYasta')">
+        📋 Copiar QR
+      </button>
+
+      <button class="btn-download"
+              onclick="descargarQR('qr_yasta.png','Yasta')">
+        ⬇ Descargar
+      </button>
+    </div>
+
   </div>
 
-  <!-- YASTA -->
-  <div class="card-pro">
-    <h2>Yasta</h2>
-
-    <img id="imgYasta"
-         class="qr-img"
-         src="qr_yasta.png"
-         onclick="zoomQR('imgYasta')">
-
-    <br>
-
-    <button class="btn-copy" onclick="copiarQR('imgYasta')">
-      📋 Copiar QR
-    </button>
-
-    <button class="btn-download" onclick="descargarQR('qr_yasta.png','Yasta')">
-      ⬇ Descargar
-    </button>
-  </div>
-
-</div>
+</div> <!-- ✅ CIERRE pagosPanel -->
 
 <br>
 
@@ -92,6 +105,17 @@
   // Solo admin ve panel superior
   if (rol === "admin") {
     document.getElementById("adminPanel").style.display = "block";
+  }
+
+  // ✅ Mostrar/Ocultar métodos de pago
+  function mostrarPagos() {
+    let panel = document.getElementById("pagosPanel");
+
+    if (panel.style.display === "none") {
+      panel.style.display = "block";
+    } else {
+      panel.style.display = "none";
+    }
   }
 
   // 📋 Copiar Imagen QR real
