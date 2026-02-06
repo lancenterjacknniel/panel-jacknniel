@@ -1,25 +1,55 @@
-<div id="adminPanel">
-  <h3>🔧 Solo Admin puede subir links QR</h3>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel LAN Center JACKNNIEL</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  <input id="linkBanco" placeholder="Link Banco Unión">
-  <button onclick="guardarQR('banco_union')">Guardar</button>
+<body>
 
-  <input id="linkYasta" placeholder="Link Yasta">
-  <button onclick="guardarQR('yasta')">Guardar</button>
-</div>
+  <h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
 
-<hr>
+  <!-- SOLO ADMIN -->
+  <div id="adminPanel">
+    <h3>🔧 Solo Admin puede subir links QR</h3>
 
-<h3>📌 Operadores solo ven QR</h3>
+    <input id="linkBanco" placeholder="Link Banco Unión">
+    <button onclick="guardarQR('banco_union')">Guardar</button>
 
-<button onclick="verQR('banco_union')">Mostrar Banco Unión</button>
-<img id="imgBanco" width="250">
+    <br><br>
 
-<button onclick="verQR('yasta')">Mostrar Yasta</button>
-<img id="imgYasta" width="250">
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+    <input id="linkYasta" placeholder="Link Yasta">
+    <button onclick="guardarQR('yasta')">Guardar</button>
+  </div>
 
-<script src="firebase.js"></script>
-<script src="panel.js"></script>
+  <hr>
+
+  <!-- OPERADORES -->
+  <h3>📌 Operadores solo ven QR</h3>
+
+  <button onclick="verQR('banco_union')">Mostrar Banco Unión</button>
+  <br>
+  <img id="imgBanco" width="250">
+
+  <br><br>
+
+  <button onclick="verQR('yasta')">Mostrar Yasta</button>
+  <br>
+  <img id="imgYasta" width="250">
+
+  <br><br>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+  <!-- Config -->
+  <script src="firebase.js"></script>
+
+  <!-- Panel -->
+  <script src="panel.js"></script>
+
+</body>
+</html>
