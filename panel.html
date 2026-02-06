@@ -7,59 +7,70 @@
 </head>
 <body>
 
-<h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
+<h1 class="titulo">🚀 PANEL LAN CENTER JACKNNIEL</h1>
+<h2 id="rolTexto" class="rol"></h2>
 
-<h2 id="rolTexto"></h2>
-
-<!-- 🔥 PANEL ADMIN -->
-<div id="adminPanel" style="display:none;" class="card">
+<!-- 🔐 PANEL ADMIN -->
+<div id="adminPanel" class="admin-box" style="display:none;">
   <h2>🔐 Admin: Actualizar QR</h2>
 
   <p>📌 Para cambiar un QR solo sube una nueva imagen al repo con el mismo nombre:</p>
 
-  <ul style="text-align:left;">
-    <li><b>qr_banco.png</b></li>
-    <li><b>qr_yasta.png</b></li>
-  </ul>
+  <div class="files">
+    <span>✅ qr_banco.png</span>
+    <span>✅ qr_yasta.png</span>
+  </div>
 
-  <p>✅ Los operadores lo verán automáticamente.</p>
-
-  <a href="https://github.com/lancenterjacknniel/panel-jacknniel"
+  <a class="btn-repo"
+     href="https://github.com/lancenterjacknniel/panel-jacknniel"
      target="_blank">
-     👉 Ir al Repo para subir QR
+     👉 Subir QR al Repo
   </a>
 </div>
 
-<hr>
+<!-- 🏦 TARJETAS QR -->
+<div class="grid">
 
-<!-- 👀 PANEL OPERADORES -->
-<div class="card">
-  <h2>👀 Operadores solo ven QR</h2>
+  <!-- BANCO UNION -->
+  <div class="card-pro">
+    <h2>Banco Unión</h2>
 
-  <h3>Banco Unión</h3>
-  <button onclick="mostrarQR('banco')">Mostrar QR</button>
-  <br><br>
-  <img id="qrBanco" src="" width="250">
+    <button onclick="mostrarQR('banco')" class="btn">
+      Mostrar QR
+    </button>
 
-  <br><br>
+    <img id="qrBanco" class="qr-img">
+  </div>
 
-  <h3>Yasta</h3>
-  <button onclick="mostrarQR('yasta')">Mostrar QR</button>
-  <br><br>
-  <img id="qrYasta" src="" width="250">
+  <!-- YASTA -->
+  <div class="card-pro">
+    <h2>Yasta</h2>
 
-  <br><br>
+    <button onclick="mostrarQR('yasta')" class="btn">
+      Mostrar QR
+    </button>
 
-  <!-- 📲 BOTÓN WHATSAPP -->
-  <button onclick="enviarWhatsApp()">📲 Enviar WhatsApp</button>
+    <img id="qrYasta" class="qr-img">
+  </div>
+
 </div>
 
-<br>
+<!-- WHATSAPP -->
+<div class="whatsapp">
+  <button onclick="enviarWhatsApp()" class="btn-wsp">
+    📲 Enviar WhatsApp
+  </button>
+</div>
 
-<button onclick="logout()">Salir</button>
+<!-- SALIR -->
+<div class="logout">
+  <button onclick="logout()" class="btn-salir">
+    🚪 Salir
+  </button>
+</div>
 
 <script>
-  // ✅ VER ROL
+  // ✅ DATOS USUARIO
   let rol = localStorage.getItem("rol");
   let user = localStorage.getItem("user");
 
@@ -71,7 +82,7 @@
     document.getElementById("adminPanel").style.display = "block";
   }
 
-  // ✅ MOSTRAR QR DESDE ARCHIVOS DEL REPO
+  // ✅ MOSTRAR QR
   function mostrarQR(tipo) {
 
     if (tipo === "banco") {
@@ -85,10 +96,11 @@
     }
   }
 
-  // ✅ WHATSAPP AUTOMÁTICO
+  // ✅ WHATSAPP
   function enviarWhatsApp() {
     let numero = "60772546";
     let mensaje = "Hola, aquí está el QR solicitado ✅";
+
     window.open(
       "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje),
       "_blank"
