@@ -2,54 +2,41 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel LAN Center JACKNNIEL</title>
+  <title>Panel QR</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
+<h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
+<p id="rolText"></p>
 
-  <!-- SOLO ADMIN -->
-  <div id="adminPanel">
-    <h3>🔧 Solo Admin puede subir links QR</h3>
+<!-- ✅ SOLO ADMIN VE ESTO -->
+<div id="adminPanel" class="card">
+  <h2>👑 Admin: Subir Links QR</h2>
 
-    <input id="linkBanco" placeholder="Link Banco Unión">
-    <button onclick="guardarQR('banco_union')">Guardar</button>
+  <input id="linkBanco" placeholder="Link Drive Banco Unión">
+  <button onclick="guardarQR('banco_union')">Guardar Banco Unión</button>
 
-    <br><br>
+  <input id="linkYasta" placeholder="Link Drive Yasta">
+  <button onclick="guardarQR('yasta')">Guardar Yasta</button>
+</div>
 
-    <input id="linkYasta" placeholder="Link Yasta">
-    <button onclick="guardarQR('yasta')">Guardar</button>
-  </div>
+<hr>
 
-  <hr>
-
-  <!-- OPERADORES -->
-  <h3>📌 Operadores solo ven QR</h3>
-
-  <button onclick="verQR('banco_union')">Mostrar Banco Unión</button>
-  <br>
+<!-- TODOS VEN ESTO -->
+<div class="card">
+  <h2>Banco Unión</h2>
+  <button onclick="verQR('banco_union')">Mostrar QR</button>
   <img id="imgBanco" width="250">
+</div>
 
-  <br><br>
-
-  <button onclick="verQR('yasta')">Mostrar Yasta</button>
-  <br>
+<div class="card">
+  <h2>Yasta</h2>
+  <button onclick="verQR('yasta')">Mostrar QR</button>
   <img id="imgYasta" width="250">
+</div>
 
-  <br><br>
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
-
-  <!-- Config -->
-  <script src="firebase.js"></script>
-
-  <!-- Panel -->
-  <script src="panel.js"></script>
+<script type="module" src="panel.js"></script>
 
 </body>
 </html>
