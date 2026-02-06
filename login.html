@@ -1,10 +1,27 @@
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login LAN Center</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<!-- Tu Config -->
-<script src="firebase.js"></script>
+<h1>🔐 PANEL LAN CENTER JACKNNIEL</h1>
 
-<!-- Login -->
-<script src="app.js"></script>
+<div class="card">
+  <h2>Ingreso</h2>
+
+  <input id="user" placeholder="Correo operador">
+  <input id="pass" type="password" placeholder="Contraseña">
+
+  <button onclick="login()">Entrar</button>
+
+  <p id="msg"></p>
+</div>
+
+<!-- ✅ SOLO MODULE -->
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
