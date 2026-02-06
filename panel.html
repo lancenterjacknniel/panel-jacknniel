@@ -13,19 +13,21 @@
 
 <!-- 🔥 PANEL ADMIN -->
 <div id="adminPanel" style="display:none;" class="card">
-  <h2>🔐 Admin: Subir Links QR (Google Drive)</h2>
+  <h2>🔐 Admin: Actualizar QR</h2>
 
-  <input id="linkBanco" placeholder="Pega link Banco Unión (Drive)">
-  <button onclick="guardarQR('banco_union')">Guardar Banco Unión</button>
+  <p>📌 Para cambiar un QR solo sube una nueva imagen al repo con el mismo nombre:</p>
 
-  <br><br>
+  <ul style="text-align:left;">
+    <li><b>qr_banco.png</b></li>
+    <li><b>qr_yasta.png</b></li>
+  </ul>
 
-  <input id="linkYasta" placeholder="Pega link Yasta (Drive)">
-  <button onclick="guardarQR('yasta')">Guardar Yasta</button>
+  <p>✅ Los operadores lo verán automáticamente.</p>
 
-  <p style="margin-top:15px;">
-    ✅ Solo pega el link normal de Drive. El sistema lo convierte solo.
-  </p>
+  <a href="https://github.com/lancenterjacknniel/panel-jacknniel"
+     target="_blank">
+     👉 Ir al Repo para subir QR
+  </a>
 </div>
 
 <hr>
@@ -34,42 +36,29 @@
 <div class="card">
   <h2>👀 Operadores solo ven QR</h2>
 
-  <button onclick="verQR('banco_union')">Mostrar Banco Unión</button>
-  <br>
-  <img id="imgBanco" width="250">
+  <h3>Banco Unión</h3>
+  <button onclick="mostrarQR('banco')">Mostrar QR</button>
+  <br><br>
+  <img id="qrBanco" src="" width="250">
 
   <br><br>
 
-  <button onclick="verQR('yasta')">Mostrar Yasta</button>
-  <br>
-  <img id="imgYasta" width="250">
+  <h3>Yasta</h3>
+  <button onclick="mostrarQR('yasta')">Mostrar QR</button>
+  <br><br>
+  <img id="qrYasta" src="" width="250">
 
   <br><br>
 
-  <button onclick="enviarWhats()">📲 Enviar WhatsApp</button>
+  <!-- 📲 BOTÓN WHATSAPP -->
+  <button onclick="enviarWhatsApp()">📲 Enviar WhatsApp</button>
 </div>
 
 <br>
 
 <button onclick="logout()">Salir</button>
 
-<!-- ✅ FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyDhR3XZX9EG1sLuOvBefZ2EA5GVn8-SggQ",
-    authDomain: "panel-jacknniel.firebaseapp.com",
-    projectId: "panel-jacknniel",
-    storageBucket: "panel-jacknniel.firebasestorage.app",
-    messagingSenderId: "130186632575",
-    appId: "1:130186632575:web:135d0352564c290d6d0e4a"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-
   // ✅ VER ROL
   let rol = localStorage.getItem("rol");
   let user = localStorage.getItem("user");
@@ -77,81 +66,33 @@
   document.getElementById("rolTexto").innerText =
     "Usuario: " + user + " | Rol: " + rol;
 
-  // SOLO ADMIN VE SUBIDA
+  // SOLO ADMIN VE PANEL ADMIN
   if (rol === "admin") {
     document.getElementById("adminPanel").style.display = "block";
   }
 
-  // ✅ CONVERTIR LINK DRIVE AUTOMÁTICO
-  function convertirDrive(link) {
+  // ✅ MOSTRAR QR DESDE ARCHIVOS DEL REPO
+  function mostrarQR(tipo) {
 
-    if (!link.includes("drive.google.com")) return link;
-
-    let id = "";
-
-    // Extraer ID
-    if (link.includes("/d/")) {
-      id = link.split("/d/")[1].split("/")[0];
+    if (tipo === "banco") {
+      document.getElementById("qrBanco").src =
+        "qr_banco.png?cache=" + new Date().getTime();
     }
 
-    return "https://drive.google.com/uc?export=view&id=" + id;
+    if (tipo === "yasta") {
+      document.getElementById("qrYasta").src =
+        "qr_yasta.png?cache=" + new Date().getTime();
+    }
   }
 
-  // ✅ GUARDAR LINK QR (ADMIN)
-  function guardarQR(banco) {
-
-    if (rol !== "admin") {
-      alert("❌ Solo admin puede subir links");
-      return;
-    }
-
-    let link = "";
-
-    if (banco === "banco_union") {
-      link = document.getElementById("linkBanco").value;
-    }
-
-    if (banco === "yasta") {
-      link = document.getElementById("linkYasta").value;
-    }
-
-    // Convertir Drive
-    link = convertirDrive(link);
-
-    db.collection("qr_links").doc(banco).set({
-      url: link
-    });
-
-    alert("✅ QR guardado correctamente");
-  }
-
-  // ✅ VER QR (TODOS)
-  function verQR(banco) {
-
-    db.collection("qr_links").doc(banco).get()
-      .then((doc) => {
-
-        if (!doc.exists) {
-          alert("❌ No hay QR guardado todavía");
-          return;
-        }
-
-        let url = doc.data().url;
-
-        if (banco === "banco_union") {
-          document.getElementById("imgBanco").src = url;
-        }
-
-        if (banco === "yasta") {
-          document.getElementById("imgYasta").src = url;
-        }
-
-      });
-  }
-
-  // ✅ WHATSAPP
-  function enviarWhats() {
-    window.open("https://wa.me/60772546", "_blank");
+  // ✅ WHATSAPP AUTOMÁTICO
+  function enviarWhatsApp() {
+    let numero = "60772546";
+    let mensaje = "Hola, aquí está el QR solicitado ✅";
+    window.open(
+      "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje),
+      "_blank"
+    );
   }
 
   // ✅ LOGOUT
