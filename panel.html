@@ -13,15 +13,19 @@
 
 <!-- 🔥 PANEL ADMIN -->
 <div id="adminPanel" style="display:none;" class="card">
-  <h2>🔐 Admin: Subir Links QR</h2>
+  <h2>🔐 Admin: Subir Links QR (Google Drive)</h2>
 
-  <input id="linkBanco" placeholder="Pega Link Banco Unión (Drive)">
+  <input id="linkBanco" placeholder="Pega link Banco Unión (Drive)">
   <button onclick="guardarQR('banco_union')">Guardar Banco Unión</button>
 
   <br><br>
 
-  <input id="linkYasta" placeholder="Pega Link Yasta (Drive)">
+  <input id="linkYasta" placeholder="Pega link Yasta (Drive)">
   <button onclick="guardarQR('yasta')">Guardar Yasta</button>
+
+  <p style="margin-top:15px;">
+    ✅ Solo pega el link normal de Drive. El sistema lo convierte solo.
+  </p>
 </div>
 
 <hr>
@@ -39,18 +43,21 @@
   <button onclick="verQR('yasta')">Mostrar Yasta</button>
   <br>
   <img id="imgYasta" width="250">
+
+  <br><br>
+
+  <button onclick="enviarWhats()">📲 Enviar WhatsApp</button>
 </div>
 
 <br>
 
 <button onclick="logout()">Salir</button>
 
-<!-- ✅ FIREBASE COMPAT -->
+<!-- ✅ FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script>
-  // ✅ CONFIG FIREBASE
   const firebaseConfig = {
     apiKey: "AIzaSyDhR3XZX9EG1sLuOvBefZ2EA5GVn8-SggQ",
     authDomain: "panel-jacknniel.firebaseapp.com",
@@ -75,17 +82,22 @@
     document.getElementById("adminPanel").style.display = "block";
   }
 
-  // ✅ CONVERTIR LINK DRIVE A IMAGEN DIRECTA
-  function convertirDrive(url) {
+  // ✅ CONVERTIR LINK DRIVE AUTOMÁTICO
+  function convertirDrive(link) {
 
-    if (!url.includes("/d/")) return url;
+    if (!link.includes("drive.google.com")) return link;
 
-    let fileID = url.split("/d/")[1].split("/")[0];
+    let id = "";
 
-    return "https://drive.google.com/uc?export=view&id=" + fileID;
+    // Extraer ID
+    if (link.includes("/d/")) {
+      id = link.split("/d/")[1].split("/")[0];
+    }
+
+    return "https://drive.google.com/uc?export=view&id=" + id;
   }
 
-  // ✅ GUARDAR LINK QR (SOLO ADMIN)
+  // ✅ GUARDAR LINK QR (ADMIN)
   function guardarQR(banco) {
 
     if (rol !== "admin") {
@@ -96,27 +108,21 @@
     let link = "";
 
     if (banco === "banco_union") {
-      link = document.getElementById("linkBanco").value.trim();
+      link = document.getElementById("linkBanco").value;
     }
 
     if (banco === "yasta") {
-      link = document.getElementById("linkYasta").value.trim();
+      link = document.getElementById("linkYasta").value;
     }
 
-    if (link === "") {
-      alert("❌ Pega un link primero");
-      return;
-    }
-
-    // Convertir Drive → Imagen directa
-    let linkFinal = convertirDrive(link);
+    // Convertir Drive
+    link = convertirDrive(link);
 
     db.collection("qr_links").doc(banco).set({
-      url: linkFinal
-    })
-    .then(() => {
-      alert("✅ QR guardado correctamente");
+      url: link
     });
+
+    alert("✅ QR guardado correctamente");
   }
 
   // ✅ VER QR (TODOS)
@@ -141,6 +147,11 @@
         }
 
       });
+  }
+
+  // ✅ WHATSAPP
+  function enviarWhats() {
+    window.open("https://wa.me/60772546", "_blank");
   }
 
   // ✅ LOGOUT
