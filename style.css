@@ -176,3 +176,17 @@ body {
   color: red;
   font-weight: bold;
 }
+.btn-download {
+  margin-top: 10px;
+  padding: 12px 20px;
+  border-radius: 15px;
+  background: orange;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.zoom {
+  transform: scale(1.6);
+  transition: 0.3s;
+}
