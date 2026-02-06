@@ -1,47 +1,104 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Panel JACKNNIEL</title>
+  <meta charset="UTF-8" />
+  <title>PANEL LAN CENTER JACKNNIEL</title>
+
   <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // 🔥 TU CONFIG (la pondremos luego)
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_AUTH_DOMAIN",
+      projectId: "TU_PROJECT_ID",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 🔥 Cargar QR desde Firestore
+    async function cargarQR(nombreDoc, imgID) {
+      const ref = doc(db, "qr_links", nombreDoc);
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+        document.getElementById(imgID).src = snap.data().url;
+      }
+    }
+
+    window.onload = () => {
+      cargarQR("banco_union", "imgBanco");
+      cargarQR("yasta", "imgYasta");
+    };
+  </script>
 </head>
+
 <body>
-  <h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
-  <p id="rol"></p>
 
-  <div class="grid">
+<h1>🚀 PANEL OPERADORES JACKNNIEL</h1>
 
-    <div class="card">
-      <h2>Banco Unión</h2>
-      <button onclick="toggleQR('banco')">Mostrar QR</button>
-      <div id="banco" class="qr-box">
-        <img id="imgBanco" width="250">
-        <button onclick="copiarImagen('imgBanco')">📌 Copiar QR</button>
-        <button onclick="enviarWhats()">📲 WhatsApp</button>
-      </div>
-      <div id="adminBanco" class="admin-only">
-        <input id="linkBanco" placeholder="Pega link Drive Banco Unión">
-        <button onclick="guardarLink('banco')">Guardar</button>
-      </div>
-    </div>
+<div class="contenedor">
 
-    <div class="card">
-      <h2>Yasta</h2>
-      <button onclick="toggleQR('yasta')">Mostrar QR</button>
-      <div id="yasta" class="qr-box">
-        <img id="imgYasta" width="250">
-        <button onclick="copiarImagen('imgYasta')">📌 Copiar QR</button>
-        <button onclick="enviarWhats()">📲 WhatsApp</button>
-      </div>
-      <div id="adminYasta" class="admin-only">
-        <input id="linkYasta" placeholder="Pega link Drive Yasta">
-        <button onclick="guardarLink('yasta')">Guardar</button>
-      </div>
-    </div>
+  <!-- BANCO UNION -->
+  <div class="card">
+    <h2>Banco Unión</h2>
 
+    <button onclick="document.getElementById('imgBanco').style.display='block'">
+      Mostrar QR
+    </button>
+
+    <img id="imgBanco" style="display:none; width:250px; margin-top:15px;">
+
+    <button onclick="copiarImagen('imgBanco')" class="copy-btn">
+      📌 Copiar QR
+    </button>
+
+    <a class="wa-btn" target="_blank"
+      href="https://wa.me/59160772546?text=Hola%20adjunto%20comprobante%20Banco%20Union">
+      WhatsApp
+    </a>
   </div>
 
-<script src="usuarios.js"></script>
-<script src="panel.js"></script>
+  <!-- YASTA -->
+  <div class="card">
+    <h2>Yasta</h2>
+
+    <button onclick="document.getElementById('imgYasta').style.display='block'">
+      Mostrar QR
+    </button>
+
+    <img id="imgYasta" style="display:none; width:250px; margin-top:15px;">
+
+    <button onclick="copiarImagen('imgYasta')" class="copy-btn">
+      📌 Copiar QR
+    </button>
+
+    <a class="wa-btn" target="_blank"
+      href="https://wa.me/59160772546?text=Hola%20adjunto%20comprobante%20Yasta">
+      WhatsApp
+    </a>
+  </div>
+
+</div>
+
+<script>
+async function copiarImagen(imgId) {
+  const img = document.getElementById(imgId);
+  const response = await fetch(img.src);
+  const blob = await response.blob();
+
+  await navigator.clipboard.write([
+    new ClipboardItem({ [blob.type]: blob })
+  ]);
+
+  alert("✅ QR copiado. Pégalo en WhatsApp.");
+}
+</script>
+
 </body>
 </html>
