@@ -4,158 +4,180 @@
   <meta charset="UTF-8">
   <title>Panel LAN Center</title>
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    body {
-      text-align: center;
-      font-family: Arial;
-      background: #050b1a;
-      color: white;
-    }
-
-    .logo {
-      width: 180px;
-      margin-top: 20px;
-    }
-
-    .card {
-      background: #0c132a;
-      border-radius: 20px;
-      padding: 30px;
-      margin: 25px auto;
-      width: 80%;
-      max-width: 700px;
-      box-shadow: 0 0 20px cyan;
-    }
-
-    button {
-      padding: 12px 18px;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
-      font-weight: bold;
-      margin: 8px;
-    }
-
-    .btn-copy {
-      background: cyan;
-    }
-
-    .btn-download {
-      background: orange;
-    }
-
-    img {
-      width: 220px;
-      margin-top: 15px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    img:hover {
-      transform: scale(1.1);
-    }
-
-    /* Zoom grande */
-    .zoom {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-
-    .zoom img {
-      width: 450px;
-      border-radius: 20px;
-      box-shadow: 0 0 25px cyan;
-    }
-  </style>
 </head>
-
 <body>
 
-<!-- ✅ LOGO -->
-<img src="logo.png" class="logo">
+<!-- LOGO -->
+<div class="top-logo">
+  <img src="logo.png" class="logo">
+</div>
 
-<h1>🚀 PANEL LAN CENTER JACKNNIEL</h1>
+<h1 class="titulo">PANEL LAN CENTER JACKNNIEL</h1>
 
-<div class="card">
-  <h2>👀 Operadores solo ven QR</h2>
+<h2 class="rol" id="rolTexto"></h2>
 
-  <!-- BANCO UNION -->
-  <h3>Banco Unión</h3>
-  <img id="qrBanco" src="qr_banco.png" onclick="zoomQR(this.src)">
-  <br>
-  <button class="btn-copy" onclick="copiarQR('qrBanco')">📋 Copiar QR</button>
-  <button class="btn-download" onclick="descargarQR('qr_banco.png')">⬇️ Descargar</button>
+<!-- 🔐 ADMIN PANEL -->
+<div id="adminPanel" class="admin-box" style="display:none;">
+  <h2>🔐 ADMIN: Subir Links QR</h2>
 
-  <hr><br>
+  <p>Banco Unión</p>
+  <input id="link1" placeholder="Link QR Banco Unión">
+  <button class="btn" onclick="guardarQR('banco_union','link1')">Guardar</button>
 
-  <!-- YASTA -->
-  <h3>Yasta</h3>
-  <img id="qrYasta" src="qr_yasta.png" onclick="zoomQR(this.src)">
-  <br>
-  <button class="btn-copy" onclick="copiarQR('qrYasta')">📋 Copiar QR</button>
-  <button class="btn-download" onclick="descargarQR('qr_yasta.png')">⬇️ Descargar</button>
+  <p>Yasta</p>
+  <input id="link2" placeholder="Link QR Yasta">
+  <button class="btn" onclick="guardarQR('yasta','link2')">Guardar</button>
 
-  <hr><br>
+  <p>Tigo Money</p>
+  <input id="link3" placeholder="Link QR Tigo Money">
+  <button class="btn" onclick="guardarQR('tigo','link3')">Guardar</button>
 
-  <!-- TIGO -->
-  <h3>Tigo Money</h3>
-  <img id="qrTigo" src="qr_tigo.png" onclick="zoomQR(this.src)">
-  <br>
-  <button class="btn-copy" onclick="copiarQR('qrTigo')">📋 Copiar QR</button>
-  <button class="btn-download" onclick="descargarQR('qr_tigo.png')">⬇️ Descargar</button>
+  <p>BNB</p>
+  <input id="link4" placeholder="Link QR BNB">
+  <button class="btn" onclick="guardarQR('bnb','link4')">Guardar</button>
+</div>
 
-  <hr><br>
+<!-- 👀 OPERADORES -->
+<div class="grid">
 
-  <!-- PAYPAL -->
-  <h3>PayPal</h3>
-  <img id="qrPaypal" src="qr_paypal.png" onclick="zoomQR(this.src)">
-  <br>
-  <button class="btn-copy" onclick="copiarQR('qrPaypal')">📋 Copiar QR</button>
-  <button class="btn-download" onclick="descargarQR('qr_paypal.png')">⬇️ Descargar</button>
+  <!-- BANCO 1 -->
+  <div class="card-pro">
+    <h2>Banco Unión</h2>
+    <button class="btn" onclick="verQR('banco_union','img1')">Mostrar QR</button>
+
+    <img id="img1" class="qr-img">
+
+    <button class="btn-copy" onclick="copiarQR('img1')">📋 Copiar</button>
+    <button class="btn-copy" onclick="descargarQR('img1','BancoUnion')">⬇ Descargar</button>
+  </div>
+
+  <!-- BANCO 2 -->
+  <div class="card-pro">
+    <h2>Yasta</h2>
+    <button class="btn" onclick="verQR('yasta','img2')">Mostrar QR</button>
+
+    <img id="img2" class="qr-img">
+
+    <button class="btn-copy" onclick="copiarQR('img2')">📋 Copiar</button>
+    <button class="btn-copy" onclick="descargarQR('img2','Yasta')">⬇ Descargar</button>
+  </div>
+
+  <!-- BANCO 3 -->
+  <div class="card-pro">
+    <h2>Tigo Money</h2>
+    <button class="btn" onclick="verQR('tigo','img3')">Mostrar QR</button>
+
+    <img id="img3" class="qr-img">
+
+    <button class="btn-copy" onclick="copiarQR('img3')">📋 Copiar</button>
+    <button class="btn-copy" onclick="descargarQR('img3','TigoMoney')">⬇ Descargar</button>
+  </div>
+
+  <!-- BANCO 4 -->
+  <div class="card-pro">
+    <h2>BNB</h2>
+    <button class="btn" onclick="verQR('bnb','img4')">Mostrar QR</button>
+
+    <img id="img4" class="qr-img">
+
+    <button class="btn-copy" onclick="copiarQR('img4')">📋 Copiar</button>
+    <button class="btn-copy" onclick="descargarQR('img4','BNB')">⬇ Descargar</button>
+  </div>
 
 </div>
 
+<!-- WHATSAPP -->
+<button class="btn-wsp"
+onclick="window.open('https://wa.me/60772546')">
+📲 Enviar WhatsApp
+</button>
 
-<!-- ✅ FUNCIONES -->
+<br>
+
+<button class="btn-salir" onclick="logout()">Salir</button>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
 <script>
-  // COPIAR QR
-  function copiarQR(idImg) {
-    let img = document.getElementById(idImg);
+  const firebaseConfig = {
+    apiKey: "AIzaSyDhR3XZX9EG1sLuOvBefZ2EA5GVn8-SggQ",
+    authDomain: "panel-jacknniel.firebaseapp.com",
+    projectId: "panel-jacknniel",
+    storageBucket: "panel-jacknniel.firebasestorage.app",
+    messagingSenderId: "130186632575",
+    appId: "1:130186632575:web:135d0352564c290d6d0e4a"
+  };
 
-    navigator.clipboard.writeText(img.src)
-      .then(() => alert("✅ QR copiado correctamente"));
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  let rol = localStorage.getItem("rol");
+  let user = localStorage.getItem("user");
+
+  document.getElementById("rolTexto").innerText =
+    "Usuario: " + user + " | Rol: " + rol;
+
+  if (rol === "admin") {
+    document.getElementById("adminPanel").style.display = "block";
   }
 
-  // DESCARGAR QR
-  function descargarQR(nombreArchivo) {
-    let link = document.createElement("a");
-    link.href = nombreArchivo;
-    link.download = nombreArchivo;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  // ✅ Guardar QR
+  function guardarQR(banco,inputID) {
+
+    if (rol !== "admin") return alert("Solo admin");
+
+    let link = document.getElementById(inputID).value;
+
+    db.collection("qr_links").doc(banco).set({
+      url: link
+    });
+
+    alert("✅ Guardado correctamente");
   }
 
-  // ZOOM QR
-  function zoomQR(src) {
-    let div = document.createElement("div");
-    div.classList.add("zoom");
+  // ✅ Mostrar QR
+  function verQR(banco,imgID) {
 
-    div.innerHTML = `<img src="${src}">`;
+    db.collection("qr_links").doc(banco).get()
+    .then((doc)=>{
 
-    div.onclick = () => div.remove();
+      if (!doc.exists) return alert("No hay QR guardado");
 
-    document.body.appendChild(div);
+      document.getElementById(imgID).src = doc.data().url;
+    });
+  }
+
+  // ✅ Zoom QR
+  document.addEventListener("click", function(e){
+    if(e.target.classList.contains("qr-img")){
+      e.target.classList.toggle("zoom");
+    }
+  });
+
+  // ✅ Copiar QR
+  function copiarQR(imgID){
+    let url = document.getElementById(imgID).src;
+    navigator.clipboard.writeText(url);
+    alert("✅ Link copiado");
+  }
+
+  // ✅ Descargar QR
+  function descargarQR(imgID,nombre){
+
+    let url = document.getElementById(imgID).src;
+
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = nombre + ".png";
+    a.click();
+  }
+
+  // ✅ Logout
+  function logout(){
+    localStorage.clear();
+    window.location.href="login.html";
   }
 </script>
 
