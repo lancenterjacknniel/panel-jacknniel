@@ -31,14 +31,18 @@
 
 <hr>
 
-<!-- ✅ BOTÓN PRINCIPAL -->
+<!-- ✅ BOTONES PRINCIPALES -->
 <button class="btn" onclick="mostrarPagos()">
   💳 Métodos de Pago
 </button>
 
+<button class="btn" onclick="mostrarPrecios()">
+  💰 Precios
+</button>
+
 <br><br>
 
-<!-- ✅ PANEL OCULTO -->
+<!-- ✅ PANEL OCULTO QR -->
 <div id="pagosPanel" style="display:none;">
 
   <div class="grid">
@@ -89,6 +93,24 @@
 
 </div> <!-- ✅ CIERRE pagosPanel -->
 
+
+<!-- ✅ PANEL OCULTO PRECIOS -->
+<div id="preciosPanel" style="display:none;" class="admin-box">
+
+  <h2>💰 Lista de Precios</h2>
+
+  <p>🎮 30 minutos: 3 Bs</p>
+  <p>🎮 1 Hora: 5 Bs</p>
+  <p>🎮 2 Horas: 10 Bs</p>
+  <p>🌙 Noche Completa: 20 Bs</p>
+
+  <hr>
+
+  <p>🖨 Impresiones: 1 Bs</p>
+  <p>📌 Recargas: 100% seguras</p>
+
+</div>
+
 <br>
 
 <button class="btn-salir" onclick="logout()">Salir</button>
@@ -111,11 +133,16 @@
   function mostrarPagos() {
     let panel = document.getElementById("pagosPanel");
 
-    if (panel.style.display === "none") {
-      panel.style.display = "block";
-    } else {
-      panel.style.display = "none";
-    }
+    panel.style.display =
+      (panel.style.display === "none") ? "block" : "none";
+  }
+
+  // ✅ Mostrar/Ocultar precios
+  function mostrarPrecios() {
+    let panel = document.getElementById("preciosPanel");
+
+    panel.style.display =
+      (panel.style.display === "none") ? "block" : "none";
   }
 
   // 📋 Copiar Imagen QR real
