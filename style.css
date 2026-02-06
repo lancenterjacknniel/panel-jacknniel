@@ -6,9 +6,19 @@ body {
   text-align: center;
 }
 
+.top-logo {
+  margin-top: 20px;
+}
+
+.logo {
+  width: 180px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px cyan;
+}
+
 .titulo {
   font-size: 45px;
-  margin-top: 30px;
+  margin-top: 15px;
   color: cyan;
   text-shadow: 0 0 20px cyan;
 }
@@ -21,47 +31,60 @@ body {
 .grid {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 35px;
   flex-wrap: wrap;
   margin-top: 30px;
 }
 
 .card-pro {
   background: #0c142b;
-  width: 350px;
-  padding: 30px;
+  width: 320px;
+  padding: 25px;
   border-radius: 25px;
   box-shadow: 0 0 25px cyan;
 }
 
 .card-pro h2 {
   color: yellow;
-  margin-bottom: 20px;
 }
 
 .btn {
-  padding: 15px 30px;
+  padding: 14px 25px;
   border: none;
   border-radius: 15px;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   background: cyan;
   font-weight: bold;
 }
 
+.btn-copy {
+  margin-top: 10px;
+  padding: 12px 20px;
+  border-radius: 15px;
+  background: lime;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
 .qr-img {
   margin-top: 20px;
-  width: 230px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  width: 200px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.zoom {
+  width: 320px !important;
+  box-shadow: 0 0 30px lime;
 }
 
 .admin-box {
   background: #111b35;
   margin: 20px auto;
   padding: 25px;
-  width: 80%;
+  width: 85%;
   border-radius: 20px;
   box-shadow: 0 0 25px lime;
 }
@@ -84,11 +107,8 @@ body {
   text-decoration: none;
 }
 
-.whatsapp {
-  margin-top: 40px;
-}
-
 .btn-wsp {
+  margin-top: 40px;
   padding: 18px 35px;
   font-size: 20px;
   border-radius: 20px;
@@ -98,11 +118,8 @@ body {
   font-weight: bold;
 }
 
-.logout {
-  margin-top: 30px;
-}
-
 .btn-salir {
+  margin-top: 30px;
   padding: 12px 25px;
   border-radius: 15px;
   background: red;
