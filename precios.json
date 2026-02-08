@@ -1,13 +1,12 @@
 [
-  { "servicio": "💎 Free Fire 110 Diamantes (ID)", "precio": "12 Bs" },
-  { "servicio": "💎 Free Fire 341 Diamantes (ID)", "precio": "33 Bs" },
-  { "servicio": "💎 Free Fire 572 Diamantes (ID)", "precio": "49 Bs" },
-  { "servicio": "💎 Free Fire 1155 Diamantes (ID)", "precio": "94 Bs" },
-  { "servicio": "💎 Free Fire 2376 Diamantes (ID)", "precio": "179 Bs" },
-  { "servicio": "💎 Free Fire 6160 Diamantes (ID)", "precio": "424 Bs" },
+  { "servicio": "💎 110 Diamantes (ID)", "precio": "12 Bs" },
+  { "servicio": "💎 341 Diamantes (ID)", "precio": "33 Bs" },
+  { "servicio": "💎 572 Diamantes (ID)", "precio": "49 Bs" },
+  { "servicio": "💎 1155 Diamantes (ID)", "precio": "94 Bs" },
+  { "servicio": "💎 2376 Diamantes (ID)", "precio": "179 Bs" },
+  { "servicio": "💎 6160 Diamantes (ID)", "precio": "424 Bs" },
 
-  { "servicio": "💳 Tarjeta Semanal Free Fire 💎450", "precio": "19 Bs" },
-  { "servicio": "🎫 Tarjeta Mensual Free Fire 💎2600", "precio": "94 Bs" },
-
-  { "servicio": "🎟 Pase de Nivel Free Fire 💎1000 (Sin Stock)", "precio": "27 Bs" }
+  { "servicio": "💳 Tarjeta Semanal (450)", "precio": "19 Bs" },
+  { "servicio": "🎫 Tarjeta Mensual (2600)", "precio": "94 Bs" },
+  { "servicio": "🔥 Pase de Nivel (1000)", "precio": "27 Bs (Sin stock)" }
 ]
