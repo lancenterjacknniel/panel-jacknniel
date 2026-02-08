@@ -91,23 +91,18 @@
 
   </div>
 
-</div> <!-- ✅ CIERRE pagosPanel -->
-
+</div>
 
 <!-- ✅ PANEL OCULTO PRECIOS -->
 <div id="preciosPanel" style="display:none;" class="admin-box">
 
-  <h2>💰 Lista de Precios</h2>
+  <h2>💰 Catálogo de Precios</h2>
 
-  <p>🎮 30 minutos: 3 Bs</p>
-  <p>🎮 1 Hora: 5 Bs</p>
-  <p>🎮 2 Horas: 10 Bs</p>
-  <p>🌙 Noche Completa: 20 Bs</p>
+  <p>📌 Toca un precio para copiarlo</p>
 
-  <hr>
-
-  <p>🖨 Impresiones: 1 Bs</p>
-  <p>📌 Recargas: 100% seguras</p>
+  <div id="listaPrecios">
+    ⏳ Cargando precios...
+  </div>
 
 </div>
 
@@ -141,8 +136,47 @@
   function mostrarPrecios() {
     let panel = document.getElementById("preciosPanel");
 
-    panel.style.display =
-      (panel.style.display === "none") ? "block" : "none";
+    if (panel.style.display === "none") {
+      panel.style.display = "block";
+      cargarPrecios();
+    } else {
+      panel.style.display = "none";
+    }
+  }
+
+  // ✅ Cargar precios desde precios.json
+  async function cargarPrecios() {
+
+    let contenedor = document.getElementById("listaPrecios");
+
+    try {
+      const res = await fetch("precios.json");
+      const precios = await res.json();
+
+      let html = "";
+
+      precios.forEach((item) => {
+
+        html += `
+          <button class="btn-precio"
+            onclick="copiarPrecio('${item.servicio} cuesta ${item.precio}')">
+            ${item.servicio} → ${item.precio}
+          </button>
+        `;
+
+      });
+
+      contenedor.innerHTML = html;
+
+    } catch (error) {
+      contenedor.innerHTML = "❌ No se pudieron cargar los precios";
+    }
+  }
+
+  // ✅ Copiar precio rápido
+  function copiarPrecio(texto) {
+    navigator.clipboard.writeText(texto);
+    alert("✅ Precio copiado");
   }
 
   // 📋 Copiar Imagen QR real
