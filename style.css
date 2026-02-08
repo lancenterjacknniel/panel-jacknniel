@@ -190,3 +190,23 @@ body {
   transform: scale(1.6);
   transition: 0.3s;
 }
+/* ✅ BOTONES DEL CATÁLOGO DE PRECIOS (JSON) */
+
+.btn-precio {
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  background: cyan;
+  font-weight: bold;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.btn-precio:hover {
+  background: lime;
+  transform: scale(1.03);
+}
