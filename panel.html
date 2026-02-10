@@ -97,7 +97,7 @@
 <div id="preciosPanel" style="display:none;" class="admin-box">
 
   <h2>💰 Catálogo de Precios</h2>
-  <p>📌 Toca una tarjeta para copiar</p>
+  <p>📌 Toca cualquier precio para copiarlo</p>
 
   <div id="listaPrecios">
     ⏳ Cargando precios...
@@ -142,46 +142,45 @@
     }
   }
 
-  // ✅ Cargar precios desde precios.json
+  // ✅ CARGAR PRECIOS DESDE precios.txt (EDITABLE FÁCIL)
   async function cargarPrecios() {
 
     let contenedor = document.getElementById("listaPrecios");
 
     try {
-      const res = await fetch("precios.json");
-      const precios = await res.json();
 
+      const res = await fetch("precios.txt");
+      const texto = await res.text();
+
+      let lineas = texto.split("\n");
       let html = "";
 
-      precios.forEach((item) => {
+      lineas.forEach((linea) => {
 
-        // Si tiene texto largo → mostrar bloque completo
-        if (item.texto) {
+        linea = linea.trim();
+        if (linea === "") return;
+
+        // 📌 Si es título (no tiene ➣)
+        if (!linea.includes("➣")) {
 
           html += `
-            <div class="precio-item"
-                 data-text="${item.texto.replaceAll('"', '&quot;')}"
-                 onclick="copiarDesdeItem(this)">
-
-              <h3>${item.servicio}</h3>
-              <p class="precio-mini">${item.precio}</p>
-
-              <div class="texto-visible">
-                ${item.texto.replaceAll("\n", "<br>")}
-              </div>
-
-            </div>
+            <h3 style="color:yellow; margin-top:25px;">
+              ${linea}
+            </h3>
           `;
 
-        } else {
+        }
 
-          // Precio normal
+        // ✅ Si es precio normal
+        else {
+
           html += `
             <button class="btn-precio"
-              onclick="copiarPrecio('${item.servicio} cuesta ${item.precio}')">
-              ${item.servicio} → ${item.precio}
+              onclick="copiarPrecio('${linea}')">
+              ${linea}
             </button>
           `;
+
         }
 
       });
@@ -189,21 +188,17 @@
       contenedor.innerHTML = html;
 
     } catch (error) {
-      contenedor.innerHTML = "❌ No se pudieron cargar los precios";
+
+      contenedor.innerHTML =
+        "<p style='color:red;'>❌ No se pudieron cargar los precios</p>";
+
     }
   }
 
-  // ✅ Copiar desde tarjeta completa (Free Fire)
-  function copiarDesdeItem(elemento) {
-    let texto = elemento.getAttribute("data-text");
-    navigator.clipboard.writeText(texto);
-    mostrarMensaje("✅ Lista completa copiada");
-  }
-
-  // Copiar precio normal
+  // ✅ Copiar precio
   function copiarPrecio(texto) {
     navigator.clipboard.writeText(texto);
-    mostrarMensaje("✅ Precio copiado");
+    mostrarMensaje("✅ Copiado: " + texto);
   }
 
   // ✅ Mensaje bonito abajo
