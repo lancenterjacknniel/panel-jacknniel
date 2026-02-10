@@ -97,7 +97,7 @@
 <div id="preciosPanel" style="display:none;" class="admin-box">
 
   <h2>💰 Catálogo de Precios</h2>
-  <p>📌 Toca cualquier tarjeta para copiar</p>
+  <p>📌 Toca cualquier bloque para copiar completo</p>
 
   <div id="listaPrecios">
     ⏳ Cargando precios...
@@ -142,7 +142,7 @@
     }
   }
 
-  // ✅ CARGAR PRECIOS DESDE precios.txt CON BLOQUES COMPLETOS
+  // ✅ CARGAR PRECIOS DESDE precios.txt POR BLOQUES
   async function cargarPrecios() {
 
     let contenedor = document.getElementById("listaPrecios");
@@ -186,7 +186,7 @@
     }
   }
 
-  // ✅ Copiar precio o bloque completo
+  // ✅ Copiar bloque completo
   function copiarPrecio(texto) {
     navigator.clipboard.writeText(texto);
     mostrarMensaje("✅ Copiado correctamente");
