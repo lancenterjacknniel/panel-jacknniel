@@ -130,8 +130,8 @@ body {
   border: none;
   cursor: pointer;
 }
-/* ✅ LOGIN CARD BONITA */
 
+/* ✅ LOGIN CARD BONITA */
 .card {
   background: #0c142b;
   width: 380px;
@@ -176,6 +176,7 @@ body {
   color: red;
   font-weight: bold;
 }
+
 .btn-download {
   margin-top: 10px;
   padding: 12px 20px;
@@ -190,8 +191,8 @@ body {
   transform: scale(1.6);
   transition: 0.3s;
 }
-/* ✅ BOTONES DEL CATÁLOGO DE PRECIOS (JSON) */
 
+/* ✅ BOTONES DEL CATÁLOGO DE PRECIOS (líneas normales) */
 .btn-precio {
   display: block;
   width: 90%;
@@ -209,4 +210,27 @@ body {
 .btn-precio:hover {
   background: lime;
   transform: scale(1.03);
+}
+
+/* ===================================================== */
+/* ✅ NUEVO: BLOQUES GRANDES DE PRECIOS (listas completas) */
+/* ===================================================== */
+
+.precio-item {
+  background: #0c142b;
+  padding: 20px;
+  margin: 15px auto;
+  width: 85%;
+  border-radius: 20px;
+  box-shadow: 0 0 20px cyan;
+  cursor: pointer;
+  font-size: 17px;
+  line-height: 1.6;
+  text-align: left;
+  transition: 0.25s;
+}
+
+.precio-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px lime;
 }
