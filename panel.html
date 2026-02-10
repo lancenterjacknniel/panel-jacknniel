@@ -97,8 +97,7 @@
 <div id="preciosPanel" style="display:none;" class="admin-box">
 
   <h2>💰 Catálogo de Precios</h2>
-
-  <p>📌 Toca un precio para copiarlo</p>
+  <p>📌 Toca una tarjeta para copiar</p>
 
   <div id="listaPrecios">
     ⏳ Cargando precios...
@@ -124,15 +123,14 @@
     document.getElementById("adminPanel").style.display = "block";
   }
 
-  // ✅ Mostrar/Ocultar métodos de pago
+  // Mostrar/Ocultar métodos de pago
   function mostrarPagos() {
     let panel = document.getElementById("pagosPanel");
-
     panel.style.display =
       (panel.style.display === "none") ? "block" : "none";
   }
 
-  // ✅ Mostrar/Ocultar precios
+  // Mostrar/Ocultar precios
   function mostrarPrecios() {
     let panel = document.getElementById("preciosPanel");
 
@@ -157,12 +155,34 @@
 
       precios.forEach((item) => {
 
-        html += `
-          <button class="btn-precio"
-            onclick="copiarPrecio('${item.servicio} cuesta ${item.precio}')">
-            ${item.servicio} → ${item.precio}
-          </button>
-        `;
+        // Si tiene texto largo → mostrar bloque completo
+        if (item.texto) {
+
+          html += `
+            <div class="precio-item"
+                 data-text="${item.texto.replaceAll('"', '&quot;')}"
+                 onclick="copiarDesdeItem(this)">
+
+              <h3>${item.servicio}</h3>
+              <p class="precio-mini">${item.precio}</p>
+
+              <div class="texto-visible">
+                ${item.texto.replaceAll("\n", "<br>")}
+              </div>
+
+            </div>
+          `;
+
+        } else {
+
+          // Precio normal
+          html += `
+            <button class="btn-precio"
+              onclick="copiarPrecio('${item.servicio} cuesta ${item.precio}')">
+              ${item.servicio} → ${item.precio}
+            </button>
+          `;
+        }
 
       });
 
@@ -173,13 +193,45 @@
     }
   }
 
-  // ✅ Copiar precio rápido
-  function copiarPrecio(texto) {
+  // ✅ Copiar desde tarjeta completa (Free Fire)
+  function copiarDesdeItem(elemento) {
+    let texto = elemento.getAttribute("data-text");
     navigator.clipboard.writeText(texto);
-    alert("✅ Precio copiado");
+    mostrarMensaje("✅ Lista completa copiada");
   }
 
-  // 📋 Copiar Imagen QR real
+  // Copiar precio normal
+  function copiarPrecio(texto) {
+    navigator.clipboard.writeText(texto);
+    mostrarMensaje("✅ Precio copiado");
+  }
+
+  // ✅ Mensaje bonito abajo
+  function mostrarMensaje(msg) {
+
+    let aviso = document.createElement("div");
+    aviso.innerText = msg;
+
+    aviso.style.position = "fixed";
+    aviso.style.bottom = "30px";
+    aviso.style.left = "50%";
+    aviso.style.transform = "translateX(-50%)";
+    aviso.style.background = "lime";
+    aviso.style.color = "black";
+    aviso.style.padding = "15px 25px";
+    aviso.style.borderRadius = "15px";
+    aviso.style.fontWeight = "bold";
+    aviso.style.boxShadow = "0 0 20px lime";
+    aviso.style.zIndex = "9999";
+
+    document.body.appendChild(aviso);
+
+    setTimeout(() => {
+      aviso.remove();
+    }, 1800);
+  }
+
+  // Copiar QR como imagen
   async function copiarQR(idImg) {
 
     let img = document.getElementById(idImg);
@@ -192,14 +244,14 @@
         new ClipboardItem({ [blob.type]: blob })
       ]);
 
-      alert("✅ QR copiado como imagen");
+      mostrarMensaje("✅ QR copiado como imagen");
 
     } catch (error) {
-      alert("❌ No se pudo copiar (solo funciona en Chrome)");
+      mostrarMensaje("❌ No se pudo copiar QR");
     }
   }
 
-  // ⬇ Descargar QR
+  // Descargar QR
   function descargarQR(archivo, nombre) {
     let a = document.createElement("a");
     a.href = archivo;
@@ -207,13 +259,13 @@
     a.click();
   }
 
-  // 🔍 Zoom dentro del cuadro
+  // Zoom QR
   function zoomQR(idImg) {
     let img = document.getElementById(idImg);
     img.classList.toggle("zoom");
   }
 
-  // 🚪 Logout
+  // Logout
   function logout() {
     localStorage.clear();
     window.location.href = "login.html";
