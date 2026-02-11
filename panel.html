@@ -241,23 +241,53 @@
   }
 
   // Buscador
-  function filtrarPrecios() {
+function filtrarPrecios() {
 
-    let input = document.getElementById("buscadorPrecios").value.toLowerCase();
-    let categorias = document.querySelectorAll(".categoria");
+  let input = document.getElementById("buscadorPrecios").value.toLowerCase();
 
-    categorias.forEach((cat) => {
+  let categorias = document.querySelectorAll(".categoria");
 
-      let nombreCat = cat.innerText.toLowerCase();
+  categorias.forEach((cat) => {
 
-      if (nombreCat.includes(input)) {
-        cat.style.display = "block";
-      } else {
-        cat.style.display = "none";
-      }
+    let botonCat = cat.querySelector(".btn-categoria");
+    let nombreCat = botonCat.innerText.toLowerCase();
 
-    });
-  }
+    let contenido = cat.querySelector(".contenido");
+    let textoBloque = contenido.innerText.toLowerCase();
+
+    // ✅ SI BUSCADOR ESTÁ VACÍO → OCULTAR TODO Y CERRAR
+    if (input.trim() === "") {
+
+      cat.style.display = "block";
+
+      // Cerrar todas las categorías
+      contenido.classList.remove("abierto");
+      contenido.style.maxHeight = "0px";
+
+      return;
+    }
+
+    // ✅ SI COINCIDE → MOSTRAR Y ABRIR AUTOMÁTICO
+    if (nombreCat.includes(input) || textoBloque.includes(input)) {
+
+      cat.style.display = "block";
+
+      contenido.classList.add("abierto");
+      contenido.style.maxHeight = contenido.scrollHeight + "px";
+
+    }
+
+    // ❌ SI NO COINCIDE → OCULTAR
+    else {
+
+      cat.style.display = "none";
+
+      contenido.classList.remove("abierto");
+      contenido.style.maxHeight = "0px";
+    }
+
+  });
+}
 
   // Copiar bloque completo
   function copiarBloque(event, texto) {
