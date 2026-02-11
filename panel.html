@@ -8,14 +8,14 @@
 
 <body>
 
-<!-- ✅ LOGO PREMIUM ARRIBA -->
+<!-- ✅ HEADER ULTRA PREMIUM -->
 <div class="header-premium">
 
   <div class="top-logo">
     <img src="logo.png" class="logo">
   </div>
 
-  <h1 class="titulo">🚀 PANEL LAN CENTER JACKNNIEL</h1>
+  <h1 class="titulo">PANEL LAN CENTER JACKNNIEL</h1>
 
   <h2 id="rolTexto" class="rol"></h2>
 
@@ -41,19 +41,19 @@
 
 <hr>
 
-<!-- ✅ BOTONES PRINCIPALES -->
+<!-- ✅ MENÚ PRINCIPAL PREMIUM -->
 <div class="menu-botones">
-
   <button class="btn" onclick="mostrarPagos()">💳 Métodos de Pago</button>
-
   <button class="btn" onclick="mostrarPrecios()">💰 Precios</button>
-
 </div>
 
-<br><br>
+<br>
 
-<!-- ✅ PANEL OCULTO QR -->
-<div id="pagosPanel" style="display:none;">
+<!-- ✅ PANEL MÉTODOS DE PAGO -->
+<div id="pagosPanel" class="panel-seccion" style="display:none;">
+
+  <h2 class="subtitulo">💳 Métodos de Pago</h2>
+
   <div class="grid">
 
     <!-- BANCO UNION -->
@@ -65,9 +65,9 @@
            src="qr_banco.png"
            onclick="zoomQR('imgBanco')">
 
-      <br>
-
-      <button class="btn-copy" onclick="copiarQR('imgBanco')">📋 Copiar QR</button>
+      <button class="btn-copy" onclick="copiarQR('imgBanco')">
+        📋 Copiar QR
+      </button>
 
       <button class="btn-download"
               onclick="descargarQR('qr_banco.png','BancoUnion')">
@@ -84,9 +84,9 @@
            src="qr_yasta.png"
            onclick="zoomQR('imgYasta')">
 
-      <br>
-
-      <button class="btn-copy" onclick="copiarQR('imgYasta')">📋 Copiar QR</button>
+      <button class="btn-copy" onclick="copiarQR('imgYasta')">
+        📋 Copiar QR
+      </button>
 
       <button class="btn-download"
               onclick="descargarQR('qr_yasta.png','Yasta')">
@@ -97,11 +97,11 @@
   </div>
 </div>
 
-<!-- ✅ PANEL OCULTO PRECIOS -->
-<div id="preciosPanel" style="display:none;" class="admin-box">
+<!-- ✅ PANEL PRECIOS -->
+<div id="preciosPanel" class="panel-seccion" style="display:none;">
 
-  <h2>💰 Catálogo de Precios</h2>
-  <p>📌 Busca o toca una categoría para ver todo el bloque</p>
+  <h2 class="subtitulo">💰 Catálogo de Precios</h2>
+  <p class="mini">📌 Busca o toca una categoría para desplegar</p>
 
   <!-- 🔍 BUSCADOR -->
   <input
@@ -120,18 +120,18 @@
 
 <br>
 
+<!-- ✅ BOTÓN SALIR -->
 <button class="btn-salir" onclick="logout()">Salir</button>
 
 <script>
 
-  // 🔒 BLOQUEO TOTAL: si no hay usuario logueado → volver al login
+  // 🔒 BLOQUEO TOTAL
   let user = localStorage.getItem("user");
 
   if (!user) {
     window.location.href = "login.html";
   }
 
-  // Mostrar rol
   let rol = localStorage.getItem("rol");
 
   document.getElementById("rolTexto").innerText =
@@ -141,27 +141,27 @@
     document.getElementById("adminPanel").style.display = "block";
   }
 
+  // Mostrar/Ocultar Pagos
   function mostrarPagos() {
     let panel = document.getElementById("pagosPanel");
     panel.style.display =
       (panel.style.display === "none") ? "block" : "none";
   }
 
+  // Mostrar/Ocultar Precios
   function mostrarPrecios() {
     let panel = document.getElementById("preciosPanel");
 
     if (panel.style.display === "none") {
       panel.style.display = "block";
       cargarPrecios();
-
       document.getElementById("buscadorPrecios").value = "";
-
     } else {
       panel.style.display = "none";
     }
   }
 
-  // ✅ CARGAR BLOQUES COMPLETOS POR CATEGORÍA
+  // ✅ CARGAR PRECIOS
   async function cargarPrecios() {
 
     let contenedor = document.getElementById("listaPrecios");
@@ -213,14 +213,12 @@
       contenedor.innerHTML = html;
 
     } catch (error) {
-
       contenedor.innerHTML =
         "<p style='color:red;'>❌ No se pudieron cargar los precios</p>";
-
     }
   }
 
-  // ✅ ABRIR / CERRAR + SOLO UNA ABIERTA
+  // Slide abrir/cerrar
   function toggleCategoria(cat) {
 
     let div = document.getElementById("cat-" + cat);
@@ -242,57 +240,34 @@
     div.style.maxHeight = div.scrollHeight + "px";
   }
 
-  // 🔍 BUSCADOR PRO
+  // Buscador
   function filtrarPrecios() {
 
     let input = document.getElementById("buscadorPrecios").value.toLowerCase();
-
     let categorias = document.querySelectorAll(".categoria");
 
     categorias.forEach((cat) => {
 
-      let botonCat = cat.querySelector(".btn-categoria");
-      let nombreCat = botonCat.innerText.toLowerCase();
+      let nombreCat = cat.innerText.toLowerCase();
 
-      let contenido = cat.querySelector(".contenido");
-      let textoBloque = contenido.innerText.toLowerCase();
-
-      if (input === "") {
-
+      if (nombreCat.includes(input)) {
         cat.style.display = "block";
-        contenido.style.maxHeight = "0px";
-        contenido.classList.remove("abierto");
-        return;
-      }
-
-      if (nombreCat.includes(input) || textoBloque.includes(input)) {
-
-        cat.style.display = "block";
-
-        contenido.classList.add("abierto");
-        contenido.style.maxHeight = contenido.scrollHeight + "px";
-
       } else {
-
         cat.style.display = "none";
-        contenido.classList.remove("abierto");
-        contenido.style.maxHeight = "0px";
       }
 
     });
   }
 
-  // ✅ COPIAR BLOQUE COMPLETO
+  // Copiar bloque completo
   function copiarBloque(event, texto) {
-
     event.stopPropagation();
-
     navigator.clipboard.writeText(texto);
     mostrarMensaje("✅ Copiado todo correctamente");
   }
 
+  // Toast premium
   function mostrarMensaje(msg) {
-
     let aviso = document.createElement("div");
     aviso.innerText = msg;
     aviso.className = "toast";
@@ -302,7 +277,7 @@
     setTimeout(() => aviso.remove(), 1800);
   }
 
-  // Copiar QR como imagen
+  // Copiar QR
   async function copiarQR(idImg) {
 
     let img = document.getElementById(idImg);
@@ -322,6 +297,7 @@
     }
   }
 
+  // Descargar QR
   function descargarQR(archivo, nombre) {
     let a = document.createElement("a");
     a.href = archivo;
@@ -329,11 +305,13 @@
     a.click();
   }
 
+  // Zoom QR
   function zoomQR(idImg) {
     let img = document.getElementById(idImg);
     img.classList.toggle("zoom");
   }
 
+  // Logout
   function logout() {
     localStorage.clear();
     window.location.href = "login.html";
