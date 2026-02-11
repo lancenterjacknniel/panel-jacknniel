@@ -100,9 +100,15 @@
 
 <script>
 
+  // 🔒 BLOQUEO TOTAL: si no hay usuario logueado → volver al login
+  let user = localStorage.getItem("user");
+
+  if (!user) {
+    window.location.href = "login.html";
+  }
+
   // Mostrar rol
   let rol = localStorage.getItem("rol");
-  let user = localStorage.getItem("user");
 
   document.getElementById("rolTexto").innerText =
     "Usuario: " + user + " | Rol: " + rol;
@@ -192,14 +198,12 @@
 
     let div = document.getElementById("cat-" + cat);
 
-    // Si ya está abierta → cerrar
     if (div.classList.contains("abierto")) {
       div.classList.remove("abierto");
       div.style.maxHeight = "0px";
       return;
     }
 
-    // Cerrar todas
     let todas = document.querySelectorAll(".contenido");
 
     todas.forEach((caja) => {
@@ -207,7 +211,6 @@
       caja.style.maxHeight = "0px";
     });
 
-    // Abrir seleccionada
     div.classList.add("abierto");
     div.style.maxHeight = div.scrollHeight + "px";
   }
@@ -215,7 +218,7 @@
   // ✅ COPIAR BLOQUE COMPLETO
   function copiarBloque(event, texto) {
 
-    event.stopPropagation(); // No cerrar acordeón
+    event.stopPropagation();
 
     navigator.clipboard.writeText(texto);
     mostrarMensaje("✅ Copiado todo correctamente");
