@@ -429,3 +429,196 @@ body {
   box-shadow: 0 0 25px lime;
   z-index: 9999;
 }
+/* ============================= */
+/* 🚀 ULTRA PREMIUM GAMER MODE   */
+/* ============================= */
+
+/* Fondo animado gamer */
+body {
+  background: radial-gradient(circle at top, #050b1a, #000);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: url("https://www.transparenttextures.com/patterns/stardust.png");
+  opacity: 0.15;
+  animation: moverFondo 25s linear infinite;
+  z-index: -1;
+}
+
+@keyframes moverFondo {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(-400px,-400px); }
+}
+
+/* Header Premium */
+.header-premium {
+  padding: 30px;
+  text-align: center;
+}
+
+.logo {
+  width: 230px;
+  border-radius: 25px;
+  box-shadow: 0 0 60px cyan;
+  transition: 0.3s;
+}
+
+.logo:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 90px lime;
+}
+
+/* Menú botones pro */
+.menu-botones {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* Botones premium */
+.btn {
+  background: linear-gradient(90deg, cyan, lime);
+  padding: 15px 30px;
+  border-radius: 18px;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s;
+  box-shadow: 0 0 25px cyan;
+}
+
+.btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 40px lime;
+}
+
+/* Panel Glassmorphism */
+.admin-box {
+  background: rgba(20, 30, 60, 0.65);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(0,255,255,0.3);
+  box-shadow: 0 0 35px lime;
+}
+
+/* Buscador premium */
+.buscador {
+  width: 90%;
+  padding: 16px;
+  border-radius: 20px;
+  border: none;
+  font-size: 17px;
+  outline: none;
+  text-align: center;
+  box-shadow: 0 0 30px cyan;
+}
+
+.buscador:focus {
+  box-shadow: 0 0 45px lime;
+}
+
+/* Categorías gamer */
+.btn-categoria {
+  width: 95%;
+  margin: 15px auto;
+  padding: 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #00f5ff, #00ff87);
+  transition: 0.25s;
+  box-shadow: 0 0 25px cyan;
+}
+
+.btn-categoria:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 45px lime;
+}
+
+/* Slide contenido */
+.contenido {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.45s ease;
+}
+
+/* Bloque precio premium */
+.bloque-precio {
+  background: rgba(10, 15, 35, 0.9);
+  margin: 18px auto;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px cyan;
+  color: white;
+}
+
+/* Texto dentro */
+.texto-precio {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Botón copiar todo */
+.btn-copiar-todo {
+  padding: 14px 25px;
+  border-radius: 18px;
+  background: orange;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.25s;
+  box-shadow: 0 0 25px orange;
+}
+
+.btn-copiar-todo:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 45px gold;
+}
+
+/* Toast premium */
+.toast {
+  position: fixed;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: lime;
+  color: black;
+  padding: 16px 28px;
+  border-radius: 18px;
+  font-weight: bold;
+  box-shadow: 0 0 30px lime;
+  z-index: 9999;
+  animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0px); }
+}
+
+/* Responsive celular */
+@media (max-width: 600px) {
+  .logo {
+    width: 170px;
+  }
+
+  .btn {
+    width: 90%;
+  }
+
+  .btn-categoria {
+    font-size: 16px;
+  }
+}
