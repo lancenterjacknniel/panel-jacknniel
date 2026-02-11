@@ -97,7 +97,7 @@
 <div id="preciosPanel" style="display:none;" class="admin-box">
 
   <h2>💰 Catálogo de Precios</h2>
-  <p>📌 Toca cualquier bloque para copiar completo</p>
+  <p>📌 Toca una categoría para desplegar precios</p>
 
   <div id="listaPrecios">
     ⏳ Cargando precios...
@@ -111,6 +111,7 @@
 
 <!-- ✅ FUNCIONES -->
 <script>
+
   // Mostrar rol
   let rol = localStorage.getItem("rol");
   let user = localStorage.getItem("user");
@@ -142,7 +143,7 @@
     }
   }
 
-  // ✅ CARGAR PRECIOS DESDE precios.txt POR BLOQUES
+  // ✅ CARGAR PRECIOS DESDE precios.txt AUTOMÁTICO POR CATEGORÍAS
   async function cargarPrecios() {
 
     let contenedor = document.getElementById("listaPrecios");
@@ -152,47 +153,76 @@
       const res = await fetch("precios.txt");
       const texto = await res.text();
 
-      // 🔥 Bloques separados por ###INICIO###
-      let bloques = texto.split("###INICIO###");
-
+      // Separar por ###
+      let partes = texto.split("###");
       let html = "";
 
-      bloques.forEach((bloque) => {
+      for (let i = 1; i < partes.length; i += 2) {
 
-        bloque = bloque.trim();
-        if (bloque === "") return;
+        let categoria = partes[i].trim();
+        let contenido = partes[i + 1].trim();
 
-        // Cortar en ###FIN###
-        bloque = bloque.split("###FIN###")[0].trim();
-
-        // Mostrar saltos en pantalla
-        let visible = bloque.replaceAll("\n", "<br>");
+        let lineas = contenido.split("\n").filter(l => l.trim() !== "");
 
         html += `
-          <div class="precio-item"
-               onclick="copiarPrecio(\`${bloque}\`)">
-            ${visible}
+          <div class="categoria">
+
+            <button class="btn-categoria"
+              onclick="toggleCategoria('${categoria}')">
+              ▶ ${categoria}
+            </button>
+
+            <div class="contenido" id="cat-${categoria}">
+        `;
+
+        lineas.forEach((l) => {
+          html += `
+            <button class="btn-precio"
+              onclick="copiarPrecio('${l}')">
+              ${l}
+            </button>
+          `;
+        });
+
+        html += `
+            </div>
           </div>
         `;
-      });
+      }
 
       contenedor.innerHTML = html;
 
     } catch (error) {
-
       contenedor.innerHTML =
         "<p style='color:red;'>❌ No se pudieron cargar los precios</p>";
-
     }
   }
 
-  // ✅ Copiar bloque completo
-  function copiarPrecio(texto) {
-    navigator.clipboard.writeText(texto);
-    mostrarMensaje("✅ Copiado correctamente");
+  // ✅ SLIDE PRO + SOLO UNA ABIERTA
+  function toggleCategoria(cat) {
+
+    // Cerrar todas
+    let todas = document.querySelectorAll(".contenido");
+
+    todas.forEach((caja) => {
+      caja.classList.remove("abierto");
+      caja.style.maxHeight = "0px";
+    });
+
+    // Abrir seleccionada
+    let div = document.getElementById("cat-" + cat);
+
+    div.classList.add("abierto");
+    div.style.maxHeight = div.scrollHeight + "px";
   }
 
-  // ✅ Mensaje bonito abajo
+  // Copiar precio
+  function copiarPrecio(texto) {
+    navigator.clipboard.writeText(texto);
+    mostrarMensaje("✅ Copiado: " + texto);
+  }
+
+  // Mensaje bonito
   function mostrarMensaje(msg) {
 
     let aviso = document.createElement("div");
@@ -212,9 +242,7 @@
 
     document.body.appendChild(aviso);
 
-    setTimeout(() => {
-      aviso.remove();
-    }, 1800);
+    setTimeout(() => aviso.remove(), 1800);
   }
 
   // Copiar QR como imagen
@@ -245,7 +273,7 @@
     a.click();
   }
 
-  // Zoom QR en el mismo lugar
+  // Zoom QR
   function zoomQR(idImg) {
     let img = document.getElementById(idImg);
     img.classList.toggle("zoom");
@@ -256,6 +284,7 @@
     localStorage.clear();
     window.location.href = "login.html";
   }
+
 </script>
 
 </body>
