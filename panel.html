@@ -135,7 +135,7 @@
 
     try {
 
-      const res = await fetch("precios.txt");
+      const res = await fetch("precios.txt?v=" + new Date().getTime());
       const texto = await res.text();
 
       let partes = texto.split("###");
