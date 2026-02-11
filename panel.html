@@ -86,7 +86,23 @@
 <div id="preciosPanel" style="display:none;" class="admin-box">
 
   <h2>💰 Catálogo de Precios</h2>
-  <p>📌 Toca una categoría para ver todo el bloque</p>
+  <p>📌 Busca o toca una categoría para ver todo el bloque</p>
+
+  <!-- 🔍 BUSCADOR -->
+  <input
+    type="text"
+    id="buscadorPrecios"
+    placeholder="🔍 Buscar Free Fire, Netflix, Pase..."
+    onkeyup="filtrarPrecios()"
+    style="
+      width: 90%;
+      padding: 14px;
+      margin: 15px auto;
+      border-radius: 15px;
+      border: none;
+      font-size: 16px;
+    "
+  >
 
   <div id="listaPrecios">
     ⏳ Cargando precios...
@@ -129,6 +145,10 @@
     if (panel.style.display === "none") {
       panel.style.display = "block";
       cargarPrecios();
+
+      // ✅ Limpiar buscador al abrir
+      document.getElementById("buscadorPrecios").value = "";
+
     } else {
       panel.style.display = "none";
     }
@@ -213,6 +233,49 @@
 
     div.classList.add("abierto");
     div.style.maxHeight = div.scrollHeight + "px";
+  }
+
+  // 🔍 BUSCADOR PRO
+  function filtrarPrecios() {
+
+    let input = document.getElementById("buscadorPrecios").value.toLowerCase();
+
+    let categorias = document.querySelectorAll(".categoria");
+
+    categorias.forEach((cat) => {
+
+      let botonCat = cat.querySelector(".btn-categoria");
+      let nombreCat = botonCat.innerText.toLowerCase();
+
+      let contenido = cat.querySelector(".contenido");
+      let textoBloque = contenido.innerText.toLowerCase();
+
+      // Si está vacío → mostrar todo cerrado
+      if (input === "") {
+
+        cat.style.display = "block";
+        contenido.style.maxHeight = "0px";
+        contenido.classList.remove("abierto");
+        return;
+      }
+
+      // Buscar en categoría o bloque
+      if (nombreCat.includes(input) || textoBloque.includes(input)) {
+
+        cat.style.display = "block";
+
+        // Abrir automáticamente
+        contenido.classList.add("abierto");
+        contenido.style.maxHeight = contenido.scrollHeight + "px";
+
+      } else {
+
+        cat.style.display = "none";
+        contenido.classList.remove("abierto");
+        contenido.style.maxHeight = "0px";
+      }
+
+    });
   }
 
   // ✅ COPIAR BLOQUE COMPLETO
