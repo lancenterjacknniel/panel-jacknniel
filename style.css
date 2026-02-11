@@ -321,3 +321,111 @@ body {
 .contenido.abierto {
   max-height: 900px;
 }
+/* ✅ HEADER PREMIUM */
+
+.header-premium {
+  text-align: center;
+  padding: 25px;
+}
+
+/* ✅ LOGO GAMER PRO */
+
+.logo {
+  width: 220px;
+  border-radius: 25px;
+  box-shadow: 0 0 50px cyan;
+  transition: 0.3s;
+}
+
+.logo:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 80px lime;
+}
+
+/* ✅ MENÚ BOTONES */
+
+.menu-botones {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* ✅ BUSCADOR PREMIUM */
+
+.buscador {
+  width: 90%;
+  padding: 15px;
+  margin: 20px auto;
+  border-radius: 18px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  text-align: center;
+  box-shadow: 0 0 25px cyan;
+}
+
+/* ✅ BOTÓN CATEGORÍA */
+
+.btn-categoria {
+  width: 95%;
+  margin: 12px auto;
+  padding: 15px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, cyan, lime);
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.2s;
+}
+
+.btn-categoria:hover {
+  transform: scale(1.04);
+}
+
+/* ✅ DESLIZAR BLOQUES */
+
+.contenido {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+/* ✅ BLOQUE PREMIUM */
+
+.bloque-precio {
+  background: #0c142b;
+  margin: 15px auto;
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 0 20px lime;
+}
+
+/* ✅ BOTÓN COPIAR TODO */
+
+.btn-copiar-todo {
+  margin-top: 15px;
+  padding: 12px 20px;
+  border-radius: 15px;
+  background: orange;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* ✅ TOAST PREMIUM */
+
+.toast {
+  position: fixed;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: lime;
+  color: black;
+  padding: 15px 25px;
+  border-radius: 15px;
+  font-weight: bold;
+  box-shadow: 0 0 25px lime;
+  z-index: 9999;
+}
