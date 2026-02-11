@@ -5,11 +5,21 @@
   <title>Panel LAN Center</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1 class="titulo">🚀 PANEL LAN CENTER JACKNNIEL</h1>
+<!-- ✅ LOGO PREMIUM ARRIBA -->
+<div class="header-premium">
 
-<h2 id="rolTexto" class="rol"></h2>
+  <div class="top-logo">
+    <img src="logo.png" class="logo">
+  </div>
+
+  <h1 class="titulo">🚀 PANEL LAN CENTER JACKNNIEL</h1>
+
+  <h2 id="rolTexto" class="rol"></h2>
+
+</div>
 
 <!-- 🔐 ADMIN INFO -->
 <div id="adminPanel" class="admin-box" style="display:none;">
@@ -32,8 +42,13 @@
 <hr>
 
 <!-- ✅ BOTONES PRINCIPALES -->
-<button class="btn" onclick="mostrarPagos()">💳 Métodos de Pago</button>
-<button class="btn" onclick="mostrarPrecios()">💰 Precios</button>
+<div class="menu-botones">
+
+  <button class="btn" onclick="mostrarPagos()">💳 Métodos de Pago</button>
+
+  <button class="btn" onclick="mostrarPrecios()">💰 Precios</button>
+
+</div>
 
 <br><br>
 
@@ -92,16 +107,9 @@
   <input
     type="text"
     id="buscadorPrecios"
+    class="buscador"
     placeholder="🔍 Buscar Free Fire, Netflix, Pase..."
     onkeyup="filtrarPrecios()"
-    style="
-      width: 90%;
-      padding: 14px;
-      margin: 15px auto;
-      border-radius: 15px;
-      border: none;
-      font-size: 16px;
-    "
   >
 
   <div id="listaPrecios">
@@ -146,7 +154,6 @@
       panel.style.display = "block";
       cargarPrecios();
 
-      // ✅ Limpiar buscador al abrir
       document.getElementById("buscadorPrecios").value = "";
 
     } else {
@@ -250,7 +257,6 @@
       let contenido = cat.querySelector(".contenido");
       let textoBloque = contenido.innerText.toLowerCase();
 
-      // Si está vacío → mostrar todo cerrado
       if (input === "") {
 
         cat.style.display = "block";
@@ -259,12 +265,10 @@
         return;
       }
 
-      // Buscar en categoría o bloque
       if (nombreCat.includes(input) || textoBloque.includes(input)) {
 
         cat.style.display = "block";
 
-        // Abrir automáticamente
         contenido.classList.add("abierto");
         contenido.style.maxHeight = contenido.scrollHeight + "px";
 
@@ -287,23 +291,11 @@
     mostrarMensaje("✅ Copiado todo correctamente");
   }
 
-  // Mensaje bonito
   function mostrarMensaje(msg) {
 
     let aviso = document.createElement("div");
     aviso.innerText = msg;
-
-    aviso.style.position = "fixed";
-    aviso.style.bottom = "30px";
-    aviso.style.left = "50%";
-    aviso.style.transform = "translateX(-50%)";
-    aviso.style.background = "lime";
-    aviso.style.color = "black";
-    aviso.style.padding = "15px 25px";
-    aviso.style.borderRadius = "15px";
-    aviso.style.fontWeight = "bold";
-    aviso.style.boxShadow = "0 0 20px lime";
-    aviso.style.zIndex = "9999";
+    aviso.className = "toast";
 
     document.body.appendChild(aviso);
 
