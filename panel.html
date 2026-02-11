@@ -32,19 +32,13 @@
 <hr>
 
 <!-- ✅ BOTONES PRINCIPALES -->
-<button class="btn" onclick="mostrarPagos()">
-  💳 Métodos de Pago
-</button>
-
-<button class="btn" onclick="mostrarPrecios()">
-  💰 Precios
-</button>
+<button class="btn" onclick="mostrarPagos()">💳 Métodos de Pago</button>
+<button class="btn" onclick="mostrarPrecios()">💰 Precios</button>
 
 <br><br>
 
 <!-- ✅ PANEL OCULTO QR -->
 <div id="pagosPanel" style="display:none;">
-
   <div class="grid">
 
     <!-- BANCO UNION -->
@@ -58,9 +52,7 @@
 
       <br>
 
-      <button class="btn-copy" onclick="copiarQR('imgBanco')">
-        📋 Copiar QR
-      </button>
+      <button class="btn-copy" onclick="copiarQR('imgBanco')">📋 Copiar QR</button>
 
       <button class="btn-download"
               onclick="descargarQR('qr_banco.png','BancoUnion')">
@@ -79,9 +71,7 @@
 
       <br>
 
-      <button class="btn-copy" onclick="copiarQR('imgYasta')">
-        📋 Copiar QR
-      </button>
+      <button class="btn-copy" onclick="copiarQR('imgYasta')">📋 Copiar QR</button>
 
       <button class="btn-download"
               onclick="descargarQR('qr_yasta.png','Yasta')">
@@ -90,14 +80,13 @@
     </div>
 
   </div>
-
 </div>
 
 <!-- ✅ PANEL OCULTO PRECIOS -->
 <div id="preciosPanel" style="display:none;" class="admin-box">
 
   <h2>💰 Catálogo de Precios</h2>
-  <p>📌 Toca una categoría para desplegar precios</p>
+  <p>📌 Toca una categoría para ver todo el bloque</p>
 
   <div id="listaPrecios">
     ⏳ Cargando precios...
@@ -109,7 +98,6 @@
 
 <button class="btn-salir" onclick="logout()">Salir</button>
 
-<!-- ✅ FUNCIONES -->
 <script>
 
   // Mostrar rol
@@ -119,19 +107,16 @@
   document.getElementById("rolTexto").innerText =
     "Usuario: " + user + " | Rol: " + rol;
 
-  // Solo admin ve panel superior
   if (rol === "admin") {
     document.getElementById("adminPanel").style.display = "block";
   }
 
-  // Mostrar/Ocultar métodos de pago
   function mostrarPagos() {
     let panel = document.getElementById("pagosPanel");
     panel.style.display =
       (panel.style.display === "none") ? "block" : "none";
   }
 
-  // Mostrar/Ocultar precios
   function mostrarPrecios() {
     let panel = document.getElementById("preciosPanel");
 
@@ -143,7 +128,7 @@
     }
   }
 
-  // ✅ CARGAR PRECIOS DESDE precios.txt AUTOMÁTICO POR CATEGORÍAS
+  // ✅ CARGAR BLOQUES COMPLETOS POR CATEGORÍA
   async function cargarPrecios() {
 
     let contenedor = document.getElementById("listaPrecios");
@@ -153,16 +138,15 @@
       const res = await fetch("precios.txt");
       const texto = await res.text();
 
-      // Separar por ###
       let partes = texto.split("###");
       let html = "";
 
       for (let i = 1; i < partes.length; i += 2) {
 
         let categoria = partes[i].trim();
-        let contenido = partes[i + 1].trim();
+        let bloque = partes[i + 1].trim();
 
-        let lineas = contenido.split("\n").filter(l => l.trim() !== "");
+        let visible = bloque.replaceAll("\n", "<br>");
 
         html += `
           <div class="categoria">
@@ -173,19 +157,22 @@
             </button>
 
             <div class="contenido" id="cat-${categoria}">
-        `;
 
-        lineas.forEach((l) => {
-          html += `
-            <button class="btn-precio"
-              onclick="copiarPrecio('${l}')">
-              ${l}
-            </button>
-          `;
-        });
+              <div class="bloque-precio">
 
-        html += `
+                <div class="texto-precio">
+                  ${visible}
+                </div>
+
+                <button class="btn-copiar-todo"
+                  onclick="copiarBloque(event,\`${bloque}\`)">
+                  📋 Copiar Todo
+                </button>
+
+              </div>
+
             </div>
+
           </div>
         `;
       }
@@ -193,13 +180,24 @@
       contenedor.innerHTML = html;
 
     } catch (error) {
+
       contenedor.innerHTML =
         "<p style='color:red;'>❌ No se pudieron cargar los precios</p>";
+
     }
   }
 
-  // ✅ SLIDE PRO + SOLO UNA ABIERTA
+  // ✅ ABRIR / CERRAR + SOLO UNA ABIERTA
   function toggleCategoria(cat) {
+
+    let div = document.getElementById("cat-" + cat);
+
+    // Si ya está abierta → cerrar
+    if (div.classList.contains("abierto")) {
+      div.classList.remove("abierto");
+      div.style.maxHeight = "0px";
+      return;
+    }
 
     // Cerrar todas
     let todas = document.querySelectorAll(".contenido");
@@ -210,16 +208,17 @@
     });
 
     // Abrir seleccionada
-    let div = document.getElementById("cat-" + cat);
-
     div.classList.add("abierto");
     div.style.maxHeight = div.scrollHeight + "px";
   }
 
-  // Copiar precio
-  function copiarPrecio(texto) {
+  // ✅ COPIAR BLOQUE COMPLETO
+  function copiarBloque(event, texto) {
+
+    event.stopPropagation(); // No cerrar acordeón
+
     navigator.clipboard.writeText(texto);
-    mostrarMensaje("✅ Copiado: " + texto);
+    mostrarMensaje("✅ Copiado todo correctamente");
   }
 
   // Mensaje bonito
@@ -265,7 +264,6 @@
     }
   }
 
-  // Descargar QR
   function descargarQR(archivo, nombre) {
     let a = document.createElement("a");
     a.href = archivo;
@@ -273,13 +271,11 @@
     a.click();
   }
 
-  // Zoom QR
   function zoomQR(idImg) {
     let img = document.getElementById(idImg);
     img.classList.toggle("zoom");
   }
 
-  // Logout
   function logout() {
     localStorage.clear();
     window.location.href = "login.html";
