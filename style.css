@@ -253,3 +253,33 @@ body {
   transform: scale(1.02);
   box-shadow: 0 0 25px lime;
 }
+/* ✅ CATEGORÍAS SLIDE PRO */
+
+.btn-categoria {
+  width: 90%;
+  margin: 15px auto;
+  padding: 18px;
+  border-radius: 18px;
+  background: yellow;
+  border: none;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 0 15px yellow;
+}
+
+.btn-categoria:hover {
+  transform: scale(1.02);
+}
+
+/* Slide animación */
+.contenido {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+  margin-top: 10px;
+}
+
+.contenido.abierto {
+  max-height: 500px;
+}
