@@ -283,3 +283,41 @@ body {
 .contenido.abierto {
   max-height: 500px;
 }
+/* BLOQUE COMPLETO */
+.bloque-precio {
+  background: #0c142b;
+  padding: 20px;
+  border-radius: 18px;
+  margin: 10px auto;
+  width: 85%;
+  box-shadow: 0 0 20px cyan;
+}
+
+/* Texto */
+.texto-precio {
+  white-space: pre-line;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Botón copiar todo */
+.btn-copiar-todo {
+  margin-top: 15px;
+  padding: 14px 25px;
+  border-radius: 15px;
+  border: none;
+  background: lime;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Slide */
+.contenido {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+}
+
+.contenido.abierto {
+  max-height: 900px;
+}
