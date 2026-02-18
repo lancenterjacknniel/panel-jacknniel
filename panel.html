@@ -65,14 +65,19 @@
            src="qr_banco.png"
            onclick="zoomQR('imgBanco')">
 
-      <button class="btn-copy" onclick="copiarQR('imgBanco')">
-        📋 Copiar QR
-      </button>
+      <!-- ✅ BOTONES EN UNA SOLA LÍNEA -->
+      <div class="botones-qr">
 
-      <button class="btn-download"
-              onclick="descargarQR('qr_banco.png','BancoUnion')">
-        ⬇ Descargar
-      </button>
+        <button class="btn-copy" onclick="copiarQR('imgBanco')">
+          📋 Copiar QR
+        </button>
+
+        <button class="btn-download"
+                onclick="descargarQR('qr_banco.png','BancoUnion')">
+          ⬇ Descargar
+        </button>
+
+      </div>
     </div>
 
     <!-- YASTA -->
@@ -84,14 +89,19 @@
            src="qr_yasta.png"
            onclick="zoomQR('imgYasta')">
 
-      <button class="btn-copy" onclick="copiarQR('imgYasta')">
-        📋 Copiar QR
-      </button>
+      <!-- ✅ BOTONES EN UNA SOLA LÍNEA -->
+      <div class="botones-qr">
 
-      <button class="btn-download"
-              onclick="descargarQR('qr_yasta.png','Yasta')">
-        ⬇ Descargar
-      </button>
+        <button class="btn-copy" onclick="copiarQR('imgYasta')">
+          📋 Copiar QR
+        </button>
+
+        <button class="btn-download"
+                onclick="descargarQR('qr_yasta.png','Yasta')">
+          ⬇ Descargar
+        </button>
+
+      </div>
     </div>
 
   </div>
@@ -241,53 +251,42 @@
   }
 
   // Buscador
-function filtrarPrecios() {
+  function filtrarPrecios() {
 
-  let input = document.getElementById("buscadorPrecios").value.toLowerCase();
+    let input = document.getElementById("buscadorPrecios").value.toLowerCase();
+    let categorias = document.querySelectorAll(".categoria");
 
-  let categorias = document.querySelectorAll(".categoria");
+    categorias.forEach((cat) => {
 
-  categorias.forEach((cat) => {
+      let botonCat = cat.querySelector(".btn-categoria");
+      let nombreCat = botonCat.innerText.toLowerCase();
 
-    let botonCat = cat.querySelector(".btn-categoria");
-    let nombreCat = botonCat.innerText.toLowerCase();
+      let contenido = cat.querySelector(".contenido");
+      let textoBloque = contenido.innerText.toLowerCase();
 
-    let contenido = cat.querySelector(".contenido");
-    let textoBloque = contenido.innerText.toLowerCase();
+      if (input.trim() === "") {
 
-    // ✅ SI BUSCADOR ESTÁ VACÍO → OCULTAR TODO Y CERRAR
-    if (input.trim() === "") {
+        cat.style.display = "block";
+        contenido.classList.remove("abierto");
+        contenido.style.maxHeight = "0px";
+        return;
+      }
 
-      cat.style.display = "block";
+      if (nombreCat.includes(input) || textoBloque.includes(input)) {
 
-      // Cerrar todas las categorías
-      contenido.classList.remove("abierto");
-      contenido.style.maxHeight = "0px";
+        cat.style.display = "block";
+        contenido.classList.add("abierto");
+        contenido.style.maxHeight = contenido.scrollHeight + "px";
 
-      return;
-    }
+      } else {
 
-    // ✅ SI COINCIDE → MOSTRAR Y ABRIR AUTOMÁTICO
-    if (nombreCat.includes(input) || textoBloque.includes(input)) {
+        cat.style.display = "none";
+        contenido.classList.remove("abierto");
+        contenido.style.maxHeight = "0px";
+      }
 
-      cat.style.display = "block";
-
-      contenido.classList.add("abierto");
-      contenido.style.maxHeight = contenido.scrollHeight + "px";
-
-    }
-
-    // ❌ SI NO COINCIDE → OCULTAR
-    else {
-
-      cat.style.display = "none";
-
-      contenido.classList.remove("abierto");
-      contenido.style.maxHeight = "0px";
-    }
-
-  });
-}
+    });
+  }
 
   // Copiar bloque completo
   function copiarBloque(event, texto) {
