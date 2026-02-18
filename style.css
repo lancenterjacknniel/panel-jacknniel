@@ -642,3 +642,15 @@ body::before {
   color: white;
   opacity: 0.8;
 }
+/* ✅ BOTONES QR EN UNA SOLA LÍNEA */
+.botones-qr {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+/* Ajuste para que no sean gigantes */
+.botones-qr button {
+  width: 140px;
+}
