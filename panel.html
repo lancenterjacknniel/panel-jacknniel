@@ -49,62 +49,15 @@
 
 <br>
 
-<!-- ✅ PANEL MÉTODOS DE PAGO -->
+<!-- ✅ PANEL MÉTODOS DE PAGO (AUTOMÁTICO DESDE pagos.txt) -->
 <div id="pagosPanel" class="panel-seccion" style="display:none;">
 
-<h2 class="subtitulo">💳 MÉTODOS DE PAGO DE LAN CENTER JACKNNIEL</h2>
+  <h2 class="subtitulo">💳 MÉTODOS DE PAGO</h2>
 
-  <div class="grid">
-
-    <!-- BANCO UNION -->
-    <div class="card-pro">
-      <h2>Banco Unión</h2>
-
-      <img id="imgBanco"
-           class="qr-img"
-           src="qr_banco.png"
-           onclick="zoomQR('imgBanco')">
-
-      <!-- ✅ BOTONES EN UNA SOLA LÍNEA -->
-      <div class="botones-qr">
-
-        <button class="btn-copy" onclick="copiarQR('imgBanco')">
-          📋 Copiar QR
-        </button>
-
-        <button class="btn-download"
-                onclick="descargarQR('qr_banco.png','BancoUnion')">
-          ⬇ Descargar
-        </button>
-
-      </div>
-    </div>
-
-    <!-- YASTA -->
-    <div class="card-pro">
-      <h2>Yasta</h2>
-
-      <img id="imgYasta"
-           class="qr-img"
-           src="qr_yasta.png"
-           onclick="zoomQR('imgYasta')">
-
-      <!-- ✅ BOTONES EN UNA SOLA LÍNEA -->
-      <div class="botones-qr">
-
-        <button class="btn-copy" onclick="copiarQR('imgYasta')">
-          📋 Copiar QR
-        </button>
-
-        <button class="btn-download"
-                onclick="descargarQR('qr_yasta.png','Yasta')">
-          ⬇ Descargar
-        </button>
-
-      </div>
-    </div>
-
+  <div id="listaPagos">
+    ⏳ Cargando métodos...
   </div>
+
 </div>
 
 <!-- ✅ PANEL PRECIOS -->
@@ -137,10 +90,7 @@
 
   // 🔒 BLOQUEO TOTAL
   let user = localStorage.getItem("user");
-
-  if (!user) {
-    window.location.href = "login.html";
-  }
+  if (!user) window.location.href = "login.html";
 
   let rol = localStorage.getItem("rol");
 
@@ -154,8 +104,13 @@
   // Mostrar/Ocultar Pagos
   function mostrarPagos() {
     let panel = document.getElementById("pagosPanel");
-    panel.style.display =
-      (panel.style.display === "none") ? "block" : "none";
+
+    if (panel.style.display === "none") {
+      panel.style.display = "block";
+      cargarPagos();
+    } else {
+      panel.style.display = "none";
+    }
   }
 
   // Mostrar/Ocultar Precios
@@ -168,6 +123,76 @@
       document.getElementById("buscadorPrecios").value = "";
     } else {
       panel.style.display = "none";
+    }
+  }
+
+  // ✅ CARGAR PAGOS DESDE pagos.txt
+  async function cargarPagos() {
+
+    let contenedor = document.getElementById("listaPagos");
+
+    try {
+
+      const res = await fetch("pagos.txt?v=" + new Date().getTime());
+      const texto = await res.text();
+
+      let partes = texto.split("###");
+      let html = "";
+
+      for (let i = 1; i < partes.length; i += 2) {
+
+        let categoria = partes[i].trim();
+        let contenido = partes[i + 1].trim();
+
+        html += `<h2 class="subtitulo">💳 ${categoria}</h2>`;
+        html += `<div class="grid">`;
+
+        let lineas = contenido.split("\n");
+
+        lineas.forEach((linea) => {
+
+          if (!linea.includes("|")) return;
+
+          let datos = linea.split("|");
+          let nombre = datos[0].trim();
+          let archivoQR = datos[1].trim();
+
+          let idImg = "qr-" + nombre.replaceAll(" ", "");
+
+          html += `
+            <div class="card-pro">
+              <h2>${nombre}</h2>
+
+              <img id="${idImg}"
+                   class="qr-img"
+                   src="${archivoQR}"
+                   onclick="zoomQR('${idImg}')">
+
+              <div class="botones-qr">
+
+                <button class="btn-copy"
+                        onclick="copiarQR('${idImg}')">
+                  📋 Copiar
+                </button>
+
+                <button class="btn-download"
+                        onclick="descargarQR('${archivoQR}','${nombre}')">
+                  ⬇ Descargar
+                </button>
+
+              </div>
+            </div>
+          `;
+        });
+
+        html += `</div>`;
+      }
+
+      contenedor.innerHTML = html;
+
+    } catch (error) {
+      contenedor.innerHTML =
+        "<p style='color:red;'>❌ No se pudieron cargar los pagos</p>";
     }
   }
 
@@ -200,20 +225,14 @@
             </button>
 
             <div class="contenido" id="cat-${categoria}">
-
               <div class="bloque-precio">
-
-                <div class="texto-precio">
-                  ${visible}
-                </div>
+                <div class="texto-precio">${visible}</div>
 
                 <button class="btn-copiar-todo"
                   onclick="copiarBloque(event,\`${bloque}\`)">
                   📋 Copiar Todo
                 </button>
-
               </div>
-
             </div>
 
           </div>
@@ -228,7 +247,7 @@
     }
   }
 
-  // Slide abrir/cerrar
+  // Slide categorías
   function toggleCategoria(cat) {
 
     let div = document.getElementById("cat-" + cat);
@@ -239,9 +258,7 @@
       return;
     }
 
-    let todas = document.querySelectorAll(".contenido");
-
-    todas.forEach((caja) => {
+    document.querySelectorAll(".contenido").forEach((caja) => {
       caja.classList.remove("abierto");
       caja.style.maxHeight = "0px";
     });
@@ -250,63 +267,50 @@
     div.style.maxHeight = div.scrollHeight + "px";
   }
 
-  // Buscador
+  // Buscador precios
   function filtrarPrecios() {
 
     let input = document.getElementById("buscadorPrecios").value.toLowerCase();
-    let categorias = document.querySelectorAll(".categoria");
 
-    categorias.forEach((cat) => {
+    document.querySelectorAll(".categoria").forEach((cat) => {
 
-      let botonCat = cat.querySelector(".btn-categoria");
-      let nombreCat = botonCat.innerText.toLowerCase();
-
+      let texto = cat.innerText.toLowerCase();
       let contenido = cat.querySelector(".contenido");
-      let textoBloque = contenido.innerText.toLowerCase();
 
       if (input.trim() === "") {
-
         cat.style.display = "block";
-        contenido.classList.remove("abierto");
         contenido.style.maxHeight = "0px";
+        contenido.classList.remove("abierto");
         return;
       }
 
-      if (nombreCat.includes(input) || textoBloque.includes(input)) {
-
+      if (texto.includes(input)) {
         cat.style.display = "block";
         contenido.classList.add("abierto");
         contenido.style.maxHeight = contenido.scrollHeight + "px";
-
       } else {
-
         cat.style.display = "none";
-        contenido.classList.remove("abierto");
-        contenido.style.maxHeight = "0px";
       }
-
     });
   }
 
-  // Copiar bloque completo
+  // Copiar bloque
   function copiarBloque(event, texto) {
     event.stopPropagation();
     navigator.clipboard.writeText(texto);
-    mostrarMensaje("✅ Copiado todo correctamente");
+    mostrarMensaje("✅ Copiado correctamente");
   }
 
-  // Toast premium
+  // Toast
   function mostrarMensaje(msg) {
     let aviso = document.createElement("div");
     aviso.innerText = msg;
     aviso.className = "toast";
-
     document.body.appendChild(aviso);
-
     setTimeout(() => aviso.remove(), 1800);
   }
 
-  // Copiar QR
+  // Copiar QR imagen
   async function copiarQR(idImg) {
 
     let img = document.getElementById(idImg);
@@ -319,10 +323,10 @@
         new ClipboardItem({ [blob.type]: blob })
       ]);
 
-      mostrarMensaje("✅ QR copiado como imagen");
+      mostrarMensaje("✅ QR copiado");
 
-    } catch (error) {
-      mostrarMensaje("❌ No se pudo copiar QR");
+    } catch {
+      mostrarMensaje("❌ No se pudo copiar");
     }
   }
 
@@ -334,10 +338,9 @@
     a.click();
   }
 
-  // Zoom QR
+  // Zoom
   function zoomQR(idImg) {
-    let img = document.getElementById(idImg);
-    img.classList.toggle("zoom");
+    document.getElementById(idImg).classList.toggle("zoom");
   }
 
   // Logout
