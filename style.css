@@ -654,3 +654,19 @@ body::before {
 .botones-qr button {
   width: 140px;
 }
+/* ✅ PAGOS AUTOMÁTICOS */
+#listaPagos {
+  margin-top: 20px;
+}
+
+/* Botones QR en línea */
+.botones-qr {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.botones-qr button {
+  width: 130px;
+}
