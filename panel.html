@@ -9,58 +9,6 @@
 
 /* ===== ESTILO EXTRA PREMIUM ===== */
 
-.galeria-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:30px;
-margin-top:25px;
-}
-
-.card-img{
-background:#0f172a;
-padding:20px;
-border-radius:20px;
-box-shadow:0 0 25px rgba(0,255,255,0.4);
-text-align:center;
-transition:0.3s;
-}
-
-.card-img:hover{
-transform:scale(1.04);
-box-shadow:0 0 35px rgba(0,255,0,0.6);
-}
-
-.card-img img{
-width:100%;
-max-height:420px;
-object-fit:cover;
-border-radius:15px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.card-img img:hover{
-transform:scale(1.05);
-}
-
-.botones-img{
-display:flex;
-gap:12px;
-margin-top:15px;
-}
-
-.botones-img button{
-flex:1;
-padding:10px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-font-weight:bold;
-}
-
-.btn-link{background:#00eaff;color:black;}
-.btn-download{background:#00ff9d;color:black;}
-
 .botones-qr{
 display:flex;
 gap:10px;
@@ -127,13 +75,6 @@ onkeyup="filtrarPrecios()">
 <!-- PANEL GALERÍA -->
 <div id="galeriaPanel" class="panel-seccion" style="display:none;">
 <h2 class="subtitulo">🖼 GALERÍA</h2>
-
-<input type="text"
-id="buscadorGaleria"
-class="buscador"
-placeholder="🔍 Buscar categoría..."
-onkeyup="filtrarGaleria()">
-
 <div id="listaGaleria">⏳ Cargando galería...</div>
 </div>
 
@@ -173,7 +114,6 @@ let panel=document.getElementById("galeriaPanel");
 panel.style.display=(panel.style.display==="none")?"block":"none";
 if(panel.style.display==="block"){
 cargarGaleria();
-document.getElementById("buscadorGaleria").value="";
 }
 }
 
@@ -316,7 +256,7 @@ cat.style.display="none";
 });
 }
 
-// ===== GALERÍA =====
+// ===== GALERÍA (MISMO SISTEMA QUE PAGOS) =====
 
 async function cargarGaleria(){
 
@@ -332,18 +272,26 @@ let html="";
 for(let i=1;i<partes.length;i+=2){
 
 let categoria=partes[i].trim();
-let contenido=partes[i+1].trim().split("\n").filter(l=>l.trim()!=="");
+let contenido=partes[i+1].trim();
 
-html+=`<h3 style="color:#00f0ff">${categoria}</h3>`;
-html+=`<div class="galeria-grid">`;
+html+=`<h2 class="subtitulo">${categoria}</h2><div class="grid">`;
 
-contenido.forEach(link=>{
+contenido.split("\n").forEach(linea=>{
+
+if(!linea.includes("|")) return;
+
+let datos=linea.split("|");
+let nombre=datos[0].trim();
+let archivo=datos[1].trim();
+let id="gal-"+nombre.replaceAll(" ","");
+
 html+=`
-<div class="card-img">
-<img src="${link}" onclick="zoomQR(this.id)" id="img${Math.random()}">
-<div class="botones-img">
-<button class="btn-link" onclick="copiarLink('${link}')">📋 Copiar</button>
-<button class="btn-download" onclick="descargarImagen('${link}')">⬇ Descargar</button>
+<div class="card-pro">
+<h2>${nombre}</h2>
+<img id="${id}" class="qr-img" src="${archivo}" onclick="zoomQR('${id}')">
+<div class="botones-qr">
+<button class="btn-copy" onclick="copiarQR('${id}')">📋 Copiar</button>
+<button class="btn-download" onclick="descargarQR('${archivo}','${nombre}')">⬇ Descargar</button>
 </div>
 </div>
 `;
@@ -357,32 +305,6 @@ contenedor.innerHTML=html;
 }catch{
 contenedor.innerHTML="<p style='color:red'>Error cargando galería</p>";
 }
-}
-
-function copiarLink(link){
-navigator.clipboard.writeText(link);
-mostrarMensaje("✅ Link copiado");
-}
-
-function descargarImagen(link){
-let a=document.createElement("a");
-a.href=link;
-a.download="imagen.png";
-a.click();
-}
-
-function filtrarGaleria(){
-let input=document.getElementById("buscadorGaleria").value.toLowerCase();
-document.querySelectorAll("#listaGaleria h3").forEach(h=>{
-let bloque=h.nextElementSibling;
-if(h.innerText.toLowerCase().includes(input)||input===""){
-h.style.display="block";
-bloque.style.display="grid";
-}else{
-h.style.display="none";
-bloque.style.display="none";
-}
-});
 }
 
 // ===== UTIL =====
@@ -409,7 +331,7 @@ const blob=await response.blob();
 await navigator.clipboard.write([
 new ClipboardItem({[blob.type]:blob})
 ]);
-mostrarMensaje("✅ QR copiado");
+mostrarMensaje("✅ Imagen copiada");
 }catch{
 mostrarMensaje("❌ No se pudo copiar");
 }
