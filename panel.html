@@ -7,8 +7,6 @@
 
 <style>
 
-/* ===== ESTILO EXTRA PREMIUM ===== */
-
 .botones-qr{
 display:flex;
 gap:10px;
@@ -19,7 +17,6 @@ margin-top:10px;
 flex:1;
 }
 
-/* ZOOM */
 .zoom{
 transform:scale(1.3);
 z-index:1000;
@@ -75,6 +72,13 @@ onkeyup="filtrarPrecios()">
 <!-- PANEL GALERÍA -->
 <div id="galeriaPanel" class="panel-seccion" style="display:none;">
 <h2 class="subtitulo">🖼 GALERÍA</h2>
+
+<input type="text"
+id="buscadorGaleria"
+class="buscador"
+placeholder="🔍 Buscar en galería..."
+onkeyup="filtrarGaleria()">
+
 <div id="listaGaleria">⏳ Cargando galería...</div>
 </div>
 
@@ -92,30 +96,68 @@ let rol = localStorage.getItem("rol");
 document.getElementById("rolTexto").innerText =
 "Usuario: "+user+" | Rol: "+rol;
 
-// ===== MOSTRAR SECCIONES =====
 
-function mostrarPagos(){
-let panel=document.getElementById("pagosPanel");
-panel.style.display=(panel.style.display==="none")?"block":"none";
-if(panel.style.display==="block") cargarPagos();
+// ===== CERRAR TODO =====
+
+function cerrarTodo(){
+document.getElementById("pagosPanel").style.display="none";
+document.getElementById("preciosPanel").style.display="none";
+document.getElementById("galeriaPanel").style.display="none";
 }
 
-function mostrarPrecios(){
-let panel=document.getElementById("preciosPanel");
-panel.style.display=(panel.style.display==="none")?"block":"none";
+
+// ===== MOSTRAR PAGOS =====
+
+function mostrarPagos(){
+
+let panel=document.getElementById("pagosPanel");
+
 if(panel.style.display==="block"){
+panel.style.display="none";
+return;
+}
+
+cerrarTodo();
+panel.style.display="block";
+cargarPagos();
+}
+
+
+// ===== MOSTRAR PRECIOS =====
+
+function mostrarPrecios(){
+
+let panel=document.getElementById("preciosPanel");
+
+if(panel.style.display==="block"){
+panel.style.display="none";
+return;
+}
+
+cerrarTodo();
+panel.style.display="block";
 cargarPrecios();
 document.getElementById("buscadorPrecios").value="";
 }
-}
+
+
+// ===== MOSTRAR GALERÍA =====
 
 function mostrarGaleria(){
+
 let panel=document.getElementById("galeriaPanel");
-panel.style.display=(panel.style.display==="none")?"block":"none";
+
 if(panel.style.display==="block"){
+panel.style.display="none";
+return;
+}
+
+cerrarTodo();
+panel.style.display="block";
 cargarGaleria();
+document.getElementById("buscadorGaleria").value="";
 }
-}
+
 
 // ===== PAGOS =====
 
@@ -167,6 +209,7 @@ contenedor.innerHTML="<p style='color:red'>Error cargando pagos</p>";
 }
 }
 
+
 // ===== PRECIOS =====
 
 async function cargarPrecios(){
@@ -211,6 +254,7 @@ contenedor.innerHTML="<p style='color:red'>Error cargando precios</p>";
 }
 }
 
+
 function toggleCategoria(cat){
 
 let div=document.getElementById("cat-"+cat);
@@ -229,6 +273,7 @@ c.style.maxHeight="0px";
 div.classList.add("abierto");
 div.style.maxHeight=div.scrollHeight+"px";
 }
+
 
 function filtrarPrecios(){
 
@@ -256,7 +301,8 @@ cat.style.display="none";
 });
 }
 
-// ===== GALERÍA (MISMO SISTEMA QUE PAGOS) =====
+
+// ===== GALERÍA (IGUAL A PAGOS + BUSCADOR) =====
 
 async function cargarGaleria(){
 
@@ -274,6 +320,7 @@ for(let i=1;i<partes.length;i+=2){
 let categoria=partes[i].trim();
 let contenido=partes[i+1].trim();
 
+html+=`<div class="bloque-galeria" data-cat="${categoria.toLowerCase()}">`;
 html+=`<h2 class="subtitulo">${categoria}</h2><div class="grid">`;
 
 contenido.split("\n").forEach(linea=>{
@@ -297,7 +344,7 @@ html+=`
 `;
 });
 
-html+=`</div>`;
+html+=`</div></div>`;
 }
 
 contenedor.innerHTML=html;
@@ -306,6 +353,30 @@ contenedor.innerHTML=html;
 contenedor.innerHTML="<p style='color:red'>Error cargando galería</p>";
 }
 }
+
+
+function filtrarGaleria(){
+
+let input=document.getElementById("buscadorGaleria").value.toLowerCase();
+
+document.querySelectorAll(".bloque-galeria").forEach(bloque=>{
+
+let texto=bloque.innerText.toLowerCase();
+
+if(input.trim()===""){
+bloque.style.display="block";
+return;
+}
+
+if(texto.includes(input)){
+bloque.style.display="block";
+}else{
+bloque.style.display="none";
+}
+
+});
+}
+
 
 // ===== UTIL =====
 
