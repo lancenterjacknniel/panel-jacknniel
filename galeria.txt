@@ -5,6 +5,8 @@ https://i.imgur.com/wcF0Sq6.png
 
 ###NETFLIX###
 Netflix Premium | qr_netflix.png
+Banco Unión | qr_banco.png
+Yasta | qr_yasta.png
 
 ###GAME LOAD###
 https://i.imgur.com/ejemplo4.png
