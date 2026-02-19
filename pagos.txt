@@ -3,7 +3,7 @@ Banco Unión | qr_banco.png
 Yasta | qr_yasta.png
 
 ###GAME LOAD BOLIVIA###
-Tigo Money rapidito | qr_tigo.png
+Banco Economico | qr_economico.png
 Binance Pay | qr_binance.png
 
 ###LAN CENTER JACKNNIEL###
