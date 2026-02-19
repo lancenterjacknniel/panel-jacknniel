@@ -16,3 +16,7 @@ Yasta | qr_yasta.png
 ###LAN CENTER JACKNNIEL###
 Banco Unión | qr_banco.png
 Yasta | qr_yasta.png
+
+###LAN CENTER JACKNNIEL###
+Banco Unión | qr_banco.png
+Yasta | qr_yasta.png
