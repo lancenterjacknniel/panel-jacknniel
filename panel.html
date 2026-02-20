@@ -332,36 +332,29 @@ html+=`
 <div class="grid">
 `;
 
-contenido.split("\n").forEach(linea=>{
+// 🔥 NUEVO SISTEMA INTELIGENTE
+let lineas = contenido.split("\n");
 
-if(!linea.includes("|")) return;
+let nombreActual = "";
+let textoAcumulado = "";
 
-let datos=linea.split("|");
-let nombre=datos[0].trim();
-let valor=datos[1].trim();
-let id="msgimg-"+nombre.replaceAll(" ","");
+lineas.forEach(linea=>{
 
-if(valor.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
+// Si la línea tiene "|" empieza un nuevo bloque
+if(linea.includes("|")){
+
+// Si había texto acumulado lo mostramos
+if(nombreActual && textoAcumulado){
+
 html+=`
 <div class="card-pro">
-<h2>${nombre}</h2>
-<img id="${id}" class="qr-img" src="${valor}" onclick="zoomQR('${id}')">
-<div class="botones-qr">
-<button class="btn-copy" onclick="copiarQR('${id}')">📋 Copiar</button>
-<button class="btn-download" onclick="descargarQR('${valor}','${nombre}')">⬇ Descargar</button>
-</div>
-</div>
-`;
-}else{
-html+=`
-<div class="card-pro">
-<h2>${nombre}</h2>
-<div style="padding:15px;background:#111;border-radius:10px;margin-bottom:10px;">
-${valor}
+<h2>${nombreActual}</h2>
+<div style="padding:15px;background:#111;border-radius:10px;margin-bottom:10px;white-space:pre-line;">
+${textoAcumulado}
 </div>
 <div class="botones-qr">
 <button class="btn-copy"
-onclick="navigator.clipboard.writeText(\`${valor}\`);mostrarMensaje('✅ Mensaje copiado');">
+onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('✅ Mensaje copiado');">
 📋 Copiar
 </button>
 </div>
@@ -369,7 +362,56 @@ onclick="navigator.clipboard.writeText(\`${valor}\`);mostrarMensaje('✅ Mensaje
 `;
 }
 
+// Reiniciamos
+let partesLinea = linea.split("|");
+nombreActual = partesLinea[0].trim();
+textoAcumulado = partesLinea[1].trim();
+
+// Si es imagen la mostramos inmediatamente
+if(textoAcumulado.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
+
+let id="msgimg-"+nombreActual.replaceAll(" ","");
+
+html+=`
+<div class="card-pro">
+<h2>${nombreActual}</h2>
+<img id="${id}" class="qr-img" src="${textoAcumulado}" onclick="zoomQR('${id}')">
+<div class="botones-qr">
+<button class="btn-copy" onclick="copiarQR('${id}')">📋 Copiar</button>
+<button class="btn-download" onclick="descargarQR('${textoAcumulado}','${nombreActual}')">⬇ Descargar</button>
+</div>
+</div>
+`;
+
+nombreActual="";
+textoAcumulado="";
+}
+
+}else{
+// Si NO tiene "|" es continuación del mensaje
+textoAcumulado += "\n" + linea;
+}
+
 });
+
+// Mostrar último mensaje pendiente
+if(nombreActual && textoAcumulado){
+
+html+=`
+<div class="card-pro">
+<h2>${nombreActual}</h2>
+<div style="padding:15px;background:#111;border-radius:10px;margin-bottom:10px;white-space:pre-line;">
+${textoAcumulado}
+</div>
+<div class="botones-qr">
+<button class="btn-copy"
+onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('✅ Mensaje copiado');">
+📋 Copiar
+</button>
+</div>
+</div>
+`;
+}
 
 html+=`
 </div>
