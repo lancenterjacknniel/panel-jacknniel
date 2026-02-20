@@ -190,6 +190,26 @@ document.getElementById("buscadorMensajes").value="";
 }
 
 
+function toggleMensajes(cat){
+
+let div=document.getElementById("msg-"+cat);
+
+if(div.classList.contains("abierto")){
+div.classList.remove("abierto");
+div.style.maxHeight="0px";
+return;
+}
+
+document.querySelectorAll("#listaMensajes .contenido").forEach(c=>{
+c.classList.remove("abierto");
+c.style.maxHeight="0px";
+});
+
+div.classList.add("abierto");
+div.style.maxHeight=div.scrollHeight+"px";
+}
+  
+
 // ===== PAGOS =====
 
 async function cargarPagos(){
