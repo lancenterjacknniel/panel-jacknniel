@@ -2,10 +2,16 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy"
+content="default-src 'self'; img-src 'self' data:;">
 <title>Panel LAN Center</title>
 <link rel="stylesheet" href="style.css">
 
 <style>
+
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+}
 
 .botones-qr{
 display:flex;
@@ -18,13 +24,32 @@ flex:1;
 }
 
 .zoom{
-transform:scale(1.3);
+transform:scale(1.5);
 z-index:1000;
 position:relative;
+box-shadow:0 0 25px rgba(0,0,0,0.6);
+border-radius:10px;
+transition:0.3s ease;
+}
+
+.toast{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#00c853;
+color:white;
+padding:10px 20px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+animation:fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
 }
 
 </style>
-
 </head>
 
 <body>
@@ -32,7 +57,7 @@ position:relative;
 <!-- HEADER -->
 <div class="header-premium">
 <div class="top-logo">
-<img src="logo.png" class="logo">
+<img src="logo.png" class="logo" loading="lazy">
 </div>
 <h1 class="titulo">PANEL LAN CENTER JACKNNIEL</h1>
 <h2 id="rolTexto" class="rol"></h2>
@@ -49,13 +74,11 @@ position:relative;
 
 <br>
 
-<!-- PANEL PAGOS -->
 <div id="pagosPanel" class="panel-seccion" style="display:none;">
 <h2 class="subtitulo">💳 MÉTODOS DE PAGO</h2>
 <div id="listaPagos">⏳ Cargando métodos...</div>
 </div>
 
-<!-- PANEL PRECIOS -->
 <div id="preciosPanel" class="panel-seccion" style="display:none;">
 <h2 class="subtitulo">💰 Catálogo de Precios</h2>
 <p class="mini">📌 Busca o toca una categoría para desplegar</p>
@@ -69,7 +92,6 @@ onkeyup="filtrarPrecios()">
 <div id="listaPrecios">⏳ Cargando precios...</div>
 </div>
 
-<!-- PANEL GALERÍA -->
 <div id="galeriaPanel" class="panel-seccion" style="display:none;">
 <h2 class="subtitulo">🖼 GALERÍA</h2>
 
@@ -88,11 +110,21 @@ onkeyup="filtrarGaleria()">
 
 <script>
 
-// 🔒 LOGIN
-let user = localStorage.getItem("user");
+// ====== SEGURIDAD BÁSICA ======
+
+function escaparHTML(texto){
+return texto
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;");
+}
+
+// ====== LOGIN (MEJORADO) ======
+
+let user = sessionStorage.getItem("user");
 if (!user) window.location.href="login.html";
 
-let rol = localStorage.getItem("rol");
+let rol = sessionStorage.getItem("rol");
 document.getElementById("rolTexto").innerText =
 "Usuario: "+user+" | Rol: "+rol;
 
@@ -100,73 +132,47 @@ document.getElementById("rolTexto").innerText =
 // ===== CERRAR TODO =====
 
 function cerrarTodo(){
-document.getElementById("pagosPanel").style.display="none";
-document.getElementById("preciosPanel").style.display="none";
-document.getElementById("galeriaPanel").style.display="none";
+["pagosPanel","preciosPanel","galeriaPanel"].forEach(id=>{
+document.getElementById(id).style.display="none";
+});
 }
 
-
-// ===== MOSTRAR PAGOS =====
+// ===== MOSTRAR =====
 
 function mostrarPagos(){
-
-let panel=document.getElementById("pagosPanel");
-
-if(panel.style.display==="block"){
-panel.style.display="none";
-return;
+togglePanel("pagosPanel",cargarPagos);
 }
-
-cerrarTodo();
-panel.style.display="block";
-cargarPagos();
-}
-
-
-// ===== MOSTRAR PRECIOS =====
 
 function mostrarPrecios(){
-
-let panel=document.getElementById("preciosPanel");
-
-if(panel.style.display==="block"){
-panel.style.display="none";
-return;
-}
-
-cerrarTodo();
-panel.style.display="block";
-cargarPrecios();
+togglePanel("preciosPanel",cargarPrecios);
 document.getElementById("buscadorPrecios").value="";
 }
 
-
-// ===== MOSTRAR GALERÍA =====
-
 function mostrarGaleria(){
+togglePanel("galeriaPanel",cargarGaleria);
+document.getElementById("buscadorGaleria").value="";
+}
 
-let panel=document.getElementById("galeriaPanel");
-
+function togglePanel(id,callback){
+let panel=document.getElementById(id);
 if(panel.style.display==="block"){
 panel.style.display="none";
 return;
 }
-
 cerrarTodo();
 panel.style.display="block";
-cargarGaleria();
-document.getElementById("buscadorGaleria").value="";
+callback();
 }
-
 
 // ===== PAGOS =====
 
 async function cargarPagos(){
 
 let contenedor=document.getElementById("listaPagos");
+const timestamp = Date.now();
 
 try{
-const res=await fetch("pagos.txt?v="+new Date().getTime());
+const res=await fetch("pagos.txt?v="+timestamp);
 const texto=await res.text();
 
 let partes=texto.split("###");
@@ -174,26 +180,28 @@ let html="";
 
 for(let i=1;i<partes.length;i+=2){
 
-let categoria=partes[i].trim();
+let categoria=escaparHTML(partes[i].trim());
 let contenido=partes[i+1].trim();
 
 html+=`<h2 class="subtitulo">${categoria}</h2><div class="grid">`;
 
-contenido.split("\n").forEach(linea=>{
+contenido.split("\n").forEach((linea,index)=>{
 if(!linea.includes("|")) return;
 
-let datos=linea.split("|");
-let nombre=datos[0].trim();
-let archivo=datos[1].trim();
-let id="qr-"+nombre.replaceAll(" ","");
+let [nombre,archivo]=linea.split("|");
+nombre=escaparHTML(nombre.trim());
+archivo=archivo.trim();
+
+let id="qr-"+nombre.replace(/\W/g,"")+"-"+index;
 
 html+=`
 <div class="card-pro">
 <h2>${nombre}</h2>
-<img id="${id}" class="qr-img" src="${archivo}" onclick="zoomQR('${id}')">
+<img id="${id}" class="qr-img" src="${archivo}" loading="lazy"
+onclick="zoomQR('${id}')">
 <div class="botones-qr">
-<button class="btn-copy" onclick="copiarQR('${id}')">📋 Copiar</button>
-<button class="btn-download" onclick="descargarQR('${archivo}','${nombre}')">⬇ Descargar</button>
+<button onclick="copiarQR('${id}')">📋 Copiar</button>
+<button onclick="descargarQR('${archivo}','${nombre}')">⬇ Descargar</button>
 </div>
 </div>
 `;
@@ -209,15 +217,15 @@ contenedor.innerHTML="<p style='color:red'>Error cargando pagos</p>";
 }
 }
 
-
 // ===== PRECIOS =====
 
 async function cargarPrecios(){
 
 let contenedor=document.getElementById("listaPrecios");
+const timestamp = Date.now();
 
 try{
-const res=await fetch("precios.txt?v="+new Date().getTime());
+const res=await fetch("precios.txt?v="+timestamp);
 const texto=await res.text();
 
 let partes=texto.split("###");
@@ -225,9 +233,9 @@ let html="";
 
 for(let i=1;i<partes.length;i+=2){
 
-let categoria=partes[i].trim();
+let categoria=escaparHTML(partes[i].trim());
 let bloque=partes[i+1].trim();
-let visible=bloque.replaceAll("\n","<br>");
+let visible=escaparHTML(bloque).replaceAll("\n","<br>");
 
 html+=`
 <div class="categoria">
@@ -237,8 +245,7 @@ html+=`
 <div class="contenido" id="cat-${categoria}">
 <div class="bloque-precio">
 <div class="texto-precio">${visible}</div>
-<button class="btn-copiar-todo"
-onclick="copiarBloque(event,\`${bloque}\`)">
+<button onclick="copiarBloque(event,\`${bloque}\`)">
 📋 Copiar Todo
 </button>
 </div>
@@ -254,62 +261,15 @@ contenedor.innerHTML="<p style='color:red'>Error cargando precios</p>";
 }
 }
 
-
-function toggleCategoria(cat){
-
-let div=document.getElementById("cat-"+cat);
-
-if(div.classList.contains("abierto")){
-div.classList.remove("abierto");
-div.style.maxHeight="0px";
-return;
-}
-
-document.querySelectorAll(".contenido").forEach(c=>{
-c.classList.remove("abierto");
-c.style.maxHeight="0px";
-});
-
-div.classList.add("abierto");
-div.style.maxHeight=div.scrollHeight+"px";
-}
-
-
-function filtrarPrecios(){
-
-let input=document.getElementById("buscadorPrecios").value.toLowerCase();
-
-document.querySelectorAll(".categoria").forEach(cat=>{
-
-let texto=cat.innerText.toLowerCase();
-let contenido=cat.querySelector(".contenido");
-
-if(input.trim()===""){
-cat.style.display="block";
-contenido.classList.remove("abierto");
-contenido.style.maxHeight="0px";
-return;
-}
-
-if(texto.includes(input)){
-cat.style.display="block";
-contenido.classList.add("abierto");
-contenido.style.maxHeight=contenido.scrollHeight+"px";
-}else{
-cat.style.display="none";
-}
-});
-}
-
-
-// ===== GALERÍA (IGUAL A PAGOS + BUSCADOR) =====
+// ===== GALERÍA =====
 
 async function cargarGaleria(){
 
 let contenedor=document.getElementById("listaGaleria");
+const timestamp = Date.now();
 
 try{
-const res=await fetch("galeria.txt?v="+new Date().getTime());
+const res=await fetch("galeria.txt?v="+timestamp);
 const texto=await res.text();
 
 let partes=texto.split("###");
@@ -317,34 +277,35 @@ let html="";
 
 for(let i=1;i<partes.length;i+=2){
 
-let categoria=partes[i].trim();
+let categoria=escaparHTML(partes[i].trim());
 let contenido=partes[i+1].trim();
 
-html+=`<div class="bloque-galeria" data-cat="${categoria.toLowerCase()}">`;
 html+=`<h2 class="subtitulo">${categoria}</h2><div class="grid">`;
 
-contenido.split("\n").forEach(linea=>{
+contenido.split("\n").forEach((linea,index)=>{
 
 if(!linea.includes("|")) return;
 
-let datos=linea.split("|");
-let nombre=datos[0].trim();
-let archivo=datos[1].trim();
-let id="gal-"+nombre.replaceAll(" ","");
+let [nombre,archivo]=linea.split("|");
+nombre=escaparHTML(nombre.trim());
+archivo=archivo.trim();
+
+let id="gal-"+nombre.replace(/\W/g,"")+"-"+index;
 
 html+=`
 <div class="card-pro">
 <h2>${nombre}</h2>
-<img id="${id}" class="qr-img" src="${archivo}" onclick="zoomQR('${id}')">
+<img id="${id}" class="qr-img" src="${archivo}" loading="lazy"
+onclick="zoomQR('${id}')">
 <div class="botones-qr">
-<button class="btn-copy" onclick="copiarQR('${id}')">📋 Copiar</button>
-<button class="btn-download" onclick="descargarQR('${archivo}','${nombre}')">⬇ Descargar</button>
+<button onclick="copiarQR('${id}')">📋 Copiar</button>
+<button onclick="descargarQR('${archivo}','${nombre}')">⬇ Descargar</button>
 </div>
 </div>
 `;
 });
 
-html+=`</div></div>`;
+html+=`</div>`;
 }
 
 contenedor.innerHTML=html;
@@ -353,30 +314,6 @@ contenedor.innerHTML=html;
 contenedor.innerHTML="<p style='color:red'>Error cargando galería</p>";
 }
 }
-
-
-function filtrarGaleria(){
-
-let input=document.getElementById("buscadorGaleria").value.toLowerCase();
-
-document.querySelectorAll(".bloque-galeria").forEach(bloque=>{
-
-let texto=bloque.innerText.toLowerCase();
-
-if(input.trim()===""){
-bloque.style.display="block";
-return;
-}
-
-if(texto.includes(input)){
-bloque.style.display="block";
-}else{
-bloque.style.display="none";
-}
-
-});
-}
-
 
 // ===== UTIL =====
 
@@ -420,11 +357,11 @@ document.getElementById(id).classList.toggle("zoom");
 }
 
 function logout(){
-localStorage.clear();
+sessionStorage.clear();
 window.location.href="login.html";
 }
 
 </script>
 
 </body>
-</html> 
+</html>
