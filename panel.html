@@ -556,8 +556,14 @@ function filtrarMensajes(){
 
 let input=document.getElementById("buscadorMensajes").value.toLowerCase();
 
-// Buscar TODAS las tarjetas de mensajes
-let tarjetas=document.querySelectorAll("#listaMensajes .card-pro");
+let categorias=document.querySelectorAll("#listaMensajes .categoria");
+
+categorias.forEach(categoria=>{
+
+let tarjetas=categoria.querySelectorAll(".card-pro");
+let contenido=categoria.querySelector(".contenido");
+
+let algunaCoincidencia=false;
 
 tarjetas.forEach(tarjeta=>{
 
@@ -565,13 +571,31 @@ let texto=tarjeta.innerText.toLowerCase();
 
 if(input.trim()===""){
 tarjeta.style.display="block";
-return;
-}
-
-if(texto.includes(input)){
+algunaCoincidencia=true;
+}else if(texto.includes(input)){
 tarjeta.style.display="block";
+algunaCoincidencia=true;
 }else{
 tarjeta.style.display="none";
+}
+
+});
+
+// 🔥 Si hay coincidencia abre la categoría
+if(algunaCoincidencia){
+contenido.classList.add("abierto");
+contenido.style.maxHeight=contenido.scrollHeight+"px";
+categoria.style.display="block";
+}else{
+// Si no hay coincidencias la oculta
+contenido.classList.remove("abierto");
+contenido.style.maxHeight="0px";
+
+if(input.trim()===""){
+categoria.style.display="block";
+}else{
+categoria.style.display="none";
+}
 }
 
 });
