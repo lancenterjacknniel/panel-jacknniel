@@ -1,6 +1,6 @@
 ### WHATSAPP ###
 Bienvenida | Hola 👋 Bienvenido a LAN Center
-Promo Imagen | promo1.png
+Banco Unión | qr_banco.png
 
 ### SOPORTE ###
 Mensaje Soporte | Si tienes problemas llama al 70000000
