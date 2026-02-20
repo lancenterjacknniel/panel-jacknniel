@@ -1,8 +1,9 @@
 ###RECARGAS###
-Hola 👋
-Tu recarga fue realizada con éxito.
 
 Banco Economico | qr_economico.png
+
+Hola 👋
+Tu recarga fue realizada con éxito.
 
 ###CUENTAS NETFLIX###
 Hola 👋
