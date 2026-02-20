@@ -45,6 +45,7 @@ position:relative;
 <button class="btn" onclick="mostrarPagos()">💳 Métodos de Pago</button>
 <button class="btn" onclick="mostrarPrecios()">💰 Precios</button>
 <button class="btn" onclick="mostrarGaleria()">🖼 Galería</button>
+<button class="btn" onclick="mostrarMensajes()">💬 Mensajes Rápidos</button>
 </div>
 
 <br>
@@ -82,6 +83,19 @@ onkeyup="filtrarGaleria()">
 <div id="listaGaleria">⏳ Cargando galería...</div>
 </div>
 
+<!-- PANEL MENSAJES -->
+<div id="mensajesPanel" class="panel-seccion" style="display:none;">
+<h2 class="subtitulo">💬 MENSAJES RÁPIDOS</h2>
+
+<input type="text"
+id="buscadorMensajes"
+class="buscador"
+placeholder="🔍 Buscar mensaje..."
+onkeyup="filtrarMensajes()">
+
+<div id="listaMensajes">⏳ Cargando mensajes...</div>
+</div>
+
 <br>
 
 <button class="btn-salir" onclick="logout()">Salir</button>
@@ -103,6 +117,7 @@ function cerrarTodo(){
 document.getElementById("pagosPanel").style.display="none";
 document.getElementById("preciosPanel").style.display="none";
 document.getElementById("galeriaPanel").style.display="none";
+document.getElementById("mensajesPanel").style.display="none";
 }
 
 
@@ -156,6 +171,22 @@ cerrarTodo();
 panel.style.display="block";
 cargarGaleria();
 document.getElementById("buscadorGaleria").value="";
+}
+
+
+function mostrarMensajes(){
+
+let panel=document.getElementById("mensajesPanel");
+
+if(panel.style.display==="block"){
+panel.style.display="none";
+return;
+}
+
+cerrarTodo();
+panel.style.display="block";
+cargarMensajes();
+document.getElementById("buscadorMensajes").value="";
 }
 
 
@@ -251,6 +282,73 @@ contenedor.innerHTML=html;
 
 }catch{
 contenedor.innerHTML="<p style='color:red'>Error cargando precios</p>";
+}
+}
+
+async function cargarMensajes(){
+
+let contenedor=document.getElementById("listaMensajes");
+
+try{
+const res=await fetch("mensajes.txt?v="+new Date().getTime());
+const texto=await res.text();
+
+let partes=texto.split("###");
+let html="";
+
+for(let i=1;i<partes.length;i+=2){
+
+let categoria=partes[i].trim();
+let contenido=partes[i+1].trim();
+
+html+=`<div class="bloque-mensaje"><h2 class="subtitulo">${categoria}</h2><div class="grid">`;
+
+contenido.split("\n").forEach(linea=>{
+
+if(!linea.includes("|")) return;
+
+let datos=linea.split("|");
+let nombre=datos[0].trim();
+let valor=datos[1].trim();
+let id="msg-"+nombre.replaceAll(" ","");
+
+if(valor.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
+html+=`
+<div class="card-pro">
+<h2>${nombre}</h2>
+<img id="${id}" class="qr-img" src="${valor}" onclick="zoomQR('${id}')">
+<div class="botones-qr">
+<button class="btn-copy" onclick="copiarQR('${id}')">📋 Copiar</button>
+<button class="btn-download" onclick="descargarQR('${valor}','${nombre}')">⬇ Descargar</button>
+</div>
+</div>
+`;
+}else{
+html+=`
+<div class="card-pro">
+<h2>${nombre}</h2>
+<div style="padding:15px;background:#111;border-radius:10px;margin-bottom:10px;">
+${valor}
+</div>
+<div class="botones-qr">
+<button class="btn-copy"
+onclick="navigator.clipboard.writeText(\`${valor}\`);mostrarMensaje('✅ Mensaje copiado');">
+📋 Copiar
+</button>
+</div>
+</div>
+`;
+}
+
+});
+
+html+=`</div></div>`;
+}
+
+contenedor.innerHTML=html;
+
+}catch{
+contenedor.innerHTML="<p style='color:red'>Error cargando mensajes</p>";
 }
 }
 
@@ -360,6 +458,29 @@ function filtrarGaleria(){
 let input=document.getElementById("buscadorGaleria").value.toLowerCase();
 
 document.querySelectorAll(".bloque-galeria").forEach(bloque=>{
+
+let texto=bloque.innerText.toLowerCase();
+
+if(input.trim()===""){
+bloque.style.display="block";
+return;
+}
+
+if(texto.includes(input)){
+bloque.style.display="block";
+}else{
+bloque.style.display="none";
+}
+
+});
+}
+
+
+function filtrarMensajes(){
+
+let input=document.getElementById("buscadorMensajes").value.toLowerCase();
+
+document.querySelectorAll(".bloque-mensaje").forEach(bloque=>{
 
 let texto=bloque.innerText.toLowerCase();
 
