@@ -29,6 +29,7 @@ position:relative;
 
 <body>
 
+<!-- HEADER -->
 <div class="header-premium">
 <div class="top-logo">
 <img src="logo.png" class="logo">
@@ -39,24 +40,25 @@ position:relative;
 
 <hr>
 
+<!-- MENÚ -->
 <div class="menu-botones">
 <button class="btn" onclick="mostrarPagos()">💳 Métodos de Pago</button>
 <button class="btn" onclick="mostrarPrecios()">💰 Precios</button>
 <button class="btn" onclick="mostrarGaleria()">🖼 Galería</button>
-<button class="btn" onclick="mostrarMensajes()">💬 Mensajes Rápidos</button>
 </div>
 
 <br>
 
-<!-- PAGOS -->
+<!-- PANEL PAGOS -->
 <div id="pagosPanel" class="panel-seccion" style="display:none;">
 <h2 class="subtitulo">💳 MÉTODOS DE PAGO</h2>
 <div id="listaPagos">⏳ Cargando métodos...</div>
 </div>
 
-<!-- PRECIOS -->
+<!-- PANEL PRECIOS -->
 <div id="preciosPanel" class="panel-seccion" style="display:none;">
 <h2 class="subtitulo">💰 Catálogo de Precios</h2>
+<p class="mini">📌 Busca o toca una categoría para desplegar</p>
 
 <input type="text"
 id="buscadorPrecios"
@@ -67,7 +69,7 @@ onkeyup="filtrarPrecios()">
 <div id="listaPrecios">⏳ Cargando precios...</div>
 </div>
 
-<!-- GALERIA -->
+<!-- PANEL GALERÍA -->
 <div id="galeriaPanel" class="panel-seccion" style="display:none;">
 <h2 class="subtitulo">🖼 GALERÍA</h2>
 
@@ -80,25 +82,13 @@ onkeyup="filtrarGaleria()">
 <div id="listaGaleria">⏳ Cargando galería...</div>
 </div>
 
-<!-- MENSAJES -->
-<div id="mensajesPanel" class="panel-seccion" style="display:none;">
-<h2 class="subtitulo">💬 MENSAJES RÁPIDOS</h2>
-
-<input type="text"
-id="buscadorMensajes"
-class="buscador"
-placeholder="🔍 Buscar mensaje..."
-onkeyup="filtrarMensajes()">
-
-<div id="listaMensajes">⏳ Cargando mensajes...</div>
-</div>
-
 <br>
+
 <button class="btn-salir" onclick="logout()">Salir</button>
 
 <script>
 
-// LOGIN
+// 🔒 LOGIN
 let user = localStorage.getItem("user");
 if (!user) window.location.href="login.html";
 
@@ -106,54 +96,128 @@ let rol = localStorage.getItem("rol");
 document.getElementById("rolTexto").innerText =
 "Usuario: "+user+" | Rol: "+rol;
 
-// CERRAR TODO
+
+// ===== CERRAR TODO =====
+
 function cerrarTodo(){
 document.getElementById("pagosPanel").style.display="none";
 document.getElementById("preciosPanel").style.display="none";
 document.getElementById("galeriaPanel").style.display="none";
-document.getElementById("mensajesPanel").style.display="none";
 }
 
-// MOSTRAR
+
+// ===== MOSTRAR PAGOS =====
+
 function mostrarPagos(){
+
 let panel=document.getElementById("pagosPanel");
-if(panel.style.display==="block"){panel.style.display="none";return;}
-cerrarTodo();panel.style.display="block";cargarPagos();
+
+if(panel.style.display==="block"){
+panel.style.display="none";
+return;
 }
+
+cerrarTodo();
+panel.style.display="block";
+cargarPagos();
+}
+
+
+// ===== MOSTRAR PRECIOS =====
 
 function mostrarPrecios(){
+
 let panel=document.getElementById("preciosPanel");
-if(panel.style.display==="block"){panel.style.display="none";return;}
-cerrarTodo();panel.style.display="block";
+
+if(panel.style.display==="block"){
+panel.style.display="none";
+return;
+}
+
+cerrarTodo();
+panel.style.display="block";
 cargarPrecios();
 document.getElementById("buscadorPrecios").value="";
 }
 
+
+// ===== MOSTRAR GALERÍA =====
+
 function mostrarGaleria(){
+
 let panel=document.getElementById("galeriaPanel");
-if(panel.style.display==="block"){panel.style.display="none";return;}
-cerrarTodo();panel.style.display="block";
+
+if(panel.style.display==="block"){
+panel.style.display="none";
+return;
+}
+
+cerrarTodo();
+panel.style.display="block";
 cargarGaleria();
 document.getElementById("buscadorGaleria").value="";
 }
 
-function mostrarMensajes(){
-let panel=document.getElementById("mensajesPanel");
-if(panel.style.display==="block"){panel.style.display="none";return;}
-cerrarTodo();panel.style.display="block";
-cargarMensajes();
-document.getElementById("buscadorMensajes").value="";
-}
 
-// ================= MENSAJES =================
+// ===== PAGOS =====
 
-async function cargarMensajes(){
+async function cargarPagos(){
 
-let contenedor=document.getElementById("listaMensajes");
+let contenedor=document.getElementById("listaPagos");
 
 try{
+const res=await fetch("pagos.txt?v="+new Date().getTime());
+const texto=await res.text();
 
-const res=await fetch("mensajes.txt?v="+new Date().getTime());
+let partes=texto.split("###");
+let html="";
+
+for(let i=1;i<partes.length;i+=2){
+
+let categoria=partes[i].trim();
+let contenido=partes[i+1].trim();
+
+html+=`<h2 class="subtitulo">${categoria}</h2><div class="grid">`;
+
+contenido.split("\n").forEach(linea=>{
+if(!linea.includes("|")) return;
+
+let datos=linea.split("|");
+let nombre=datos[0].trim();
+let archivo=datos[1].trim();
+let id="qr-"+nombre.replaceAll(" ","");
+
+html+=`
+<div class="card-pro">
+<h2>${nombre}</h2>
+<img id="${id}" class="qr-img" src="${archivo}" onclick="zoomQR('${id}')">
+<div class="botones-qr">
+<button class="btn-copy" onclick="copiarQR('${id}')">📋 Copiar</button>
+<button class="btn-download" onclick="descargarQR('${archivo}','${nombre}')">⬇ Descargar</button>
+</div>
+</div>
+`;
+});
+
+html+=`</div>`;
+}
+
+contenedor.innerHTML=html;
+
+}catch{
+contenedor.innerHTML="<p style='color:red'>Error cargando pagos</p>";
+}
+}
+
+
+// ===== PRECIOS =====
+
+async function cargarPrecios(){
+
+let contenedor=document.getElementById("listaPrecios");
+
+try{
+const res=await fetch("precios.txt?v="+new Date().getTime());
 const texto=await res.text();
 
 let partes=texto.split("###");
@@ -163,77 +227,37 @@ for(let i=1;i<partes.length;i+=2){
 
 let categoria=partes[i].trim();
 let bloque=partes[i+1].trim();
-
-let lineas=bloque.split("\n");
-let contenidoHTML="";
-let textoParaCopiar="";
-
-lineas.forEach(linea=>{
-
-if(linea.startsWith("IMG|")){
-let archivo=linea.replace("IMG|","").trim();
-let id="msg-"+archivo.replaceAll(".","");
-
-contenidoHTML+=`
-<img id="${id}" class="qr-img"
-src="${archivo}" onclick="zoomQR('${id}')">
-
-<div class="botones-qr">
-<button class="btn-copy" onclick="copiarQR('${id}')">📋 Copiar Imagen</button>
-<button class="btn-download" onclick="descargarQR('${archivo}','imagen')">⬇ Descargar</button>
-</div>
-`;
-
-}else{
-contenidoHTML+=linea+"<br>";
-textoParaCopiar+=linea+"\n";
-}
-
-});
+let visible=bloque.replaceAll("\n","<br>");
 
 html+=`
 <div class="categoria">
-<button class="btn-categoria"
-onclick="toggleCategoria('msg-${categoria}')">
+<button class="btn-categoria" onclick="toggleCategoria('${categoria}')">
 ▶ ${categoria}
 </button>
-
-<div class="contenido" id="cat-msg-${categoria}">
+<div class="contenido" id="cat-${categoria}">
 <div class="bloque-precio">
-<div class="texto-precio">${contenidoHTML}</div>
-
+<div class="texto-precio">${visible}</div>
 <button class="btn-copiar-todo"
-onclick="copiarBloque(event,\`${textoParaCopiar}\`)">
-📋 Copiar Mensaje
+onclick="copiarBloque(event,\`${bloque}\`)">
+📋 Copiar Todo
 </button>
-
 </div>
 </div>
 </div>
 `;
-
 }
 
 contenedor.innerHTML=html;
 
 }catch{
-contenedor.innerHTML="<p style='color:red'>Error cargando mensajes</p>";
+contenedor.innerHTML="<p style='color:red'>Error cargando precios</p>";
 }
 }
 
-function filtrarMensajes(){
-let input=document.getElementById("buscadorMensajes").value.toLowerCase();
-document.querySelectorAll("#listaMensajes .categoria").forEach(cat=>{
-let texto=cat.innerText.toLowerCase();
-cat.style.display=texto.includes(input)||input===""?"block":"none";
-});
-}
-
-// ================= UTIL =================
 
 function toggleCategoria(cat){
+
 let div=document.getElementById("cat-"+cat);
-if(!div)return;
 
 if(div.classList.contains("abierto")){
 div.classList.remove("abierto");
@@ -249,6 +273,112 @@ c.style.maxHeight="0px";
 div.classList.add("abierto");
 div.style.maxHeight=div.scrollHeight+"px";
 }
+
+
+function filtrarPrecios(){
+
+let input=document.getElementById("buscadorPrecios").value.toLowerCase();
+
+document.querySelectorAll(".categoria").forEach(cat=>{
+
+let texto=cat.innerText.toLowerCase();
+let contenido=cat.querySelector(".contenido");
+
+if(input.trim()===""){
+cat.style.display="block";
+contenido.classList.remove("abierto");
+contenido.style.maxHeight="0px";
+return;
+}
+
+if(texto.includes(input)){
+cat.style.display="block";
+contenido.classList.add("abierto");
+contenido.style.maxHeight=contenido.scrollHeight+"px";
+}else{
+cat.style.display="none";
+}
+});
+}
+
+
+// ===== GALERÍA (IGUAL A PAGOS + BUSCADOR) =====
+
+async function cargarGaleria(){
+
+let contenedor=document.getElementById("listaGaleria");
+
+try{
+const res=await fetch("galeria.txt?v="+new Date().getTime());
+const texto=await res.text();
+
+let partes=texto.split("###");
+let html="";
+
+for(let i=1;i<partes.length;i+=2){
+
+let categoria=partes[i].trim();
+let contenido=partes[i+1].trim();
+
+html+=`<div class="bloque-galeria" data-cat="${categoria.toLowerCase()}">`;
+html+=`<h2 class="subtitulo">${categoria}</h2><div class="grid">`;
+
+contenido.split("\n").forEach(linea=>{
+
+if(!linea.includes("|")) return;
+
+let datos=linea.split("|");
+let nombre=datos[0].trim();
+let archivo=datos[1].trim();
+let id="gal-"+nombre.replaceAll(" ","");
+
+html+=`
+<div class="card-pro">
+<h2>${nombre}</h2>
+<img id="${id}" class="qr-img" src="${archivo}" onclick="zoomQR('${id}')">
+<div class="botones-qr">
+<button class="btn-copy" onclick="copiarQR('${id}')">📋 Copiar</button>
+<button class="btn-download" onclick="descargarQR('${archivo}','${nombre}')">⬇ Descargar</button>
+</div>
+</div>
+`;
+});
+
+html+=`</div></div>`;
+}
+
+contenedor.innerHTML=html;
+
+}catch{
+contenedor.innerHTML="<p style='color:red'>Error cargando galería</p>";
+}
+}
+
+
+function filtrarGaleria(){
+
+let input=document.getElementById("buscadorGaleria").value.toLowerCase();
+
+document.querySelectorAll(".bloque-galeria").forEach(bloque=>{
+
+let texto=bloque.innerText.toLowerCase();
+
+if(input.trim()===""){
+bloque.style.display="block";
+return;
+}
+
+if(texto.includes(input)){
+bloque.style.display="block";
+}else{
+bloque.style.display="none";
+}
+
+});
+}
+
+
+// ===== UTIL =====
 
 function copiarBloque(event,texto){
 event.stopPropagation();
@@ -297,4 +427,4 @@ window.location.href="login.html";
 </script>
 
 </body>
-</html>
+</html> 
