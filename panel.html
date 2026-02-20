@@ -556,22 +556,26 @@ function filtrarMensajes(){
 
 let input=document.getElementById("buscadorMensajes").value.toLowerCase();
 
-document.querySelectorAll(".bloque-mensaje").forEach(bloque=>{
+// Buscar TODAS las tarjetas de mensajes
+let tarjetas=document.querySelectorAll("#listaMensajes .card-pro");
 
-let texto=bloque.innerText.toLowerCase();
+tarjetas.forEach(tarjeta=>{
+
+let texto=tarjeta.innerText.toLowerCase();
 
 if(input.trim()===""){
-bloque.style.display="block";
+tarjeta.style.display="block";
 return;
 }
 
 if(texto.includes(input)){
-bloque.style.display="block";
+tarjeta.style.display="block";
 }else{
-bloque.style.display="none";
+tarjeta.style.display="none";
 }
 
 });
+
 }
 
 
