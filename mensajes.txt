@@ -1,13 +1,7 @@
-###RECARGAS###
+### WHATSAPP ###
+Bienvenida | Hola 👋 Bienvenido a LAN Center
+Promo Imagen | promo1.png
 
-Banco Economico | qr_economico.png
-
-Hola 👋
-Tu recarga fue realizada con éxito.
-
-###CUENTAS NETFLIX###
-Hola 👋
-Aquí está tu cuenta:
-Usuario:
-Clave:
-IMG|netflix.png
+### SOPORTE ###
+Mensaje Soporte | Si tienes problemas llama al 70000000
+Imagen Soporte | soporte.png
