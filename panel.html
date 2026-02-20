@@ -308,42 +308,46 @@ contenedor.innerHTML="<p style='color:red'>Error cargando precios</p>";
 async function cargarMensajes(){
 
 let contenedor=document.getElementById("listaMensajes");
-
-try{
-const res=await fetch("mensajes.txt?v="+new Date().getTime());
-const texto=await res.text();
-
-let partes=texto.split("###");
 let html="";
 
-for(let i=1;i<partes.length;i+=2){
+html += await crearCategoriaMensajes("LAN CENTER JACKNNIEL","mensajes_lan.txt");
+html += await crearCategoriaMensajes("GAME LOAD BOLIVIA","mensajes_game.txt");
 
-let categoria=partes[i].trim();
-let contenido=partes[i+1].trim();
-let visible=categoria.replaceAll(" ","_");
+contenedor.innerHTML=html;
+}
+
+
+// 🔥 FUNCIÓN PARA CREAR CADA CATEGORÍA
+async function crearCategoriaMensajes(titulo,archivo){
+
+let visible=titulo.replaceAll(" ","_");
+let html="";
 
 html+=`
 <div class="categoria">
 <button class="btn-categoria" onclick="toggleMensajes('${visible}')">
-▶ ${categoria}
+▶ ${titulo}
 </button>
 
 <div class="contenido" id="msg-${visible}">
 <div class="grid">
 `;
 
-// 🔥 NUEVO SISTEMA INTELIGENTE
-let lineas = contenido.split("\n");
+try{
 
-let nombreActual = "";
-let textoAcumulado = "";
+const res=await fetch(archivo+"?v="+new Date().getTime());
+const texto=await res.text();
+
+let contenido=texto.trim();
+let lineas=contenido.split("\n");
+
+let nombreActual="";
+let textoAcumulado="";
 
 lineas.forEach(linea=>{
 
-// Si la línea tiene "|" empieza un nuevo bloque
 if(linea.includes("|")){
 
-// Si había texto acumulado lo mostramos
 if(nombreActual && textoAcumulado){
 
 html+=`
@@ -362,12 +366,10 @@ onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('�
 `;
 }
 
-// Reiniciamos
-let partesLinea = linea.split("|");
-nombreActual = partesLinea[0].trim();
-textoAcumulado = partesLinea[1].trim();
+let partesLinea=linea.split("|");
+nombreActual=partesLinea[0].trim();
+textoAcumulado=partesLinea[1].trim();
 
-// Si es imagen la mostramos inmediatamente
 if(textoAcumulado.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
 
 let id="msgimg-"+nombreActual.replaceAll(" ","");
@@ -388,13 +390,13 @@ textoAcumulado="";
 }
 
 }else{
-// Si NO tiene "|" es continuación del mensaje
+
 textoAcumulado += "\n" + linea;
+
 }
 
 });
 
-// Mostrar último mensaje pendiente
 if(nombreActual && textoAcumulado){
 
 html+=`
@@ -413,18 +415,17 @@ onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('�
 `;
 }
 
+}catch{
+html+=`<p style="color:red">Error cargando ${archivo}</p>`;
+}
+
 html+=`
 </div>
 </div>
 </div>
 `;
-}
 
-contenedor.innerHTML=html;
-
-}catch{
-contenedor.innerHTML="<p style='color:red'>Error cargando mensajes</p>";
-}
+return html;
 }
 
 
