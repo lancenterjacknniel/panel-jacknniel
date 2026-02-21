@@ -562,69 +562,33 @@ bloque.style.display="none";
 });
 }
 
-
 function filtrarMensajes(){
 
-let input=document.getElementById("buscadorMensajes").value.toLowerCase().trim();
+let input=document.getElementById("buscadorMensajes").value.toLowerCase();
 
-let categorias=document.querySelectorAll("#listaMensajes .categoria");
+document.querySelectorAll("#listaMensajes .categoria").forEach(cat=>{
 
-categorias.forEach(categoria=>{
+let texto=cat.innerText.toLowerCase();
+let contenido=cat.querySelector(".contenido");
 
-let tarjetas=categoria.querySelectorAll(".card-pro");
-let contenido=categoria.querySelector(".contenido");
-let boton=categoria.querySelector(".btn-categoria");
+if(input.trim()===""){
 
-let algunaCoincidencia=false;
-
-tarjetas.forEach(tarjeta=>{
-
-let textoOriginal=tarjeta.innerText;
-let texto=textoOriginal.toLowerCase();
-
-if(input===""){
-
-tarjeta.style.display="block";
-
-}else if(texto.includes(input)){
-
-tarjeta.style.display="block";
-algunaCoincidencia=true;
-
-// 🔥 RESALTAR TEXTO
-let regex=new RegExp(`(${input})`,"gi");
-tarjeta.innerHTML=tarjeta.innerHTML.replace(/<mark>|<\/mark>/g,"");
-tarjeta.innerHTML=tarjeta.innerHTML.replace(regex,"<mark style='background:yellow;color:black;'>$1</mark>");
-
-}else{
-
-tarjeta.style.display="none";
+cat.style.display="block";
+contenido.classList.remove("abierto");
+contenido.style.maxHeight="0px";
+return;
 
 }
 
-});
+if(texto.includes(input)){
 
-// 🔥 COMPORTAMIENTO DE CATEGORÍAS
-if(input===""){
-
-// Si borras búsqueda → todo cerrado
-contenido.classList.remove("abierto");
-contenido.style.maxHeight="0px";
-categoria.style.display="block";
-
-}else if(algunaCoincidencia){
-
-// Si hay coincidencia → abre
+cat.style.display="block";
 contenido.classList.add("abierto");
 contenido.style.maxHeight=contenido.scrollHeight+"px";
-categoria.style.display="block";
 
 }else{
 
-// Si no hay coincidencia → ocultar categoría
-contenido.classList.remove("abierto");
-contenido.style.maxHeight="0px";
-categoria.style.display="none";
+cat.style.display="none";
 
 }
 
