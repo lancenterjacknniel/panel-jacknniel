@@ -40,6 +40,15 @@ position:relative;
 
 <hr>
 
+<div style="text-align:center;margin:25px 0;">
+<input type="text"
+id="buscadorGlobal"
+class="buscador"
+placeholder="🔍 Buscar en todo el panel..."
+onkeyup="buscadorGlobal()"
+style="max-width:500px;">
+</div>
+  
 <!-- MENÚ -->
 <div class="menu-botones">
 <button class="btn" onclick="mostrarPagos()">💳 Métodos de Pago</button>
@@ -643,6 +652,40 @@ localStorage.clear();
 window.location.href="login.html";
 }
 
+function buscadorGlobal(){
+
+let input=document.getElementById("buscadorGlobal").value.toLowerCase();
+
+// Si está vacío → mostrar todo normal
+if(input.trim()===""){
+
+document.querySelectorAll(".panel-seccion").forEach(sec=>{
+sec.style.display="none";
+});
+
+return;
+}
+
+// Mostrar todos los paneles para buscar dentro
+document.querySelectorAll(".panel-seccion").forEach(sec=>{
+sec.style.display="block";
+});
+
+// Buscar dentro de TODO el contenido
+document.querySelectorAll(".panel-seccion").forEach(seccion=>{
+
+let texto=seccion.innerText.toLowerCase();
+
+if(texto.includes(input)){
+seccion.style.display="block";
+}else{
+seccion.style.display="none";
+}
+
+});
+
+}
+  
 </script>
 
 </body>
