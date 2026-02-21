@@ -656,30 +656,40 @@ function buscadorGlobal(){
 
 let input=document.getElementById("buscadorGlobal").value.toLowerCase();
 
-// Si está vacío → mostrar todo normal
+// Si está vacío → no tocar nada
 if(input.trim()===""){
-
-document.querySelectorAll(".panel-seccion").forEach(sec=>{
-sec.style.display="none";
-});
-
 return;
 }
 
-// Mostrar todos los paneles para buscar dentro
-document.querySelectorAll(".panel-seccion").forEach(sec=>{
-sec.style.display="block";
-});
+// Buscar en tarjetas (cards)
+document.querySelectorAll(".card-pro, .bloque-precio").forEach(card=>{
 
-// Buscar dentro de TODO el contenido
-document.querySelectorAll(".panel-seccion").forEach(seccion=>{
-
-let texto=seccion.innerText.toLowerCase();
+let texto=card.innerText.toLowerCase();
 
 if(texto.includes(input)){
-seccion.style.display="block";
+card.style.display="block";
 }else{
-seccion.style.display="none";
+card.style.display="none";
+}
+
+});
+
+// Ocultar categorías vacías
+document.querySelectorAll(".categoria").forEach(cat=>{
+
+let visibles=cat.querySelectorAll(".card-pro, .bloque-precio");
+let algunoVisible=false;
+
+visibles.forEach(v=>{
+if(v.style.display!=="none"){
+algunoVisible=true;
+}
+});
+
+if(algunoVisible){
+cat.style.display="block";
+}else{
+cat.style.display="none";
 }
 
 });
