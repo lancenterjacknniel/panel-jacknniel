@@ -554,7 +554,7 @@ bloque.style.display="none";
 
 function filtrarMensajes(){
 
-let input=document.getElementById("buscadorMensajes").value.toLowerCase();
+let input=document.getElementById("buscadorMensajes").value.toLowerCase().trim();
 
 let categorias=document.querySelectorAll("#listaMensajes .categoria");
 
@@ -562,40 +562,59 @@ categorias.forEach(categoria=>{
 
 let tarjetas=categoria.querySelectorAll(".card-pro");
 let contenido=categoria.querySelector(".contenido");
+let boton=categoria.querySelector(".btn-categoria");
 
 let algunaCoincidencia=false;
 
 tarjetas.forEach(tarjeta=>{
 
-let texto=tarjeta.innerText.toLowerCase();
+let textoOriginal=tarjeta.innerText;
+let texto=textoOriginal.toLowerCase();
 
-if(input.trim()===""){
+if(input===""){
+
 tarjeta.style.display="block";
-algunaCoincidencia=true;
+
 }else if(texto.includes(input)){
+
 tarjeta.style.display="block";
 algunaCoincidencia=true;
+
+// 🔥 RESALTAR TEXTO
+let regex=new RegExp(`(${input})`,"gi");
+tarjeta.innerHTML=tarjeta.innerHTML.replace(/<mark>|<\/mark>/g,"");
+tarjeta.innerHTML=tarjeta.innerHTML.replace(regex,"<mark style='background:yellow;color:black;'>$1</mark>");
+
 }else{
+
 tarjeta.style.display="none";
+
 }
 
 });
 
-// 🔥 Si hay coincidencia abre la categoría
-if(algunaCoincidencia){
+// 🔥 COMPORTAMIENTO DE CATEGORÍAS
+if(input===""){
+
+// Si borras búsqueda → todo cerrado
+contenido.classList.remove("abierto");
+contenido.style.maxHeight="0px";
+categoria.style.display="block";
+
+}else if(algunaCoincidencia){
+
+// Si hay coincidencia → abre
 contenido.classList.add("abierto");
 contenido.style.maxHeight=contenido.scrollHeight+"px";
 categoria.style.display="block";
+
 }else{
-// Si no hay coincidencias la oculta
+
+// Si no hay coincidencia → ocultar categoría
 contenido.classList.remove("abierto");
 contenido.style.maxHeight="0px";
-
-if(input.trim()===""){
-categoria.style.display="block";
-}else{
 categoria.style.display="none";
-}
+
 }
 
 });
