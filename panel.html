@@ -39,15 +39,6 @@ position:relative;
 </div>
 
 <hr>
-
-<div style="text-align:center;margin:25px 0;">
-<input type="text"
-id="buscadorGlobal"
-class="buscador"
-placeholder="🔍 Buscar en todo el panel..."
-onkeyup="buscadorGlobal()"
-style="max-width:500px;">
-</div>
   
 <!-- MENÚ -->
 <div class="menu-botones">
@@ -650,50 +641,6 @@ document.getElementById(id).classList.toggle("zoom");
 function logout(){
 localStorage.clear();
 window.location.href="login.html";
-}
-
-function buscadorGlobal(){
-
-let input=document.getElementById("buscadorGlobal").value.toLowerCase();
-
-// Si está vacío → no tocar nada
-if(input.trim()===""){
-return;
-}
-
-// Buscar en tarjetas (cards)
-document.querySelectorAll(".card-pro, .bloque-precio").forEach(card=>{
-
-let texto=card.innerText.toLowerCase();
-
-if(texto.includes(input)){
-card.style.display="block";
-}else{
-card.style.display="none";
-}
-
-});
-
-// Ocultar categorías vacías
-document.querySelectorAll(".categoria").forEach(cat=>{
-
-let visibles=cat.querySelectorAll(".card-pro, .bloque-precio");
-let algunoVisible=false;
-
-visibles.forEach(v=>{
-if(v.style.display!=="none"){
-algunoVisible=true;
-}
-});
-
-if(algunoVisible){
-cat.style.display="block";
-}else{
-cat.style.display="none";
-}
-
-});
-
 }
   
 </script>
