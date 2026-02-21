@@ -350,11 +350,16 @@ if(linea.includes("|")){
 
 if(nombreActual && textoAcumulado){
 
+let textoSeguro = textoAcumulado
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;");
+
 html+=`
 <div class="card-pro">
 <h2>${nombreActual}</h2>
 <div style="padding:15px;background:#111;border-radius:10px;margin-bottom:10px;white-space:pre-line;">
-${textoAcumulado}
+${textoSeguro}
 </div>
 <div class="botones-qr">
 <button class="btn-copy"
@@ -397,13 +402,19 @@ textoAcumulado += "\n" + linea;
 
 });
 
+// 🔥 Mostrar último bloque pendiente
 if(nombreActual && textoAcumulado){
+
+let textoSeguro = textoAcumulado
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;");
 
 html+=`
 <div class="card-pro">
 <h2>${nombreActual}</h2>
 <div style="padding:15px;background:#111;border-radius:10px;margin-bottom:10px;white-space:pre-line;">
-${textoAcumulado}
+${textoSeguro}
 </div>
 <div class="botones-qr">
 <button class="btn-copy"
