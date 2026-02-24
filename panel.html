@@ -464,26 +464,45 @@ function filtrarPrecios(){
 
 let input=document.getElementById("buscadorPrecios").value.toLowerCase();
 
-document.querySelectorAll(".categoria").forEach(cat=>{
+document.querySelectorAll("#listaPrecios .bloque-precio").forEach(card=>{
 
-let texto=cat.innerText.toLowerCase();
-let contenido=cat.querySelector(".contenido");
+let texto=card.innerText.toLowerCase();
+
+if(input.trim()===""){
+card.style.display="block";
+}else if(texto.includes(input)){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+
+});
+
+// Ocultar categorías vacías
+document.querySelectorAll("#listaPrecios .categoria").forEach(cat=>{
+
+let tarjetas=cat.querySelectorAll(".bloque-precio");
+let algunaVisible=false;
+
+tarjetas.forEach(t=>{
+if(t.style.display!=="none"){
+algunaVisible=true;
+}
+});
 
 if(input.trim()===""){
 cat.style.display="block";
-contenido.classList.remove("abierto");
-contenido.style.maxHeight="0px";
-return;
-}
-
-if(texto.includes(input)){
+}else if(algunaVisible){
 cat.style.display="block";
-contenido.classList.add("abierto");
-contenido.style.maxHeight=contenido.scrollHeight+"px";
+cat.querySelector(".contenido").classList.add("abierto");
+cat.querySelector(".contenido").style.maxHeight=
+cat.querySelector(".contenido").scrollHeight+"px";
 }else{
 cat.style.display="none";
 }
+
 });
+
 }
 
 
@@ -566,30 +585,41 @@ function filtrarMensajes(){
 
 let input=document.getElementById("buscadorMensajes").value.toLowerCase();
 
-document.querySelectorAll("#listaMensajes .categoria").forEach(cat=>{
+document.querySelectorAll("#listaMensajes .card-pro").forEach(card=>{
 
-let texto=cat.innerText.toLowerCase();
-let contenido=cat.querySelector(".contenido");
+let texto=card.innerText.toLowerCase();
 
 if(input.trim()===""){
-
-cat.style.display="block";
-contenido.classList.remove("abierto");
-contenido.style.maxHeight="0px";
-return;
-
+card.style.display="block";
+}else if(texto.includes(input)){
+card.style.display="block";
+}else{
+card.style.display="none";
 }
 
-if(texto.includes(input)){
+});
 
+// Ocultar categorías vacías
+document.querySelectorAll("#listaMensajes .categoria").forEach(cat=>{
+
+let tarjetas=cat.querySelectorAll(".card-pro");
+let algunaVisible=false;
+
+tarjetas.forEach(t=>{
+if(t.style.display!=="none"){
+algunaVisible=true;
+}
+});
+
+if(input.trim()===""){
 cat.style.display="block";
-contenido.classList.add("abierto");
-contenido.style.maxHeight=contenido.scrollHeight+"px";
-
+}else if(algunaVisible){
+cat.style.display="block";
+cat.querySelector(".contenido").classList.add("abierto");
+cat.querySelector(".contenido").style.maxHeight=
+cat.querySelector(".contenido").scrollHeight+"px";
 }else{
-
 cat.style.display="none";
-
 }
 
 });
