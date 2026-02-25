@@ -602,13 +602,34 @@ function filtrarMensajes(){
 
 let input=document.getElementById("buscadorMensajes").value.toLowerCase();
 
+// 🔹 SI ESTÁ VACÍO → VOLVER AL ESTADO ORIGINAL
+if(input.trim()===""){
+
+// Mostrar todas las tarjetas
+document.querySelectorAll("#listaMensajes .card-pro").forEach(card=>{
+card.style.display="block";
+});
+
+// Mostrar todas las categorías
+document.querySelectorAll("#listaMensajes .categoria").forEach(cat=>{
+cat.style.display="block";
+
+// Cerrar todas las categorías
+let contenido=cat.querySelector(".contenido");
+contenido.classList.remove("abierto");
+contenido.style.maxHeight="0px";
+});
+
+return;
+}
+
+
+// 🔹 FILTRAR TARJETAS
 document.querySelectorAll("#listaMensajes .card-pro").forEach(card=>{
 
 let texto=card.innerText.toLowerCase();
 
-if(input.trim()===""){
-card.style.display="block";
-}else if(texto.includes(input)){
+if(texto.includes(input)){
 card.style.display="block";
 }else{
 card.style.display="none";
@@ -616,7 +637,8 @@ card.style.display="none";
 
 });
 
-// Ocultar categorías vacías
+
+// 🔹 OCULTAR CATEGORÍAS VACÍAS Y ABRIR LAS QUE TENGAN RESULTADOS
 document.querySelectorAll("#listaMensajes .categoria").forEach(cat=>{
 
 let tarjetas=cat.querySelectorAll(".card-pro");
@@ -628,21 +650,23 @@ algunaVisible=true;
 }
 });
 
-if(input.trim()===""){
+if(algunaVisible){
+
 cat.style.display="block";
-}else if(algunaVisible){
-cat.style.display="block";
-cat.querySelector(".contenido").classList.add("abierto");
-cat.querySelector(".contenido").style.maxHeight=
-cat.querySelector(".contenido").scrollHeight+"px";
+
+let contenido=cat.querySelector(".contenido");
+contenido.classList.add("abierto");
+contenido.style.maxHeight=contenido.scrollHeight+"px";
+
 }else{
+
 cat.style.display="none";
+
 }
 
 });
 
 }
-
 
 // ===== UTIL =====
 
