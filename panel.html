@@ -464,13 +464,30 @@ function filtrarPrecios(){
 
 let input=document.getElementById("buscadorPrecios").value.toLowerCase();
 
+// 🔹 Si está vacío → volver al estado original
+if(input.trim()===""){
+
+document.querySelectorAll("#listaPrecios .bloque-precio").forEach(card=>{
+card.style.display="block";
+});
+
+document.querySelectorAll("#listaPrecios .categoria").forEach(cat=>{
+cat.style.display="block";
+
+let contenido=cat.querySelector(".contenido");
+contenido.classList.remove("abierto");
+contenido.style.maxHeight="0px";
+});
+
+return;
+}
+
+// 🔹 Buscar por bloque individual
 document.querySelectorAll("#listaPrecios .bloque-precio").forEach(card=>{
 
 let texto=card.innerText.toLowerCase();
 
-if(input.trim()===""){
-card.style.display="block";
-}else if(texto.includes(input)){
+if(texto.includes(input)){
 card.style.display="block";
 }else{
 card.style.display="none";
@@ -478,7 +495,7 @@ card.style.display="none";
 
 });
 
-// Ocultar categorías vacías
+// 🔹 Mostrar solo categorías que tengan coincidencia
 document.querySelectorAll("#listaPrecios .categoria").forEach(cat=>{
 
 let tarjetas=cat.querySelectorAll(".bloque-precio");
@@ -490,13 +507,13 @@ algunaVisible=true;
 }
 });
 
-if(input.trim()===""){
+if(algunaVisible){
 cat.style.display="block";
-}else if(algunaVisible){
-cat.style.display="block";
-cat.querySelector(".contenido").classList.add("abierto");
-cat.querySelector(".contenido").style.maxHeight=
-cat.querySelector(".contenido").scrollHeight+"px";
+
+let contenido=cat.querySelector(".contenido");
+contenido.classList.add("abierto");
+contenido.style.maxHeight=contenido.scrollHeight+"px";
+
 }else{
 cat.style.display="none";
 }
