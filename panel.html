@@ -464,6 +464,13 @@ function filtrarPrecios(){
 
 let input=document.getElementById("buscadorPrecios").value.toLowerCase();
 
+// 🔥 NUEVO: Scroll automático al panel
+window.scrollTo({
+top: document.getElementById("preciosPanel").offsetTop - 20,
+behavior: "smooth"
+});
+
+
 // 🔹 Si está vacío → volver al estado original
 if(input.trim()===""){
 
@@ -482,6 +489,7 @@ contenido.style.maxHeight="0px";
 return;
 }
 
+
 // 🔹 Buscar por bloque individual
 document.querySelectorAll("#listaPrecios .bloque-precio").forEach(card=>{
 
@@ -494,6 +502,7 @@ card.style.display="none";
 }
 
 });
+
 
 // 🔹 Mostrar solo categorías que tengan coincidencia
 document.querySelectorAll("#listaPrecios .categoria").forEach(cat=>{
@@ -576,28 +585,82 @@ contenedor.innerHTML="<p style='color:red'>Error cargando galería</p>";
 }
 
 
-function filtrarGaleria(){
+function filtrarMensajes(){
 
-let input=document.getElementById("buscadorGaleria").value.toLowerCase();
+// 🔥 SCROLL AUTOMÁTICO AL BUSCAR
+window.scrollTo({
+top: document.getElementById("mensajesPanel").offsetTop - 20,
+behavior: "smooth"
+});
 
-document.querySelectorAll(".bloque-galeria").forEach(bloque=>{
+let input=document.getElementById("buscadorMensajes").value.toLowerCase();
 
-let texto=bloque.innerText.toLowerCase();
-
+// 🔹 SI ESTÁ VACÍO → VOLVER AL ESTADO ORIGINAL
 if(input.trim()===""){
-bloque.style.display="block";
+
+// Mostrar todas las tarjetas
+document.querySelectorAll("#listaMensajes .card-pro").forEach(card=>{
+card.style.display="block";
+});
+
+// Mostrar todas las categorías
+document.querySelectorAll("#listaMensajes .categoria").forEach(cat=>{
+cat.style.display="block";
+
+// Cerrar todas las categorías
+let contenido=cat.querySelector(".contenido");
+contenido.classList.remove("abierto");
+contenido.style.maxHeight="0px";
+});
+
 return;
 }
 
+
+// 🔹 FILTRAR TARJETAS
+document.querySelectorAll("#listaMensajes .card-pro").forEach(card=>{
+
+let texto=card.innerText.toLowerCase();
+
 if(texto.includes(input)){
-bloque.style.display="block";
+card.style.display="block";
 }else{
-bloque.style.display="none";
+card.style.display="none";
 }
 
 });
+
+
+// 🔹 OCULTAR CATEGORÍAS VACÍAS Y ABRIR LAS QUE TENGAN RESULTADOS
+document.querySelectorAll("#listaMensajes .categoria").forEach(cat=>{
+
+let tarjetas=cat.querySelectorAll(".card-pro");
+let algunaVisible=false;
+
+tarjetas.forEach(t=>{
+if(t.style.display!=="none"){
+algunaVisible=true;
+}
+});
+
+if(algunaVisible){
+
+cat.style.display="block";
+
+let contenido=cat.querySelector(".contenido");
+contenido.classList.add("abierto");
+contenido.style.maxHeight=contenido.scrollHeight+"px";
+
+}else{
+
+cat.style.display="none";
+
 }
 
+});
+
+}
+  
 function filtrarMensajes(){
 
 // 🔥 SCROLL AUTOMÁTICO AL BUSCAR
