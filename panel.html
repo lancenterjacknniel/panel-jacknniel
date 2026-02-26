@@ -460,75 +460,65 @@ div.style.maxHeight=div.scrollHeight+"px";
 }
 
 
-function filtrarPrecios(){
+function filtrarPrecios() {
+    let input = document.getElementById("buscadorPrecios").value.toLowerCase();
 
-let input=document.getElementById("buscadorPrecios").value.toLowerCase();
+    // 🔹 Si está vacío → volver al estado original
+    if (input.trim() === "") {
 
-// 🔥 NUEVO: Scroll automático al panel
-window.scrollTo({
-top: document.getElementById("preciosPanel").offsetTop - 20,
-behavior: "smooth"
-});
+        document.querySelectorAll("#listaPrecios .bloque-precio").forEach(card => {
+            card.style.display = "block";
+        });
 
+        document.querySelectorAll("#listaPrecios .categoria").forEach(cat => {
+            cat.style.display = "block";
 
-// 🔹 Si está vacío → volver al estado original
-if(input.trim()===""){
+            let contenido = cat.querySelector(".contenido");
+            if (contenido) {
+                contenido.classList.remove("abierto");
+                contenido.style.maxHeight = "0px";
+            }
+        });
 
-document.querySelectorAll("#listaPrecios .bloque-precio").forEach(card=>{
-card.style.display="block";
-});
+        return;
+    }
 
-document.querySelectorAll("#listaPrecios .categoria").forEach(cat=>{
-cat.style.display="block";
+    // 🔹 Buscar por bloque individual
+    document.querySelectorAll("#listaPrecios .bloque-precio").forEach(card => {
+        let texto = card.innerText.toLowerCase();
 
-let contenido=cat.querySelector(".contenido");
-contenido.classList.remove("abierto");
-contenido.style.maxHeight="0px";
-});
+        if (texto.includes(input)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+    });
 
-return;
-}
+    // 🔹 Mostrar solo categorías que tengan coincidencia
+    document.querySelectorAll("#listaPrecios .categoria").forEach(cat => {
 
+        let tarjetas = cat.querySelectorAll(".bloque-precio");
+        let algunaVisible = false;
 
-// 🔹 Buscar por bloque individual
-document.querySelectorAll("#listaPrecios .bloque-precio").forEach(card=>{
+        tarjetas.forEach(t => {
+            if (t.style.display !== "none") {
+                algunaVisible = true;
+            }
+        });
 
-let texto=card.innerText.toLowerCase();
+        if (algunaVisible) {
+            cat.style.display = "block";
 
-if(texto.includes(input)){
-card.style.display="block";
-}else{
-card.style.display="none";
-}
+            let contenido = cat.querySelector(".contenido");
+            if (contenido) {
+                contenido.classList.add("abierto");
+                contenido.style.maxHeight = contenido.scrollHeight + "px";
+            }
 
-});
-
-
-// 🔹 Mostrar solo categorías que tengan coincidencia
-document.querySelectorAll("#listaPrecios .categoria").forEach(cat=>{
-
-let tarjetas=cat.querySelectorAll(".bloque-precio");
-let algunaVisible=false;
-
-tarjetas.forEach(t=>{
-if(t.style.display!=="none"){
-algunaVisible=true;
-}
-});
-
-if(algunaVisible){
-cat.style.display="block";
-
-let contenido=cat.querySelector(".contenido");
-contenido.classList.add("abierto");
-contenido.style.maxHeight=contenido.scrollHeight+"px";
-
-}else{
-cat.style.display="none";
-}
-
-});
-
+        } else {
+            cat.style.display = "none";
+        }
+    });
 }
 
 
