@@ -600,6 +600,12 @@ bloque.style.display="none";
 
 function filtrarMensajes(){
 
+// 🔥 SCROLL AUTOMÁTICO AL BUSCAR
+window.scrollTo({
+top: document.getElementById("mensajesPanel").offsetTop - 20,
+behavior: "smooth"
+});
+
 let input=document.getElementById("buscadorMensajes").value.toLowerCase();
 
 // 🔹 SI ESTÁ VACÍO → VOLVER AL ESTADO ORIGINAL
@@ -667,7 +673,7 @@ cat.style.display="none";
 });
 
 }
-
+  
 // ===== UTIL =====
 
 function copiarBloque(event,texto){
