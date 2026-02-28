@@ -40,13 +40,6 @@ position:relative;
 
 <hr>
 
-<!-- 🔎 BUSCADOR GENERAL -->
-<input type="text"
-id="buscadorGeneral"
-class="buscador"
-placeholder="🔎 Buscar en todo el panel..."
-onkeyup="filtrarGeneral()">
-  
 <!-- MENÚ -->
 <div class="menu-botones">
 <button class="btn" onclick="mostrarPagos()">💳 Métodos de Pago</button>
@@ -778,70 +771,6 @@ document.getElementById(id).classList.toggle("zoom");
 function logout(){
 localStorage.clear();
 window.location.href="login.html";
-}
-
-function logout(){
-localStorage.clear();
-window.location.href="login.html";
-}
-
-
-/* 🔎 BUSCADOR GENERAL */
-function filtrarGeneral(){
-
-let input=document.getElementById("buscadorGeneral").value.toLowerCase();
-
-if(input.trim()===""){
-cerrarTodo();
-return;
-}
-
-document.getElementById("pagosPanel").style.display="block";
-document.getElementById("preciosPanel").style.display="block";
-document.getElementById("galeriaPanel").style.display="block";
-document.getElementById("mensajesPanel").style.display="block";
-
-document.querySelectorAll(".card-pro, .bloque-precio").forEach(card=>{
-
-let texto=card.innerText.toLowerCase();
-
-if(texto.includes(input)){
-card.style.display="block";
-}else{
-card.style.display="none";
-}
-
-});
-
-document.querySelectorAll(".categoria").forEach(cat=>{
-
-let tarjetas=cat.querySelectorAll(".card-pro, .bloque-precio");
-let algunaVisible=false;
-
-tarjetas.forEach(t=>{
-if(t.style.display!=="none"){
-algunaVisible=true;
-}
-});
-
-if(algunaVisible){
-
-cat.style.display="block";
-
-let contenido=cat.querySelector(".contenido");
-if(contenido){
-contenido.classList.add("abierto");
-contenido.style.maxHeight=contenido.scrollHeight+"px";
-}
-
-}else{
-cat.style.display="none";
-}
-
-});
-
-window.scrollTo({ top: 0, behavior: "smooth" });
-
 }
   
 </script>
