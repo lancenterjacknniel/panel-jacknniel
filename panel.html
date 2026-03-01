@@ -460,65 +460,51 @@ div.style.maxHeight=div.scrollHeight+"px";
 }
 
 
-function filtrarPrecios() {
-    let input = document.getElementById("buscadorPrecios").value.toLowerCase();
+function filtrarPrecios(){
 
-    // 🔹 Si está vacío → volver al estado original
-    if (input.trim() === "") {
+let input = document.getElementById("buscadorPrecios").value.toLowerCase();
+let categorias = document.querySelectorAll("#listaPrecios .categoria");
 
-        document.querySelectorAll("#listaPrecios .bloque-precio").forEach(card => {
-            card.style.display = "block";
-        });
+// 🔹 SI ESTÁ VACÍO → VOLVER TODO NORMAL
+if(input.trim() === ""){
 
-        document.querySelectorAll("#listaPrecios .categoria").forEach(cat => {
-            cat.style.display = "block";
+categorias.forEach(cat=>{
+cat.style.display = "block";
 
-            let contenido = cat.querySelector(".contenido");
-            if (contenido) {
-                contenido.classList.remove("abierto");
-                contenido.style.maxHeight = "0px";
-            }
-        });
+let contenido = cat.querySelector(".contenido");
+contenido.classList.remove("abierto");
+contenido.style.maxHeight = "0px";
+});
 
-        return;
-    }
+window.scrollTo({ top: 0, behavior: "smooth" });
+return;
+}
 
-    // 🔹 Buscar por bloque individual
-    document.querySelectorAll("#listaPrecios .bloque-precio").forEach(card => {
-        let texto = card.innerText.toLowerCase();
 
-        if (texto.includes(input)) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
-    });
+// 🔹 FILTRAR CATEGORÍAS COMPLETAS
+categorias.forEach(cat=>{
 
-    // 🔹 Mostrar solo categorías que tengan coincidencia
-    document.querySelectorAll("#listaPrecios .categoria").forEach(cat => {
+let textoCompleto = cat.innerText.toLowerCase();
+let contenido = cat.querySelector(".contenido");
 
-        let tarjetas = cat.querySelectorAll(".bloque-precio");
-        let algunaVisible = false;
+if(textoCompleto.includes(input)){
 
-        tarjetas.forEach(t => {
-            if (t.style.display !== "none") {
-                algunaVisible = true;
-            }
-        });
+cat.style.display = "block";
 
-        if (algunaVisible) {
-            cat.style.display = "block";
+// abrir automáticamente
+contenido.classList.add("abierto");
+contenido.style.maxHeight = contenido.scrollHeight + "px";
 
-            let contenido = cat.querySelector(".contenido");
-            if (contenido) {
-                contenido.classList.add("abierto");
-                contenido.style.maxHeight = contenido.scrollHeight + "px";
-            }
+}else{
 
-        } else {
-            cat.style.display = "none";
-        }
-    });
+cat.style.display = "none";
+
+}
+
+});
+
+window.scrollTo({ top: 0, behavior: "smooth" });
+
 }
 
 
