@@ -463,6 +463,10 @@ div.style.maxHeight=div.scrollHeight+"px";
 function filtrarPrecios(){
 
 let input = document.getElementById("buscadorPrecios").value.toLowerCase();
+
+// 🔥 SUBIR AUTOMÁTICAMENTE ARRIBA
+window.scrollTo({ top: 0, behavior: "smooth" });
+
 let categorias = document.querySelectorAll("#listaPrecios .categoria");
 
 // 🔹 SI ESTÁ VACÍO → VOLVER TODO NORMAL
