@@ -2,6 +2,12 @@
 Banco Unión | qr_banco.png
 Yasta | qr_yasta.png
 
+Bienvenida |
+Hola 👋
+
+Bienvenido a LAN Center 🎮
+Promo de hoy es una vix de regalo 🔥
+
 ###GAME LOAD BOLIVIA###
 Banco Economico | qr_economico.png
 Binance Pay | qr_binance.png
