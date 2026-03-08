@@ -408,7 +408,7 @@ let textoAcumulado="";
 
 lineas.forEach(linea=>{
 
-linea=linea.trim();
+linea=linea.replace("\r","");
 
 if(linea.includes("|")){
 
