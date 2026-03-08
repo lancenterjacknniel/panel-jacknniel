@@ -681,3 +681,22 @@ body::before {
   line-height: 1.7;
   text-align: left;
 }
+
+.texto-pro p{
+margin:5px 0;
+}
+
+.texto-pro li{
+margin-left:15px;
+}
+
+.texto-pro h3{
+color:yellow;
+margin-top:10px;
+}
+
+.texto-pro hr{
+margin:15px 0;
+border:1px solid cyan;
+}
+
