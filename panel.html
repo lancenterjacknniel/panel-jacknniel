@@ -1057,7 +1057,69 @@ card.style.display="none";
 }
 
 cargarCategorias();
-  
+
+
+ function procesarTextoPro(texto){
+
+let lineas = texto.split("\n");
+let resultado = "";
+
+lineas.forEach(l=>{
+
+l = l.trim();
+
+if(l === ""){
+
+resultado += "<br>";
+return;
+
+}
+
+// TITULOS
+if(l.startsWith("#")){
+resultado += `<h3 style="color:yellow;margin-top:10px;">${l.replace("#","")}</h3>`;
+return;
+}
+
+// LISTAS
+if(l.startsWith("•")){
+resultado += `<div style="margin-left:10px;">• ${l.replace("•","")}</div>`;
+return;
+}
+
+// BOTONES
+if(l.startsWith("[Boton]")){
+
+let partes = l.replace("[Boton]","").split("|");
+
+let textoBtn = partes[0].trim();
+let link = partes[1].trim();
+
+resultado += `
+<a href="${link}" target="_blank">
+<button class="btn" style="margin-top:10px;">
+${textoBtn}
+</button>
+</a>
+`;
+
+return;
+}
+
+// SEPARADOR
+if(l==="---"){
+resultado += `<hr style="margin:10px 0;border:1px solid cyan;">`;
+return;
+}
+
+// TEXTO NORMAL
+resultado += `<div>${l}</div>`;
+
+});
+
+return resultado;
+
+}
   
 </script>
 
