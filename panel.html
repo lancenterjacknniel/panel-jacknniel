@@ -42,8 +42,10 @@ position:relative;
 <hr>
 
 <!-- MENU -->
-<div class="menu-botones">
+<div class="menu-botones" id="menuCategorias"></div>
 
+<div id="panelDinamico"></div>
+  
 <button class="btn" onclick="abrirPanel('pagosPanel')">
 💳 Métodos de Pago
 </button>
@@ -500,6 +502,175 @@ mostrarMensaje("Imagen copiada")
 
 }
 
+async function cargarCategorias(){
+
+let menu = document.getElementById("menuCategorias");
+let panel = document.getElementById("panelDinamico");
+
+try{
+
+const res = await fetch("categorias.txt?v="+new Date().getTime());
+const texto = await res.text();
+
+let lineas = texto.split("\n");
+
+lineas.forEach(linea=>{
+
+if(!linea.includes("|")) return;
+
+let datos = linea.split("|");
+
+let nombre = datos[0].trim();
+let archivo = datos[1].trim();
+
+let id = nombre.replaceAll(" ","_");
+
+menu.innerHTML += `
+<button class="btn" onclick="abrirCategoria('${id}','${archivo}','${nombre}')">
+${nombre}
+</button>
+`;
+
+panel.innerHTML += `
+<div id="panel_${id}" class="panel-seccion" style="display:none;">
+<h2 class="subtitulo">${nombre}</h2>
+
+<input class="buscador"
+placeholder="🔍 Buscar..."
+onkeyup="buscarGeneral('${id}')">
+
+<div id="contenido_${id}">⏳ Cargando...</div>
+</div>
+`;
+
+});
+
+}catch{
+
+menu.innerHTML = "Error cargando categorias";
+
+}
+
+}
+
+function abrirCategoria(id,archivo,titulo){
+
+document.querySelectorAll(".panel-seccion").forEach(p=>{
+p.style.display="none";
+});
+
+let panel = document.getElementById("panel_"+id);
+panel.style.display="block";
+
+cargarContenido(archivo,"contenido_"+id);
+
+}
+
+async function cargarContenido(archivo,contenedor){
+
+let div = document.getElementById(contenedor);
+
+try{
+
+const res = await fetch(archivo+"?v="+new Date().getTime());
+const texto = await res.text();
+
+let html="";
+
+let lineas = texto.split("\n");
+
+lineas.forEach(linea=>{
+
+if(!linea.includes("|")) return;
+
+let datos = linea.split("|");
+
+let nombre = datos[0].trim();
+let valor = datos[1].trim();
+
+if(valor.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
+
+let id="img_"+nombre.replaceAll(" ","");
+
+html += `
+<div class="card-pro">
+<h2>${nombre}</h2>
+
+<img id="${id}" class="qr-img"
+src="${valor}"
+onclick="zoomQR('${id}')">
+
+<div class="botones-qr">
+
+<button class="btn-copy"
+onclick="copiarQR('${id}')">
+📋 Copiar
+</button>
+
+<button class="btn-download"
+onclick="descargarQR('${valor}','${nombre}')">
+⬇ Descargar
+</button>
+
+</div>
+</div>
+`;
+
+}else{
+
+html += `
+<div class="card-pro">
+<h2>${nombre}</h2>
+
+<div style="padding:15px;background:#111;border-radius:10px;white-space:pre-line;">
+${valor}
+</div>
+
+<button class="btn-copy"
+onclick="navigator.clipboard.writeText(\`${valor}\`);mostrarMensaje('Copiado');">
+📋 Copiar
+</button>
+
+</div>
+`;
+
+}
+
+});
+
+div.innerHTML = html;
+
+}catch{
+
+div.innerHTML = "Error cargando archivo";
+
+}
+
+}
+
+function buscarGeneral(id){
+
+let input = event.target.value.toLowerCase();
+
+let contenedor = document.getElementById("contenido_"+id);
+
+contenedor.querySelectorAll(".card-pro").forEach(card=>{
+
+let texto = card.innerText.toLowerCase();
+
+if(texto.includes(input)){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+
+});
+
+}
+
+cargarCategorias();
+
+  
 function descargarQR(url,nombre){
 
 let a=document.createElement("a")
