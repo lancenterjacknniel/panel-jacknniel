@@ -3,4 +3,4 @@ Precios|precios.txt
 Galeria|galeria.txt
 Mensajes Rapidos|mensajes.txt
 GAME LOAD BOLIVIA|gameload.txt
-LAN CENTERJACKNNIEL|lancenter.txt
+LAN CENTERJACKNNIEL|mensajes_lan.txt
