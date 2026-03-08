@@ -422,15 +422,17 @@ let textoSeguro = textoAcumulado
 html+=`
 <div class="card-pro">
 <h2>${nombreActual}</h2>
-<div style="padding:15px;background:#111;border-radius:10px;margin-bottom:10px;white-space:pre-line;">
-${textoSeguro}
+<div class="texto-pro">
+${procesarTexto(textoSeguro)}
 </div>
+
 <div class="botones-qr">
 <button class="btn-copy"
-onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('✅ Mensaje copiado');">
+onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`)">
 📋 Copiar
 </button>
 </div>
+
 </div>
 `;
 }
@@ -438,10 +440,7 @@ onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('�
 let partesLinea=linea.split("|");
 
 nombreActual=partesLinea[0].trim();
-
-/* 🔥 CORRECCIÓN IMPORTANTE */
 textoAcumulado=partesLinea.slice(1).join("|").trim();
-
 
 if(textoAcumulado.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
 
@@ -450,11 +449,22 @@ let id="msgimg-"+nombreActual.replaceAll(" ","");
 html+=`
 <div class="card-pro">
 <h2>${nombreActual}</h2>
-<img id="${id}" class="qr-img" src="${textoAcumulado}" onclick="zoomQR('${id}')">
+
+<img id="${id}" class="qr-img"
+src="${textoAcumulado}"
+onclick="zoomQR('${id}')">
+
 <div class="botones-qr">
-<button class="btn-copy" onclick="copiarQR('${id}')">📋 Copiar</button>
-<button class="btn-download" onclick="descargarQR('${textoAcumulado}','${nombreActual}')">⬇ Descargar</button>
+<button class="btn-copy" onclick="copiarQR('${id}')">
+📋 Copiar
+</button>
+
+<button class="btn-download"
+onclick="descargarQR('${textoAcumulado}','${nombreActual}')">
+⬇ Descargar
+</button>
 </div>
+
 </div>
 `;
 
@@ -470,8 +480,6 @@ textoAcumulado += "\n" + linea;
 
 });
 
-
-// 🔥 Mostrar último bloque pendiente
 if(nombreActual && textoAcumulado){
 
 let textoSeguro = textoAcumulado
@@ -481,22 +489,28 @@ let textoSeguro = textoAcumulado
 
 html+=`
 <div class="card-pro">
+
 <h2>${nombreActual}</h2>
-<div style="padding:15px;background:#111;border-radius:10px;margin-bottom:10px;white-space:pre-line;">
-${textoSeguro}
+
+<div class="texto-pro">
+${procesarTexto(textoSeguro)}
 </div>
+
 <div class="botones-qr">
 <button class="btn-copy"
-onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('✅ Mensaje copiado');">
+onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`)">
 📋 Copiar
 </button>
 </div>
+
 </div>
 `;
 }
 
 }catch{
+
 html+=`<p style="color:red">Error cargando ${archivo}</p>`;
+
 }
 
 html+=`
@@ -506,8 +520,53 @@ html+=`
 `;
 
 return html;
+
 }
 
+function procesarTexto(texto){
+
+let lineas=texto.split("\n");
+let resultado="";
+
+lineas.forEach(l=>{
+
+if(l.startsWith("#")){
+
+resultado+=`<h3>${l.replace("#","")}</h3>`;
+
+}else if(l.startsWith("•")){
+
+resultado+=`<li>${l.replace("•","")}</li>`;
+
+}else if(l.startsWith("[Botón]")){
+
+let partes=l.replace("[Botón]","").split("|");
+
+resultado+=`
+<a href="${partes[1]}" target="_blank">
+<button class="btn">
+${partes[0]}
+</button>
+</a>
+`;
+
+}else if(l==="---"){
+
+resultado+=`<hr>`;
+
+}else{
+
+resultado+=`<p>${l}</p>`;
+
+}
+
+});
+
+return resultado;
+
+}
+
+ 
 function toggleCategoria(cat){
 
 let div=document.getElementById("cat-"+cat);
