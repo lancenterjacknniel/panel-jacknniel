@@ -1,6 +1,8 @@
-Pagos|pagos.txt
-Precios|precios.txt
-Galeria|galeria.txt
-Mensajes Rapidos|mensajes_lan.txt
-GAME LOAD BOLIVIA|gameload.txt
-LAN CENTERJACKNNIEL|mensajes_lan.txt
+Métodos de Pago | pagos.txt
+Precios | precios.txt
+Galería | galeria.txt
+Mensajes Rápidos | mensajes_lan.txt
+Game Load Bolivia | mensajes_game.txt
+Promociones | promos.txt
+
+NOMBRE BOTON | ARCHIVO TXT
