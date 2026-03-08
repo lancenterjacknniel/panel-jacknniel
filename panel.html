@@ -400,7 +400,7 @@ try{
 const res=await fetch(archivo+"?v="+new Date().getTime());
 const texto=await res.text();
 
-let contenido=texto.trim();
+let contenido=texto;
 let lineas=contenido.split("\n");
 
 let nombreActual="";
