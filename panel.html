@@ -410,6 +410,11 @@ lineas.forEach(linea=>{
 
 linea=linea.replace("\r","");
 
+if(linea.trim()===""){
+textoAcumulado += "\n";
+return;
+}
+
 if(linea.includes("|")){
 
 if(nombreActual && textoAcumulado){
