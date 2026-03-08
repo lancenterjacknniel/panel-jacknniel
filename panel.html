@@ -379,7 +379,8 @@ contenedor.innerHTML=html;
 
 
 // 🔥 FUNCIÓN PARA CREAR CADA CATEGORÍA
-async function crearCategoriaMensajes(titulo,archivo){
+
+ async function crearCategoriaMensajes(titulo,archivo){
 
 let visible=titulo.replaceAll(" ","_");
 let html="";
@@ -407,6 +408,8 @@ let textoAcumulado="";
 
 lineas.forEach(linea=>{
 
+linea=linea.trim();
+
 if(linea.includes("|")){
 
 if(nombreActual && textoAcumulado){
@@ -433,8 +436,12 @@ onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('�
 }
 
 let partesLinea=linea.split("|");
+
 nombreActual=partesLinea[0].trim();
-textoAcumulado=partesLinea[1].trim();
+
+/* 🔥 CORRECCIÓN IMPORTANTE */
+textoAcumulado=partesLinea.slice(1).join("|").trim();
+
 
 if(textoAcumulado.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
 
@@ -462,6 +469,7 @@ textoAcumulado += "\n" + linea;
 }
 
 });
+
 
 // 🔥 Mostrar último bloque pendiente
 if(nombreActual && textoAcumulado){
@@ -499,7 +507,6 @@ html+=`
 
 return html;
 }
-
 
 function toggleCategoria(cat){
 
