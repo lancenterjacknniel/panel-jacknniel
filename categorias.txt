@@ -1,7 +1,8 @@
 Qr LCJ | pagos.txt
+Lcj Mensajes Rápidos | mensajes_lan.txt
 Galería | galeria.txt
 Precios | precios.txt
-Mensajes Rápidos | mensajes_lan.txt
+
 Game Load Bolivia | mensajes_game.txt
 Promociones | promos.txt
 Qr GLB | QrGameLoadBolviia.txt
