@@ -395,3 +395,17 @@ width:90%;
 
 }
 
+.texto-mensaje{
+
+white-space:pre-wrap;
+
+word-break:break-word;
+
+width:100%;
+
+max-width:100%;
+
+text-align:left;
+
+}
+
