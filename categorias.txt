@@ -1,6 +1,6 @@
 Métodos de Pago | pagos.txt
-Precios | precios.txt
 Galería | galeria.txt
+Precios | precios.txt
 Mensajes Rápidos | mensajes_lan.txt
 Game Load Bolivia | mensajes_game.txt
 Promociones | promos.txt
