@@ -1,4 +1,3 @@
-###LAN CENTER JACKNNIEL###
 Banco Unión | qr_banco.png
 Yasta | qr_yasta.png
 
@@ -10,6 +9,6 @@ Tigo Money|
 
 ✅ Enviar captura del pago para confirmar.
 
-###GAME LOAD BOLIVIA###
+
 Banco Economico | qr_economico.png
 Binance Pay | qr_binance.png
