@@ -4,5 +4,6 @@ Precios | precios.txt
 Mensajes Rápidos | mensajes_lan.txt
 Game Load Bolivia | mensajes_game.txt
 Promociones | promos.txt
+Qr GLB | QrGameLoadBolviia.txt
 
 NOMBRE BOTON | ARCHIVO TXT
