@@ -1,4 +1,4 @@
-Qr LCJ | pagos.txt
+Lcj Qr | pagos.txt
 Lcj Mensajes Rápidos | mensajes_lan.txt
 Galería | galeria.txt
 Precios | precios.txt
