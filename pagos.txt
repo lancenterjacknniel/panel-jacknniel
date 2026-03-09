@@ -9,6 +9,3 @@ Tigo Money|
 
 ✅ Enviar captura del pago para confirmar.
 
-
-Banco Economico | qr_economico.png
-Binance Pay | qr_binance.png
