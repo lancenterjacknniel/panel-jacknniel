@@ -184,11 +184,17 @@ box-shadow:0 0 45px lime;
 /* ================================= */
 
 .grid{
+
 display:grid;
+
 grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+
 gap:25px;
+
 margin-top:25px;
+
 align-items:start;
+
 }
 
 /* ================================= */
@@ -201,15 +207,54 @@ width:100%;
 
 padding:25px;
 
-border-radius:25px;
+border-radius:22px;
 
-background:#0c142b;
+background:linear-gradient(180deg,#0c142b,#08102a);
+
+position:relative;
 
 box-shadow:
 0 0 20px cyan,
-0 0 40px #00ffff44;
+0 0 40px #00ffff33;
 
-transition:.25s;
+transition:.3s;
+
+overflow:hidden;
+
+}
+
+.card-pro::before{
+
+content:"";
+
+position:absolute;
+
+inset:-2px;
+
+border-radius:22px;
+
+background:linear-gradient(
+120deg,
+cyan,
+#00ffff,
+#00ff99,
+cyan
+);
+
+background-size:400%;
+
+animation:neonMove 6s linear infinite;
+
+z-index:-1;
+
+filter:blur(6px);
+
+}
+
+@keyframes neonMove{
+
+0%{background-position:0%}
+100%{background-position:400%}
 
 }
 
@@ -229,12 +274,12 @@ transform:translateY(0);
 
 .card-pro:hover{
 
-transform:translateY(-5px) scale(1.02);
+transform:translateY(-6px) scale(1.02);
 
 box-shadow:
-0 0 25px cyan,
-0 0 50px cyan,
-0 0 80px #00ffff55;
+0 0 30px cyan,
+0 0 60px #00ffff88,
+0 0 100px #00ffff33;
 
 }
 
@@ -242,9 +287,11 @@ box-shadow:
 
 color:yellow;
 
-text-shadow:0 0 10px yellow;
+text-shadow:0 0 12px yellow;
 
-margin-bottom:10px;
+margin-bottom:12px;
+
+font-size:20px;
 
 }
 
@@ -272,15 +319,23 @@ font-size:16px;
 
 margin-top:12px;
 
-width:160px;
+width:170px;
 
-border-radius:10px;
+border-radius:12px;
 
 cursor:pointer;
 
 transition:.3s;
 
-box-shadow:0 0 15px cyan;
+box-shadow:0 0 20px cyan;
+
+}
+
+.qr-img:hover{
+
+transform:scale(1.05);
+
+box-shadow:0 0 30px cyan;
 
 }
 
