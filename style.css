@@ -129,9 +129,7 @@ display:flex;
 
 flex-direction:column;
 
-justify-content:space-between;
-
-min-height:420px;
+justify-content:flex-start;
 
 padding:25px;
 
@@ -150,6 +148,8 @@ box-shadow:
 0 0 40px #00ffff33;
 
 transition:.35s;
+
+min-height:380px;
 
 }
 
