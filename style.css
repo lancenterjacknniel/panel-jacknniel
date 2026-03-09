@@ -109,13 +109,13 @@ display:grid;
 
 grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
 
-gap:45px;
+gap:40px;
 
 margin-top:35px;
 
 justify-content:center;
 
-align-items:start;
+align-items:stretch;
 
 }
 
@@ -124,6 +124,14 @@ align-items:start;
 /* ============================= */
 
 .card-pro{
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:space-between;
+
+min-height:420px;
 
 padding:25px;
 
