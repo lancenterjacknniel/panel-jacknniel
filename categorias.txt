@@ -3,9 +3,14 @@ Lcj Mensajes Rápidos | mensajes_lan.txt
 Lcj Precios | precios.txt
 Lcj Galería | galeria.txt
 Lcj Videos | videos.txt
+Lcj Promociones | promos.txt
 
-Game Load Bolivia | mensajes_game.txt
-Promociones | promos.txt
-Qr GLB | QrGameLoadBolviia.txt
+Glb Qr | QrGameLoadBolviia.txt
+Glb Mensajes Rapidos | mensajes_game.txt
+Glb Precios | Glbprecios.txt
+Glb Galería | Glbgaleria.txt
+Glb Videos | Glbvideos.txt
+Glb Promociones | Glbpromos.txt
+
 
 NOMBRE BOTON | ARCHIVO TXT
