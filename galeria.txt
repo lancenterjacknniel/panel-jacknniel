@@ -1,4 +1,2 @@
 ###NETFLIX###
 Netflix Premium | qr_netflix.png
-Banco Unión | qr_banco.png
-Yasta | qr_yasta.png
