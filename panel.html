@@ -416,6 +416,51 @@ window.location.href="login.html"
 }
 
 
+ function convertirVideo(link){
+
+/* YOUTUBE */
+
+if(link.includes("youtube.com/watch")){
+
+let id = link.split("v=")[1]
+return "https://www.youtube.com/embed/"+id
+
+}
+
+if(link.includes("youtu.be")){
+
+let id = link.split("/").pop()
+return "https://www.youtube.com/embed/"+id
+
+}
+
+/* TIKTOK */
+
+if(link.includes("tiktok.com")){
+
+return link.replace("/video/","/embed/")
+
+}
+
+/* INSTAGRAM */
+
+if(link.includes("instagram.com")){
+
+return link+"/embed"
+
+}
+
+/* FACEBOOK */
+
+if(link.includes("facebook.com")){
+
+return "https://www.facebook.com/plugins/video.php?href="+link
+
+}
+
+return link
+}
+  
 
 /* ============================ */
 /* INICIAR PANEL */
