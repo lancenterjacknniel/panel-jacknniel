@@ -1,4 +1,4 @@
-Métodos de Pago | pagos.txt
+Qr LCJ | pagos.txt
 Galería | galeria.txt
 Precios | precios.txt
 Mensajes Rápidos | mensajes_lan.txt
