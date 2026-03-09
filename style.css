@@ -184,13 +184,12 @@ box-shadow:0 0 45px lime;
 /* ================================= */
 
 .grid{
-
-column-count:3;
-
-column-gap:28px;
-
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+gap:28px;
 margin-top:25px;
-
+grid-auto-flow:dense;
+align-items:start;
 }
 
 /* ================================= */
@@ -199,11 +198,9 @@ margin-top:25px;
 
 .card-pro{
 
-display:inline-block;
+.card-pro{
 
 width:100%;
-
-margin-bottom:28px;
 
 background:linear-gradient(180deg,#0c142b,#08102a);
 
@@ -213,11 +210,7 @@ border-radius:22px;
 
 box-shadow:0 0 25px cyan;
 
-break-inside:avoid;
-
 transition:.35s;
-
-animation:cardLoad .4s ease;
 
 }
 
