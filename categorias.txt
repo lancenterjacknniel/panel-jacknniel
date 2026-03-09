@@ -2,7 +2,7 @@ Lcj Qr | pagos.txt
 Lcj Mensajes Rápidos | mensajes_lan.txt
 Lcj Precios | precios.txt
 Lcj Galería | galeria.txt
-
+Lcj Videos | videos.txt
 
 Game Load Bolivia | mensajes_game.txt
 Promociones | promos.txt
