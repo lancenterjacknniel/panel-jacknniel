@@ -2,13 +2,18 @@
 /* FONDO GENERAL */
 /* ============================= */
 
-body{
+body {
+
 margin:0;
+
 font-family:Arial;
-background:radial-gradient(circle at top,#050b1a,#000);
+
+background:#050b1a;
+
 color:white;
+
 text-align:center;
-overflow-x:hidden;
+
 }
 
 /* ============================= */
@@ -16,7 +21,13 @@ overflow-x:hidden;
 /* ============================= */
 
 .header-premium{
+
+text-align:center;
+
 padding:30px;
+
+background:transparent;
+
 }
 
 .logo{
@@ -75,11 +86,19 @@ box-shadow:0 0 40px lime;
 /* ============================= */
 
 .panel-seccion{
-margin:40px auto;
-max-width:1400px;
-padding:10px;
-background:transparent;
-box-shadow:none;
+
+margin:30px auto;
+
+width:90%;
+
+padding:30px;
+
+border-radius:25px;
+
+background:rgba(10,15,35,0.9);
+
+box-shadow:0 0 40px cyan;
+
 }
 
 /* ============================= */
