@@ -3,17 +3,12 @@
 /* ============================= */
 
 body{
-
 margin:0;
-
 font-family:Arial;
-
 background:#050b1a;
-
 color:white;
-
 text-align:center;
-
+overflow-x:hidden;
 }
 
 /* ============================= */
@@ -21,13 +16,9 @@ text-align:center;
 /* ============================= */
 
 .header-premium{
-
 text-align:center;
-
 padding:30px;
-
 background:transparent;
-
 }
 
 .logo{
@@ -86,19 +77,12 @@ box-shadow:0 0 40px lime;
 /* ============================= */
 
 .panel-seccion{
-
 margin:30px auto;
-
 width:90%;
-
 padding:30px;
-
 border-radius:25px;
-
 background:rgba(10,15,35,0.9);
-
 box-shadow:0 0 40px cyan;
-
 }
 
 /* ============================= */
@@ -123,15 +107,11 @@ box-shadow:0 0 25px cyan;
 /* ============================= */
 
 .grid{
-
 display:grid;
-
 grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-
 gap:40px;
-
 margin-top:35px;
-
+align-items:start;
 }
 
 /* ============================= */
@@ -139,96 +119,62 @@ margin-top:35px;
 /* ============================= */
 
 .card-pro{
-
 background:linear-gradient(180deg,#0c142b,#08102a);
-
 padding:25px;
-
 border-radius:25px;
-
 box-shadow:0 0 25px cyan;
-
 width:100%;
-
 max-width:100%;
-
 box-sizing:border-box;
-
 display:flex;
-
 flex-direction:column;
-
 align-items:center;
-
 position:relative;
-
 overflow:hidden;
-
 transition:.3s;
-
+word-wrap:break-word;
+overflow-wrap:anywhere;
 }
 
-/* Neon animado (ahora queda dentro de la tarjeta) */
+/* Neon animado */
 
 .card-pro::before{
-
 content:"";
-
 position:absolute;
-
 top:-3px;
-
 left:-3px;
-
 right:-3px;
-
 bottom:-3px;
-
 border-radius:28px;
-
 background:linear-gradient(120deg,cyan,#00ffff,#00ff99,cyan);
-
 background-size:400%;
-
 animation:neonMove 6s linear infinite;
-
 z-index:-1;
-
 filter:blur(10px);
-
 }
 
 @keyframes neonMove{
-
 0%{background-position:0%}
-
 100%{background-position:400%}
-
 }
 
 .card-pro:hover{
-
 transform:translateY(-6px) scale(1.02);
-
 box-shadow:
 0 0 25px cyan,
 0 0 50px #00ffff55,
 0 0 80px #00ffff33;
-
 }
 
 /* TITULO */
 
 .card-pro h2{
-
 color:yellow;
-
 text-shadow:0 0 10px yellow;
-
 margin-bottom:15px;
-
 font-size:20px;
-
+width:100%;
+word-break:break-word;
 }
 
 /* ============================= */
@@ -236,43 +182,30 @@ font-size:20px;
 /* ============================= */
 
 .texto-pro{
-
 white-space:pre-wrap;
-
 line-height:1.7;
-
 text-align:left;
-
 font-size:16px;
-
 width:100%;
-
 max-width:100%;
-
 box-sizing:border-box;
-
 word-break:break-word;
-
 overflow-wrap:anywhere;
-
 }
 
 .texto-mensaje{
-
 white-space:pre-wrap;
-
 word-break:break-word;
-
+overflow-wrap:anywhere;
 width:100%;
-
 text-align:left;
-
 }
 
+/* Links largos */
+
 .texto-pro a{
-
 word-break:break-all;
-
+color:#00ffff;
 }
 
 /* ============================= */
@@ -280,21 +213,14 @@ word-break:break-all;
 /* ============================= */
 
 .qr-img{
-
 margin:15px auto;
-
 width:170px;
-
+max-width:100%;
 display:block;
-
 border-radius:12px;
-
 cursor:pointer;
-
 transition:.3s;
-
 box-shadow:0 0 15px cyan;
-
 }
 
 .qr-img:hover{
@@ -313,15 +239,11 @@ position:relative;
 /* ============================= */
 
 .botones-qr{
-
 display:flex;
-
 justify-content:center;
-
 gap:15px;
-
 margin-top:auto;
-
+flex-wrap:wrap;
 }
 
 .botones-qr button{
@@ -351,41 +273,24 @@ font-weight:bold;
 /* ============================= */
 
 .video-container{
-
 position:relative;
-
 width:100%;
-
 padding-bottom:56.25%;
-
 margin-top:15px;
-
 border-radius:15px;
-
 overflow:hidden;
-
 box-shadow:0 0 15px cyan;
-
 background:#000;
-
 }
 
 .video-container iframe{
-
 position:absolute;
-
 top:0;
-
 left:0;
-
 width:100%;
-
 height:100%;
-
 border:none;
-
 border-radius:15px;
-
 }
 
 /* ============================= */
