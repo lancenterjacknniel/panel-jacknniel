@@ -29,11 +29,7 @@ body {
 }
 
 .grid {
-  display: flex;
-  justify-content: center;
-  gap: 35px;
-  flex-wrap: wrap;
-  margin-top: 30px;
+  column-count:
 }
 
 .card-pro {
