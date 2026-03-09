@@ -233,12 +233,21 @@ font-size:16px;
 /* ============================= */
 
 .qr-img{
-margin-top:12px;
+
+margin:15px auto;
+
 width:170px;
+
+display:block;
+
 border-radius:12px;
+
 cursor:pointer;
+
 transition:.3s;
+
 box-shadow:0 0 15px cyan;
+
 }
 
 .qr-img:hover{
@@ -257,10 +266,15 @@ position:relative;
 /* ============================= */
 
 .botones-qr{
+
 display:flex;
+
 justify-content:center;
+
 gap:15px;
-margin-top:15px;
+
+margin-top:auto;
+
 }
 
 .botones-qr button{
