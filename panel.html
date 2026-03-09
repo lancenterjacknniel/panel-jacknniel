@@ -165,31 +165,66 @@ const res = await fetch(archivo+"?v="+Date.now())
 const texto = await res.text()
 
 let html=""
+
 let lineas = texto.split("\n")
+
+let nombreActual=""
+let textoAcumulado=""
 
 lineas.forEach(linea=>{
 
-if(!linea.includes("|")) return
+linea=linea.trim()
 
-let datos = linea.split("|")
+if(linea.includes("|")){
 
-let nombre = datos[0].trim()
-let valor = datos[1].trim()
+if(nombreActual && textoAcumulado){
 
-/* SI ES IMAGEN */
-
-if(valor.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
-
-let id="img_"+nombre.replaceAll(" ","")
-
-html += `
+html+=`
 <div class="card-pro">
 
-<h2>${nombre}</h2>
+<h2>${nombreActual}</h2>
+
+<div style="
+padding:15px;
+background:#111;
+border-radius:10px;
+white-space:pre-line;
+">
+
+${textoAcumulado}
+
+</div>
+
+<button
+class="btn-copy"
+onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('Copiado')">
+
+📋 Copiar
+
+</button>
+
+</div>
+`
+}
+
+let partes=linea.split("|")
+
+nombreActual=partes[0].trim()
+textoAcumulado=partes.slice(1).join("|").trim()
+
+if(textoAcumulado.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
+
+let id="img_"+nombreActual.replaceAll(" ","")
+
+html+=`
+
+<div class="card-pro">
+
+<h2>${nombreActual}</h2>
 
 <img id="${id}"
 class="qr-img"
-src="${valor}"
+src="${textoAcumulado}"
 onclick="zoomQR('${id}')">
 
 <div class="botones-qr">
@@ -200,25 +235,36 @@ onclick="copiarQR('${id}')">
 </button>
 
 <button class="btn-download"
-onclick="descargarQR('${valor}','${nombre}')">
+onclick="descargarQR('${textoAcumulado}','${nombreActual}')">
 ⬇ Descargar
 </button>
 
 </div>
 
 </div>
+
 `
+
+nombreActual=""
+textoAcumulado=""
 
 }
 
-/* SI ES TEXTO */
+}else{
 
-else{
+textoAcumulado += "\n" + linea
 
-html += `
+}
+
+})
+
+if(nombreActual && textoAcumulado){
+
+html+=`
+
 <div class="card-pro">
 
-<h2>${nombre}</h2>
+<h2>${nombreActual}</h2>
 
 <div style="
 padding:15px;
@@ -227,24 +273,23 @@ border-radius:10px;
 white-space:pre-line;
 ">
 
-${valor}
+${textoAcumulado}
 
 </div>
 
 <button
 class="btn-copy"
-onclick="navigator.clipboard.writeText(\`${valor}\`);mostrarMensaje('Copiado')">
+onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('Copiado')">
 
 📋 Copiar
 
 </button>
 
 </div>
+
 `
 
 }
-
-})
 
 div.innerHTML = html
 
