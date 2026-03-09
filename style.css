@@ -125,31 +125,25 @@ align-items:stretch;
 
 .card-pro{
 
+background:linear-gradient(180deg,#0c142b,#08102a);
+
+padding:25px;
+
+border-radius:25px;
+
+box-shadow:0 0 25px cyan;
+
 display:flex;
 
 flex-direction:column;
 
+align-items:center;
+
 justify-content:flex-start;
 
-padding:25px;
+min-height:320px;
 
-border-radius:22px;
-
-background:#0c142b;
-
-position:relative;
-
-max-width:420px;
-
-margin:auto;
-
-box-shadow:
-0 0 20px cyan,
-0 0 40px #00ffff33;
-
-transition:.35s;
-
-min-height:380px;
+transition:all .3s ease;
 
 }
 
@@ -194,12 +188,12 @@ filter:blur(8px);
 
 .card-pro:hover{
 
-transform:translateY(-8px) scale(1.02);
+transform:translateY(-6px) scale(1.02);
 
 box-shadow:
-0 0 30px cyan,
-0 0 60px #00ffff88,
-0 0 120px #00ffff33;
+0 0 25px cyan,
+0 0 50px #00ffff55,
+0 0 80px #00ffff33;
 
 }
 
@@ -318,6 +312,8 @@ border-radius:15px;
 overflow:hidden;
 
 box-shadow:0 0 15px cyan;
+
+background:#000;
 
 }
 
