@@ -212,12 +212,13 @@ let partes=linea.split("|")
 nombreActual=partes[0].trim()
 textoAcumulado=partes.slice(1).join("|").trim()
 
+/* IMAGEN */
+
 if(textoAcumulado.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
 
 let id="img_"+nombreActual.replaceAll(" ","")
 
 html+=`
-
 <div class="card-pro">
 
 <h2>${nombreActual}</h2>
@@ -242,7 +243,6 @@ onclick="descargarQR('${textoAcumulado}','${nombreActual}')">
 </div>
 
 </div>
-
 `
 
 nombreActual=""
@@ -250,6 +250,36 @@ textoAcumulado=""
 
 }
 
+/* VIDEO */
+
+else if(textoAcumulado.startsWith("[video]")){
+
+let link = textoAcumulado.replace("[video]","").trim()
+
+html+=`
+<div class="card-pro">
+
+<h2>${nombreActual}</h2>
+
+<div class="video-container">
+
+<iframe
+src="${convertirVideo(link)}"
+frameborder="0"
+allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+`
+
+nombreActual=""
+textoAcumulado=""
+
+}
+
+  
 }else{
 
 textoAcumulado += "\n" + linea
