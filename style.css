@@ -2,7 +2,7 @@
 /* FONDO GENERAL */
 /* ============================= */
 
-body {
+body{
 
 margin:0;
 
@@ -132,10 +132,6 @@ gap:40px;
 
 margin-top:35px;
 
-justify-content:center;
-
-align-items:stretch;
-
 }
 
 /* ============================= */
@@ -154,8 +150,6 @@ box-shadow:0 0 25px cyan;
 
 width:100%;
 
-max-width:100%;
-
 box-sizing:border-box;
 
 display:flex;
@@ -164,27 +158,15 @@ flex-direction:column;
 
 align-items:center;
 
+position:relative;
+
 overflow:hidden;
 
-transition:all .3s ease;
+transition:.3s;
 
 }
 
-.card-pro div{
-
-width:100%;
-
-max-width:100%;
-
-box-sizing:border-box;
-
-word-break:break-word;
-
-overflow-wrap:anywhere;
-
-}
-
-/* Neon animado */
+/* Neon animado (ahora queda dentro de la tarjeta) */
 
 .card-pro::before{
 
@@ -192,17 +174,17 @@ content:"";
 
 position:absolute;
 
-inset:-2px;
+top:-3px;
 
-border-radius:22px;
+left:-3px;
 
-background:linear-gradient(
-120deg,
-cyan,
-#00ffff,
-#00ff99,
-cyan
-);
+right:-3px;
+
+bottom:-3px;
+
+border-radius:28px;
+
+background:linear-gradient(120deg,cyan,#00ffff,#00ff99,cyan);
 
 background-size:400%;
 
@@ -210,18 +192,17 @@ animation:neonMove 6s linear infinite;
 
 z-index:-1;
 
-filter:blur(8px);
+filter:blur(10px);
 
 }
 
 @keyframes neonMove{
 
 0%{background-position:0%}
+
 100%{background-position:400%}
 
 }
-
-/* Hover */
 
 .card-pro:hover{
 
@@ -253,10 +234,31 @@ font-size:20px;
 /* ============================= */
 
 .texto-pro{
+
 white-space:pre-wrap;
+
 line-height:1.7;
+
 text-align:left;
+
 font-size:16px;
+
+width:100%;
+
+word-break:break-word;
+
+}
+
+.texto-mensaje{
+
+white-space:pre-wrap;
+
+word-break:break-word;
+
+width:100%;
+
+text-align:left;
+
 }
 
 /* ============================= */
@@ -417,18 +419,3 @@ width:90%;
 }
 
 }
-
-.texto-mensaje{
-
-white-space:pre-wrap;
-
-word-break:break-word;
-
-width:100%;
-
-max-width:100%;
-
-text-align:left;
-
-}
-
