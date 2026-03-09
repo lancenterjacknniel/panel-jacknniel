@@ -304,22 +304,39 @@ font-weight:bold;
 /* ============================= */
 
 .video-container{
+
 position:relative;
+
+width:100%;
+
 padding-bottom:56.25%;
-height:0;
-overflow:hidden;
+
+margin-top:15px;
+
 border-radius:15px;
-margin-top:10px;
+
+overflow:hidden;
+
+box-shadow:0 0 15px cyan;
+
 }
 
 .video-container iframe{
+
 position:absolute;
+
 top:0;
+
 left:0;
+
 width:100%;
+
 height:100%;
+
 border:none;
+
 border-radius:15px;
+
 }
 
 /* ============================= */
