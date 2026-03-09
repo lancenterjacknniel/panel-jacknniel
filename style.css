@@ -65,25 +65,18 @@ box-shadow:0 0 40px lime;
 /* PANEL */
 
 .panel-seccion{
-
 margin:40px auto;
-
-width:92%;
-
+max-width:1400px;
 padding:10px;
-
-border-radius:25px;
-
 background:transparent;
-
 box-shadow:none;
-
 }
 
 /* BUSCADOR */
 
 .buscador{
 width:90%;
+max-width:600px;
 padding:16px;
 margin:20px auto;
 border-radius:20px;
@@ -100,21 +93,21 @@ box-shadow:0 0 25px cyan;
 
 display:grid;
 
-grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
 
-gap:35px;
+gap:40px;
 
-margin-top:25px;
+margin-top:30px;
 
 align-items:start;
+
+justify-content:center;
 
 }
 
 /* TARJETAS */
 
 .card-pro{
-
-width:100%;
 
 padding:25px;
 
@@ -127,6 +120,10 @@ box-shadow:
 0 0 40px #00ffff33;
 
 transition:.3s;
+
+max-width:420px;
+
+margin:auto;
 
 }
 
@@ -147,7 +144,7 @@ color:yellow;
 
 text-shadow:0 0 10px yellow;
 
-margin-bottom:12px;
+margin-bottom:15px;
 
 }
 
@@ -187,7 +184,7 @@ position:relative;
 .botones-qr{
 display:flex;
 justify-content:center;
-gap:12px;
+gap:15px;
 margin-top:15px;
 }
 
@@ -255,7 +252,7 @@ z-index:9999;
 @media (max-width:1200px){
 
 .grid{
-grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 }
 
 }
