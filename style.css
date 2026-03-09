@@ -28,26 +28,33 @@ body {
   color: white;
 }
 
-.grid {
-  column-count: 3;
-  column-gap: 35px;
-  margin-top: 30px;
+.grid{
+column-count:3;
+column-gap:35px;
+margin-top:30px;
+width:100%;
 }
 
-.card-pro {
-  background: #0c142b;
-  width: 100%;
-  padding: 25px;
-  border-radius: 25px;
-  box-shadow: 0 0 25px cyan;
+.card-pro{
 
-  display: inline-block;
-  margin-bottom: 35px;
-  break-inside: avoid;
-}
+background:linear-gradient(180deg,#0c142b,#08102a);
 
-.card-pro h2 {
-  color: yellow;
+width:100%;
+
+display:inline-block;
+
+margin-bottom:35px;
+
+padding:25px;
+
+border-radius:25px;
+
+box-shadow:0 0 25px cyan;
+
+break-inside:avoid;
+
+transition:all .3s ease;
+
 }
 
 .btn {
@@ -730,5 +737,32 @@ column-count:2;
 .grid{
 column-count:1;
 }
+}
+
+.card-pro:hover{
+
+transform:translateY(-6px) scale(1.02);
+
+box-shadow:
+0 0 25px cyan,
+0 0 50px #00ffff55,
+0 0 80px #00ffff33;
+
+}
+
+@media (max-width:1200px){
+
+.grid{
+column-count:2;
+}
+
+}
+
+@media (max-width:700px){
+
+.grid{
+column-count:1;
+}
+
 }
 
