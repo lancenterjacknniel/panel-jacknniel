@@ -1,3 +1,7 @@
+/* ================================= */
+/* RESET */
+/* ================================= */
+
 body{
 margin:0;
 font-family:Arial;
@@ -7,117 +11,203 @@ text-align:center;
 overflow-x:hidden;
 }
 
-/* ================= HEADER ================= */
+/* ================================= */
+/* FONDO ESTRELLAS ANIMADO */
+/* ================================= */
+
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:200%;
+height:200%;
+background:url("https://www.transparenttextures.com/patterns/stardust.png");
+opacity:.15;
+animation:fondo 40s linear infinite;
+z-index:-1;
+}
+
+@keyframes fondo{
+0%{transform:translate(0,0);}
+100%{transform:translate(-600px,-600px);}
+}
+
+/* ================================= */
+/* HEADER */
+/* ================================= */
 
 .header-premium{
 padding:30px;
 }
 
 .logo{
-width:230px;
+width:220px;
 border-radius:25px;
 box-shadow:0 0 60px cyan;
-transition:.3s;
+transition:.35s;
 }
 
 .logo:hover{
 transform:scale(1.08);
-box-shadow:0 0 90px lime;
+box-shadow:
+0 0 60px cyan,
+0 0 120px #00ffff88;
 }
 
 .titulo{
 font-size:45px;
-margin-top:15px;
 color:cyan;
-text-shadow:0 0 20px cyan;
+text-shadow:0 0 25px cyan;
+margin-top:10px;
 }
 
 .rol{
-margin-bottom:25px;
+opacity:.9;
+margin-bottom:20px;
 }
 
-/* ================= MENU ================= */
+/* ================================= */
+/* MENU BOTONES */
+/* ================================= */
 
 .menu-botones{
 display:flex;
 justify-content:center;
-gap:18px;
 flex-wrap:wrap;
-margin-top:20px;
+gap:18px;
+margin-top:15px;
 }
 
 .btn{
-background:linear-gradient(90deg,cyan,lime);
+
+background:linear-gradient(90deg,#00eaff,#00ff6a);
+
 padding:14px 28px;
-border-radius:18px;
-font-size:16px;
-font-weight:bold;
+
 border:none;
+
+border-radius:18px;
+
+font-weight:bold;
+
 cursor:pointer;
-transition:.25s;
+
 box-shadow:0 0 20px cyan;
+
+transition:.25s;
+
 }
 
 .btn:hover{
-transform:scale(1.05);
-box-shadow:0 0 40px lime;
+
+transform:scale(1.07);
+
+box-shadow:
+0 0 30px cyan,
+0 0 60px #00ffff55;
+
 }
 
-/* ================= PANEL ================= */
+/* ================================= */
+/* PANEL SECCION */
+/* ================================= */
 
 .panel-seccion{
+
 margin:30px auto;
-width:90%;
+
+width:92%;
+
 padding:30px;
+
 border-radius:25px;
-background:rgba(20,30,60,.75);
+
+background:rgba(15,20,45,.7);
+
 backdrop-filter:blur(12px);
+
 box-shadow:0 0 40px cyan;
+
 }
+
+/* ================================= */
+/* TITULOS */
+/* ================================= */
 
 .subtitulo{
+
 font-size:28px;
+
 color:cyan;
+
 text-shadow:0 0 20px cyan;
+
+margin-bottom:10px;
+
 }
 
-/* ================= BUSCADOR ================= */
+/* ================================= */
+/* BUSCADOR */
+/* ================================= */
 
 .buscador{
+
 width:90%;
+
 padding:16px;
+
 margin:20px auto;
+
 border-radius:20px;
+
 border:none;
+
 font-size:16px;
-outline:none;
+
 text-align:center;
+
+outline:none;
+
 box-shadow:0 0 25px cyan;
+
 }
 
 .buscador:focus{
+
 box-shadow:0 0 45px lime;
+
 }
 
-/* ================= GRID MASONRY ================= */
+/* ================================= */
+/* GRID MASONRY (TARJETAS AUTOMATICAS) */
+/* ================================= */
 
 .grid{
+
 column-count:3;
-column-gap:25px;
+
+column-gap:28px;
+
 margin-top:25px;
+
 }
 
-/* ================= TARJETAS ================= */
+/* ================================= */
+/* TARJETAS */
+/* ================================= */
 
 .card-pro{
 
 display:inline-block;
+
 width:100%;
-margin-bottom:25px;
+
+margin-bottom:28px;
 
 background:linear-gradient(180deg,#0c142b,#08102a);
 
-padding:22px;
+padding:24px;
 
 border-radius:22px;
 
@@ -125,7 +215,23 @@ box-shadow:0 0 25px cyan;
 
 break-inside:avoid;
 
-transition:.25s;
+transition:.35s;
+
+animation:cardLoad .4s ease;
+
+}
+
+@keyframes cardLoad{
+
+from{
+opacity:0;
+transform:translateY(40px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
 
 }
 
@@ -134,174 +240,294 @@ transition:.25s;
 transform:translateY(-6px) scale(1.02);
 
 box-shadow:
-0 0 25px cyan,
-0 0 50px #00ffff55,
-0 0 80px #00ffff33;
+0 0 30px cyan,
+0 0 60px #00ffff66,
+0 0 90px #00ffff22;
 
 }
 
 .card-pro h2{
+
 color:yellow;
+
+margin-bottom:10px;
+
 }
 
-/* ================= IMAGEN ================= */
+/* ================================= */
+/* TEXTO MENSAJES */
+/* ================================= */
+
+.texto-pro{
+
+white-space:pre-wrap;
+
+line-height:1.7;
+
+text-align:left;
+
+font-size:16px;
+
+}
+
+/* ================================= */
+/* IMAGEN */
+/* ================================= */
 
 .qr-img{
-margin-top:12px;
-width:160px;
+
+width:170px;
+
+margin-top:10px;
+
 border-radius:12px;
+
 cursor:pointer;
+
 transition:.3s;
+
 }
 
 .qr-img.zoom{
+
 transform:scale(2);
+
 z-index:999;
+
 position:relative;
+
 }
 
-/* ================= BOTONES QR ================= */
+/* ================================= */
+/* BOTONES QR */
+/* ================================= */
 
 .botones-qr{
+
 display:flex;
+
 justify-content:center;
+
 gap:12px;
+
 margin-top:15px;
+
 }
 
 .botones-qr button{
+
 width:130px;
+
 }
 
 .btn-copy{
-padding:12px 20px;
-border-radius:15px;
+
 background:lime;
+
+padding:12px 20px;
+
 border:none;
+
+border-radius:15px;
+
 cursor:pointer;
+
 font-weight:bold;
+
 }
 
 .btn-download{
-padding:12px 20px;
-border-radius:15px;
+
 background:orange;
+
+padding:12px 20px;
+
 border:none;
+
+border-radius:15px;
+
 cursor:pointer;
+
 font-weight:bold;
+
 }
 
-/* ================= MENSAJES ================= */
-
-.texto-pro{
-white-space:pre-wrap;
-font-size:16px;
-line-height:1.7;
-text-align:left;
-}
-
-.texto-pro h3{
-color:yellow;
-margin-top:10px;
-}
-
-.texto-pro hr{
-margin:12px 0;
-border:1px solid cyan;
-}
-
-/* ================= VIDEO ================= */
+/* ================================= */
+/* VIDEO */
+/* ================================= */
 
 .video-container{
+
 position:relative;
+
 padding-bottom:56.25%;
+
 height:0;
+
 overflow:hidden;
+
 border-radius:15px;
+
 margin-top:10px;
+
 }
 
 .video-container iframe{
+
 position:absolute;
+
 top:0;
+
 left:0;
+
 width:100%;
+
 height:100%;
+
 border:none;
+
 border-radius:15px;
+
 }
 
-/* ================= CATEGORIAS ================= */
+/* ================================= */
+/* CATEGORIAS */
+/* ================================= */
 
 .btn-categoria{
+
 width:95%;
+
 margin:12px auto;
-padding:15px;
-border-radius:18px;
+
+padding:16px;
+
 border:none;
+
+border-radius:18px;
+
 cursor:pointer;
+
 font-weight:bold;
+
 font-size:17px;
+
 background:linear-gradient(90deg,#00f5ff,#00ff87);
+
 box-shadow:0 0 25px cyan;
+
 transition:.25s;
+
 }
 
 .btn-categoria:hover{
+
 transform:scale(1.05);
+
 box-shadow:0 0 45px lime;
+
 }
 
-/* ================= CONTENIDO SLIDE ================= */
+/* ================================= */
+/* SLIDE CONTENIDO */
+/* ================================= */
 
 .contenido{
+
 max-height:0;
+
 overflow:hidden;
+
 transition:max-height .4s ease;
+
 }
 
-/* ================= PRECIOS ================= */
+/* ================================= */
+/* BLOQUES PRECIOS */
+/* ================================= */
 
 .bloque-precio{
+
 background:#0c142b;
-padding:22px;
+
+padding:24px;
+
 border-radius:18px;
+
 margin:12px auto;
+
 box-shadow:0 0 20px cyan;
+
 }
 
 .texto-precio{
+
 white-space:pre-line;
+
 line-height:1.6;
+
 }
 
 .btn-copiar-todo{
+
 margin-top:12px;
+
 padding:12px 22px;
-border-radius:15px;
-background:orange;
+
 border:none;
+
+border-radius:15px;
+
+background:orange;
+
 font-weight:bold;
+
 cursor:pointer;
+
 }
 
-/* ================= TOAST ================= */
+/* ================================= */
+/* TOAST */
+/* ================================= */
 
 .toast{
+
 position:fixed;
+
 bottom:35px;
+
 left:50%;
+
 transform:translateX(-50%);
+
 background:lime;
+
 color:black;
+
 padding:15px 25px;
+
 border-radius:15px;
+
 font-weight:bold;
+
 box-shadow:0 0 25px lime;
+
 z-index:9999;
+
+animation:toast .25s ease;
+
 }
 
-/* ================= RESPONSIVE ================= */
+@keyframes toast{
+
+from{opacity:0;transform:translateX(-50%) translateY(15px);}
+to{opacity:1;transform:translateX(-50%) translateY(0);}
+
+}
+
+/* ================================= */
+/* RESPONSIVE */
+/* ================================= */
 
 @media (max-width:1200px){
 
