@@ -133,6 +133,14 @@ border-radius:25px;
 
 box-shadow:0 0 25px cyan;
 
+width:100%;
+
+max-width:100%;
+
+box-sizing:border-box;
+
+overflow:hidden;
+
 display:flex;
 
 flex-direction:column;
@@ -141,9 +149,15 @@ align-items:center;
 
 justify-content:flex-start;
 
-min-height:320px;
-
 transition:all .3s ease;
+
+}
+
+.card-pro div{
+
+word-wrap:break-word;
+
+overflow-wrap:break-word;
 
 }
 
@@ -380,3 +394,4 @@ width:90%;
 }
 
 }
+
