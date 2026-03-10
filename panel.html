@@ -250,11 +250,18 @@ textoAcumulado=""
 
 }
 
-/* VIDEO */
+/* VIDEO AUTOMATICO */
 
-else if(textoAcumulado.startsWith("[video]")){
+else if(
+textoAcumulado.includes("youtube.com") ||
+textoAcumulado.includes("youtu.be") ||
+textoAcumulado.includes("tiktok.com") ||
+textoAcumulado.includes("instagram.com") ||
+textoAcumulado.includes("facebook.com") ||
+textoAcumulado.match(/\.(mp4|webm|ogg)$/i)
+){
 
-let link = textoAcumulado.replace("[video]","").trim()
+let link = textoAcumulado.trim()
 
 html+=`
 <div class="card-pro">
@@ -266,8 +273,26 @@ html+=`
 <iframe
 src="${convertirVideo(link)}"
 frameborder="0"
-allowfullscreen
-></iframe>
+allowfullscreen>
+</iframe>
+
+</div>
+
+<div class="texto-pro">
+${textoAcumulado}
+</div>
+
+<div class="botones-qr">
+
+<button class="btn-copy"
+onclick="navigator.clipboard.writeText('${link}');mostrarMensaje('Link copiado');">
+📋 Copiar link
+</button>
+
+<button class="btn-download"
+onclick="window.open('${link}','_blank')">
+▶ Abrir video
+</button>
 
 </div>
 
@@ -276,58 +301,6 @@ allowfullscreen
 
 nombreActual=""
 textoAcumulado=""
-
-}
-
-  
-}else{
-
-textoAcumulado += "\n" + linea
-
-}
-
-})
-
-if(nombreActual && textoAcumulado){
-
-html+=`
-
-<div class="card-pro">
-
-<h2>${nombreActual}</h2>
-
-<div style="
-padding:15px;
-background:#111;
-border-radius:10px;
-white-space:pre-line;
-">
-
-${textoAcumulado}
-
-</div>
-
-<button
-class="btn-copy"
-onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('Copiado')">
-
-📋 Copiar
-
-</button>
-
-</div>
-
-`
-
-}
-
-div.innerHTML = `<div class="grid">${html}</div>`
-
-}catch{
-
-div.innerHTML="Error cargando archivo"
-
-}
 
 }
 
