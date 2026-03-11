@@ -151,11 +151,12 @@ cargarContenido(archivo,"contenido_"+id)
 
 
 
+  
 /* ============================ */
 /* CARGAR CONTENIDO TXT */
 /* ============================ */
 
-async function cargarContenido(archivo,contenedor){
+  async function cargarContenido(archivo,contenedor){
 
 let div = document.getElementById(contenedor)
 
@@ -169,7 +170,8 @@ let html=""
 let lineas = texto.split("\n")
 
 let nombreActual=""
-let textoAcumulado=""
+let valorActual=""
+let descripcion=""
 
 lineas.forEach(linea=>{
 
@@ -177,242 +179,36 @@ linea=linea.trim()
 
 if(linea.includes("|")){
 
-if(nombreActual && textoAcumulado){
+/* guardar tarjeta anterior */
 
-html+=`
-<div class="card-pro">
+if(nombreActual){
 
-<h2>${nombreActual}</h2>
+html+=crearTarjeta(nombreActual,valorActual,descripcion)
 
-<div style="
-padding:15px;
-background:#111;
-border-radius:10px;
-white-space:pre-line;
-">
-
-${textoAcumulado}
-
-</div>
-
-<button
-class="btn-copy"
-onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('Copiado')">
-
-📋 Copiar
-
-</button>
-
-</div>
-`
 }
+
+/* nueva tarjeta */
 
 let partes=linea.split("|")
 
 nombreActual=partes[0].trim()
-textoAcumulado=partes.slice(1).join("|").trim()
+valorActual=partes.slice(1).join("|").trim()
 
-/* IMAGEN */
+descripcion=""
 
-if(textoAcumulado.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
-
-let id="img_"+nombreActual.replaceAll(" ","")
-
-html+=`
-<div class="card-pro">
-
-<h2>${nombreActual}</h2>
-
-<img id="${id}"
-class="qr-img"
-src="${textoAcumulado}"
-onclick="zoomQR('${id}')">
-
-<div class="botones-qr">
-
-<button class="btn-copy"
-onclick="copiarQR('${id}')">
-📋 Copiar
-</button>
-
-<button class="btn-download"
-onclick="descargarQR('${textoAcumulado}','${nombreActual}')">
-⬇ Descargar
-</button>
-
-</div>
-
-</div>
-`
-
-nombreActual=""
-textoAcumulado=""
-
-}
-
-async function cargarContenido(archivo,contenedor){
-
-let div = document.getElementById(contenedor)
-
-try{
-
-const res = await fetch(archivo+"?v="+Date.now())
-const texto = await res.text()
-
-let html=""
-
-let lineas = texto.split("\n")
-
-let nombreActual=""
-let textoAcumulado=""
-
-lineas.forEach(linea=>{
-
-linea=linea.trim()
-
-if(linea.includes("|")){
-
-if(nombreActual && textoAcumulado){
-
-html+=`
-<div class="card-pro">
-
-<h2>${nombreActual}</h2>
-
-<div style="
-padding:15px;
-background:#111;
-border-radius:10px;
-white-space:pre-line;
-">
-
-${textoAcumulado}
-
-</div>
-
-<button
-class="btn-copy"
-onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('Copiado')">
-
-📋 Copiar
-
-</button>
-
-</div>
-`
-}
-
-let partes=linea.split("|")
-
-nombreActual=partes[0].trim()
-textoAcumulado=partes.slice(1).join("|").trim()
-
-/* IMAGEN */
-
-if(textoAcumulado.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
-
-let id="img_"+nombreActual.replaceAll(" ","")
-
-html+=`
-<div class="card-pro">
-
-<h2>${nombreActual}</h2>
-
-<img id="${id}"
-class="qr-img"
-src="${textoAcumulado}"
-onclick="zoomQR('${id}')">
-
-<div class="botones-qr">
-
-<button class="btn-copy"
-onclick="copiarQR('${id}')">
-📋 Copiar
-</button>
-
-<button class="btn-download"
-onclick="descargarQR('${textoAcumulado}','${nombreActual}')">
-⬇ Descargar
-</button>
-
-</div>
-
-</div>
-`
-
-nombreActual=""
-textoAcumulado=""
-
-}
-
-/* VIDEO */
-
-else if(textoAcumulado.startsWith("[video]")){
-
-let link = textoAcumulado.replace("[video]","").trim()
-
-html+=`
-<div class="card-pro">
-
-<h2>${nombreActual}</h2>
-
-<div class="video-container">
-
-<iframe
-src="${convertirVideo(link)}"
-frameborder="0"
-allowfullscreen
-></iframe>
-
-</div>
-
-</div>
-`
-
-nombreActual=""
-textoAcumulado=""
-
-}
-
-  
 }else{
 
-textoAcumulado += "\n" + linea
+descripcion += linea + "\n"
 
 }
 
 })
 
-if(nombreActual && textoAcumulado){
+/* última tarjeta */
 
-html+=`
+if(nombreActual){
 
-<div class="card-pro">
-
-<h2>${nombreActual}</h2>
-
-<div style="
-padding:15px;
-background:#111;
-border-radius:10px;
-white-space:pre-line;
-">
-
-${textoAcumulado}
-
-</div>
-
-<button
-class="btn-copy"
-onclick="navigator.clipboard.writeText(\`${textoAcumulado}\`);mostrarMensaje('Copiado')">
-
-📋 Copiar
-
-</button>
-
-</div>
-
-`
+html+=crearTarjeta(nombreActual,valorActual,descripcion)
 
 }
 
@@ -425,6 +221,7 @@ div.innerHTML="Error cargando archivo"
 }
 
 }
+
   
 
 
