@@ -3,12 +3,59 @@
 /* ============================= */
 
 body{
+
 margin:0;
+
 font-family:Arial;
+
 background:#050b1a;
+
 color:white;
+
 text-align:center;
+
 overflow-x:hidden;
+
+position:relative;
+
+}
+
+/* ESTRELLAS GAMER */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:200%;
+
+height:200%;
+
+background:url("https://www.transparenttextures.com/patterns/stardust.png");
+
+opacity:0.25;
+
+animation:estrellasMover 120s linear infinite;
+
+z-index:-1;
+
+}
+
+@keyframes estrellasMover{
+
+0%{
+transform:translate(0,0);
+}
+
+100%{
+transform:translate(-1000px,-800px);
+}
+
 }
 
 /* ============================= */
