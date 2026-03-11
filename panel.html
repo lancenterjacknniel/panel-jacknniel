@@ -496,12 +496,13 @@ mostrarMensaje("Texto copiado")
 }
 
 
-function copiarTarjeta(card){
+function copiarTarjeta(btn){
 
-let texto = card.querySelector(".texto-pro").innerText
+let tarjeta = btn.closest(".card-pro")
+
+let texto = tarjeta.querySelector(".texto-pro").innerText
 
 /* quitar espacios arriba y abajo */
-
 texto = texto.trim()
 
 navigator.clipboard.writeText(texto)
