@@ -522,7 +522,39 @@ mostrarMensaje("Copiado")
 
 }
 
-  
+function copiarTarjeta(card){
+
+let texto = card.querySelector(".texto-pro").innerText
+
+/* quitar espacios arriba y abajo */
+
+texto = texto.trim()
+
+navigator.clipboard.writeText(texto)
+
+.then(()=>{
+mostrarMensaje("📋 Copiado")
+})
+
+.catch(()=>{
+
+let area=document.createElement("textarea")
+
+area.value=texto
+
+document.body.appendChild(area)
+
+area.select()
+
+document.execCommand("copy")
+
+document.body.removeChild(area)
+
+mostrarMensaje("📋 Copiado")
+
+})
+
+}
   
 
 /* ============================ */
