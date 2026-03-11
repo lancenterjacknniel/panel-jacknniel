@@ -222,7 +222,116 @@ div.innerHTML="Error cargando archivo"
 
 }
 
-  
+
+ function crearTarjeta(nombre,valor,descripcion){
+
+/* IMAGEN */
+
+if(valor.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
+
+let id="img_"+nombre.replaceAll(" ","")
+
+return `
+<div class="card-pro">
+
+<h2>${nombre}</h2>
+
+<img id="${id}"
+class="qr-img"
+src="${valor}"
+onclick="zoomQR('${id}')">
+
+<div class="texto-pro">${descripcion}</div>
+
+<div class="botones-qr">
+
+<button class="btn-copy"
+onclick="copiarQR('${id}')">
+📋 Copiar
+</button>
+
+<button class="btn-download"
+onclick="descargarQR('${valor}','${nombre}')">
+⬇ Descargar
+</button>
+
+</div>
+
+</div>
+`
+
+}
+
+/* VIDEO */
+
+if(
+valor.includes("youtube.com") ||
+valor.includes("youtu.be") ||
+valor.includes("tiktok.com") ||
+valor.includes("instagram.com") ||
+valor.includes("facebook.com") ||
+valor.match(/\.(mp4|webm|ogg)$/i)
+){
+
+return `
+<div class="card-pro">
+
+<h2>${nombre}</h2>
+
+<div class="video-container">
+
+<iframe
+src="${convertirVideo(valor)}"
+frameborder="0"
+allowfullscreen>
+</iframe>
+
+</div>
+
+<div class="texto-pro">${descripcion}</div>
+
+<div class="botones-qr">
+
+<button class="btn-copy"
+onclick="navigator.clipboard.writeText('${valor}');mostrarMensaje('Link copiado')">
+📋 Copiar link
+</button>
+
+<button class="btn-download"
+onclick="window.open('${valor}','_blank')">
+▶ Abrir video
+</button>
+
+</div>
+
+</div>
+`
+
+}
+
+/* TEXTO NORMAL */
+
+return `
+<div class="card-pro">
+
+<h2>${nombre}</h2>
+
+<div class="texto-pro">
+${valor}
+${descripcion}
+</div>
+
+<button class="btn-copy"
+onclick="navigator.clipboard.writeText(\`${valor}\`);mostrarMensaje('Copiado')">
+
+📋 Copiar
+
+</button>
+
+</div>
+`
+
+}
 
 
 /* ============================ */
