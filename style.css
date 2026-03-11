@@ -153,11 +153,6 @@ z-index:-1;
 filter:blur(10px);
 }
 
-@keyframes neonMove{
-0%{background-position:0%}
-100%{background-position:400%}
-}
-
 .card-pro:hover{
 transform:translateY(-6px) scale(1.02);
 box-shadow:
