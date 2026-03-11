@@ -232,7 +232,7 @@ if(valor.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
 let id="img_"+nombre.replaceAll(" ","")
 
 return `
-<div class="card-pro">
+<div class="card-pro" onclick="copiarTarjeta(this)">
 
 <h2>${nombre}</h2>
 
@@ -521,6 +521,35 @@ mostrarMensaje("Copiado")
 })
 
 }
+
+function copiarTarjeta(card){
+
+let texto = card.querySelector(".texto-pro").innerText
+
+navigator.clipboard.writeText(texto)
+
+.then(()=>{
+mostrarMensaje("📋 Texto copiado")
+})
+
+.catch(()=>{
+
+let area = document.createElement("textarea")
+area.value = texto
+document.body.appendChild(area)
+
+area.select()
+document.execCommand("copy")
+
+document.body.removeChild(area)
+
+mostrarMensaje("📋 Texto copiado")
+
+})
+
+}
+
+  
   
 
 /* ============================ */
