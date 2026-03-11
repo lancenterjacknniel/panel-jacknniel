@@ -5,17 +5,11 @@
 body{
 
 margin:0;
-
 font-family:Arial;
-
 background:#050b1a;
-
 color:white;
-
 text-align:center;
-
 overflow-x:hidden;
-
 position:relative;
 
 }
@@ -25,36 +19,22 @@ position:relative;
 body::before{
 
 content:"";
-
 position:fixed;
-
 top:0;
-
 left:0;
-
 width:200%;
-
 height:200%;
-
 background:url("https://www.transparenttextures.com/patterns/stardust.png");
-
 opacity:0.25;
-
 animation:estrellasMover 120s linear infinite;
-
-z-index:-1;
+z-index:-2;
 
 }
 
 @keyframes estrellasMover{
 
-0%{
-transform:translate(0,0);
-}
-
-100%{
-transform:translate(-1000px,-800px);
-}
+0%{transform:translate(0,0);}
+100%{transform:translate(-1000px,-800px);}
 
 }
 
@@ -173,32 +153,6 @@ padding:25px;
 
 border-radius:25px;
 
-box-shadow:0 0 25px cyan;
-
-width:100%;
-
-box-sizing:border-box;
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-
-overflow:hidden;
-
-}
-
-/* Neon animado */
-
-.card-pro{
-
-background:linear-gradient(180deg,#0c142b,#08102a);
-
-padding:25px;
-
-border-radius:25px;
-
 box-shadow:
 0 0 15px cyan,
 0 0 35px #00ffff55;
@@ -217,9 +171,11 @@ overflow:hidden;
 
 position:relative;
 
+transition:.3s;
+
 }
 
-/* Neon borde limpio */
+/* Neon limpio sin fondo celeste */
 
 .card-pro::after{
 
@@ -239,17 +195,13 @@ box-shadow:
 
 }
 
-@keyframes neonMove{
-0%{background-position:0%}
-100%{background-position:400%}
-}
+/* Hover */
 
 .card-pro:hover{
 transform:translateY(-6px) scale(1.02);
 box-shadow:
 0 0 25px cyan,
-0 0 50px #00ffff55,
-0 0 80px #00ffff33;
+0 0 50px #00ffff55;
 }
 
 /* TITULO */
@@ -304,8 +256,6 @@ overflow-wrap:anywhere;
 width:100%;
 text-align:left;
 }
-
-/* Links largos */
 
 .texto-pro a{
 word-break:break-all;
