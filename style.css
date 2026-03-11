@@ -191,19 +191,52 @@ overflow:hidden;
 
 /* Neon animado */
 
-.card-pro::before{
+.card-pro{
+
+background:linear-gradient(180deg,#0c142b,#08102a);
+
+padding:25px;
+
+border-radius:25px;
+
+box-shadow:
+0 0 15px cyan,
+0 0 35px #00ffff55;
+
+width:100%;
+
+box-sizing:border-box;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+overflow:hidden;
+
+position:relative;
+
+}
+
+/* Neon borde limpio */
+
+.card-pro::after{
+
 content:"";
+
 position:absolute;
-top:-3px;
-left:-3px;
-right:-3px;
-bottom:-3px;
-border-radius:28px;
-background:linear-gradient(120deg,cyan,#00ffff,#00ff99,cyan);
-background-size:400%;
-animation:neonMove 6s linear infinite;
-z-index:-1;
-filter:blur(10px);
+
+inset:0;
+
+border-radius:25px;
+
+pointer-events:none;
+
+box-shadow:
+0 0 15px cyan,
+0 0 35px #00ffff55;
+
 }
 
 @keyframes neonMove{
