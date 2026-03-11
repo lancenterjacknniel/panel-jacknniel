@@ -182,15 +182,33 @@ word-break:break-word;
 /* ============================= */
 
 .texto-pro{
+
+background:#0a0a0a;
+
+padding:18px;
+
+border-radius:12px;
+
+margin-top:10px;
+
+margin-bottom:15px;
+
 white-space:pre-wrap;
+
 line-height:1.7;
+
 text-align:left;
+
 font-size:16px;
+
 width:100%;
-max-width:100%;
+
 box-sizing:border-box;
+
 word-break:break-word;
+
 overflow-wrap:anywhere;
+
 }
 
 .texto-mensaje{
