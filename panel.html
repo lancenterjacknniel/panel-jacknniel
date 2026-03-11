@@ -322,10 +322,8 @@ ${descripcion}
 </div>
 
 <button class="btn-copy"
-onclick="navigator.clipboard.writeText(\`${valor}\`);mostrarMensaje('Copiado')">
-
+<button class="btn-copy" onclick="copiarTexto(this)">
 📋 Copiar
-
 </button>
 
 </div>
@@ -460,6 +458,42 @@ return "https://www.facebook.com/plugins/video.php?href="+link
 }
 
 return link
+}
+
+function copiarTexto(btn){
+
+let tarjeta = btn.closest(".card-pro")
+
+let texto = tarjeta.innerText
+
+navigator.clipboard.writeText(texto)
+
+.then(()=>{
+
+mostrarMensaje("Texto copiado")
+
+})
+
+.catch(()=>{
+
+/* método alternativo */
+
+let area = document.createElement("textarea")
+
+area.value = texto
+
+document.body.appendChild(area)
+
+area.select()
+
+document.execCommand("copy")
+
+document.body.removeChild(area)
+
+mostrarMensaje("Texto copiado")
+
+})
+
 }
   
 
