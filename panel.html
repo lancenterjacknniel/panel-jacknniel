@@ -341,7 +341,9 @@ let input = event.target.value.toLowerCase()
 
 let contenedor = document.getElementById("contenido_"+id)
 
-contenedor.querySelectorAll(".card-pro").forEach(card=>{
+let tarjetas = Array.from(contenedor.querySelectorAll(".card-pro"))
+
+tarjetas.forEach(card=>{
 
 let texto = card.innerText.toLowerCase()
 
@@ -353,8 +355,15 @@ card.style.display="none"
 
 })
 
-}
+/* mover resultados arriba */
 
+let visibles = tarjetas.filter(card=>card.style.display!="none")
+
+visibles.forEach(card=>{
+contenedor.prepend(card)
+})
+
+}
 
 
 /* ============================ */
