@@ -321,8 +321,7 @@ ${valor}
 ${descripcion}
 </div>
 
-<button class="btn-copy"
-<button class="btn-copy" onclick="copiarTexto(this)">
+<button class="btn-copy" onclick="copiarTarjeta(this)">
 📋 Copiar
 </button>
 
@@ -491,6 +490,33 @@ document.execCommand("copy")
 document.body.removeChild(area)
 
 mostrarMensaje("Texto copiado")
+
+})
+
+}
+
+function copiarTarjeta(btn){
+
+let tarjeta = btn.closest(".card-pro")
+
+let texto = tarjeta.querySelector(".texto-pro").innerText
+
+navigator.clipboard.writeText(texto)
+
+.then(()=>{
+mostrarMensaje("Copiado")
+})
+
+.catch(()=>{
+
+let area=document.createElement("textarea")
+area.value=texto
+document.body.appendChild(area)
+area.select()
+document.execCommand("copy")
+document.body.removeChild(area)
+
+mostrarMensaje("Copiado")
 
 })
 
