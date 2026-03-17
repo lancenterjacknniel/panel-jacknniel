@@ -857,18 +857,12 @@ margin:6px 0;
 .subcategoria{
 
 display:flex;
-
 flex-direction:column;
-
 align-items:center;
-
 margin:25px 0;
-
 gap:12px;
 
 }
-
-/* BOTON */
 
 .btn-sub{
 
@@ -904,17 +898,9 @@ transition:.25s;
 
 }
 
-/* FLECHA */
-
 .btn-sub::after{
-
 content:"▶";
-
-font-size:14px;
-
 }
-
-/* HOVER */
 
 .btn-sub:hover{
 
@@ -923,13 +909,5 @@ transform:translateX(6px) scale(1.03);
 box-shadow:
 0 0 20px cyan,
 0 0 40px #00ffff;
-
-}
-
-/* CLICK */
-
-.btn-sub:active{
-
-transform:scale(0.95);
 
 }
