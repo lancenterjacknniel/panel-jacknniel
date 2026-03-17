@@ -167,6 +167,8 @@ const texto = await res.text()
 
 let html=""
 
+let categoriaActual="" 
+  
 let lineas = texto.split("\n")
 
 let nombreActual=""
@@ -175,6 +177,24 @@ let descripcion=""
 
 lineas.forEach(linea=>{
 
+/* BOTONES ### */
+
+if(linea.startsWith("###")){
+
+categoriaActual = linea.replace("###","").trim()
+
+html += `
+<div class="subcategoria">
+<button class="btn-sub" onclick="filtrarSub('${categoriaActual}')">
+${categoriaActual}
+</button>
+</div>
+`
+
+return
+
+}
+  
 linea=linea.trim()
 
 if(linea.includes("|")){
@@ -274,7 +294,7 @@ valor.match(/\.(mp4|webm|ogg)$/i)
 ){
 
 return `
-<div class="card-pro">
+<div class="card-pro" data-cat="${categoriaActual}">
 
 <h2>${nombre}</h2>
 
@@ -525,6 +545,20 @@ document.execCommand("copy")
 document.body.removeChild(area)
 
 mostrarMensaje("📋 Copiado")
+
+})
+
+}
+
+function filtrarSub(cat){
+
+document.querySelectorAll(".card-pro").forEach(card=>{
+
+if(card.dataset.cat === cat || cat==="TODOS"){
+card.style.display="block"
+}else{
+card.style.display="none"
+}
 
 })
 
