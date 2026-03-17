@@ -814,7 +814,15 @@ box-shadow:
 
 .subcategoria{
 
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
 margin:20px 0;
+
+gap:10px;
 
 }
 
