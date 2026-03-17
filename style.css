@@ -850,3 +850,86 @@ margin:6px 0;
 
 }
 
+/* ============================= */
+/* BOTONES SUBCATEGORIAS GAMER */
+/* ============================= */
+
+.subcategoria{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+margin:25px 0;
+
+gap:12px;
+
+}
+
+/* BOTON */
+
+.btn-sub{
+
+width:260px;
+
+background:linear-gradient(90deg,#00eaff,#00ff6a);
+
+border:none;
+
+padding:14px 20px;
+
+border-radius:18px;
+
+font-weight:bold;
+
+font-size:16px;
+
+cursor:pointer;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+color:black;
+
+box-shadow:
+0 0 10px cyan,
+0 0 25px #00ffff55;
+
+transition:.25s;
+
+}
+
+/* FLECHA */
+
+.btn-sub::after{
+
+content:"▶";
+
+font-size:14px;
+
+}
+
+/* HOVER */
+
+.btn-sub:hover{
+
+transform:translateX(6px) scale(1.03);
+
+box-shadow:
+0 0 20px cyan,
+0 0 40px #00ffff;
+
+}
+
+/* CLICK */
+
+.btn-sub:active{
+
+transform:scale(0.95);
+
+}
