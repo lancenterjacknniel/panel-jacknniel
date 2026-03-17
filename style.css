@@ -828,11 +828,15 @@ gap:10px;
 
 .btn-sub{
 
+display:block;
+
+width:220px;
+
 background:linear-gradient(90deg,#00ffff,#00ff88);
 
 border:none;
 
-padding:10px 20px;
+padding:12px;
 
 border-radius:15px;
 
@@ -842,7 +846,7 @@ font-weight:bold;
 
 box-shadow:0 0 10px cyan;
 
-margin:5px;
+margin:6px 0;
 
 }
 
