@@ -911,3 +911,66 @@ box-shadow:
 0 0 40px #00ffff;
 
 }
+
+/* ============================= */
+/* SUBCATEGORIAS VERTICALES */
+/* ============================= */
+
+.subcategoria{
+
+display:flex !important;
+
+flex-direction:column !important;
+
+align-items:center;
+
+gap:12px;
+
+margin-top:25px;
+
+width:100%;
+
+}
+
+.btn-sub{
+
+width:260px;
+
+display:block;
+
+text-align:left;
+
+background:linear-gradient(90deg,#00eaff,#00ff6a);
+
+border:none;
+
+padding:14px 20px;
+
+border-radius:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+box-shadow:0 0 20px cyan;
+
+transition:.25s;
+
+}
+
+.btn-sub::after{
+
+content:" ▶";
+
+float:right;
+
+}
+
+.btn-sub:hover{
+
+transform:scale(1.03);
+
+box-shadow:0 0 35px cyan;
+
+}
+
