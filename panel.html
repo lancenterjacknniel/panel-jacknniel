@@ -576,6 +576,20 @@ cont.style.display="none"
 }
 
 }
+
+function abrirSubcategoria(id){
+
+document.querySelectorAll(".contenido-sub").forEach(el=>{
+el.style.display="none"
+})
+
+let cont = document.getElementById(id)
+
+if(cont){
+cont.style.display="block"
+}
+
+}
   
 /* ============================ */
 /* INICIAR PANEL */
@@ -587,3 +601,7 @@ cargarCategorias()
 
 </body>
 </html>
+
+
+
+
