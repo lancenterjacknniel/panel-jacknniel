@@ -552,14 +552,33 @@ mostrarMensaje("📋 Copiado")
 
 function filtrarSub(cat){
 
-document.querySelectorAll(".card-pro").forEach(card=>{
+document.querySelectorAll(".btn-sub").forEach(btn=>{
 
-if(card.dataset.cat === cat || cat==="TODOS"){
-card.style.display="block"
-}else{
-card.style.display="none"
+btn.classList.remove("active")
+
+if(btn.innerText.trim()==cat){
+btn.classList.add("active")
 }
 
+})
+
+document.querySelectorAll(".card-pro").forEach(card=>{
+
+if(card.dataset.cat===cat){
+
+card.style.display="block"
+
+}else{
+
+card.style.display="none"
+
+}
+
+})
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
 })
 
 }
