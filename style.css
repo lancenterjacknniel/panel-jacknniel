@@ -373,3 +373,46 @@ border-radius:10px;
 .logo{width:160px;}
 .btn{width:90%;}
 }
+
+/* ============================= */
+/* FIX LINKS LARGOS */
+/* ============================= */
+
+.texto-pro{
+
+word-break:break-word;
+overflow-wrap:anywhere;
+white-space:pre-wrap;
+
+}
+
+/* links especificamente */
+
+.texto-pro a{
+
+word-break:break-all;
+overflow-wrap:anywhere;
+
+}
+
+/* por si el link es texto normal (no <a>) */
+
+.texto-pro{
+
+overflow-wrap:anywhere;
+
+}
+
+.texto-pro a{
+
+color:#00ffff;
+text-decoration:none;
+word-break:break-all;
+
+}
+
+.texto-pro a:hover{
+
+text-decoration:underline;
+
+}
