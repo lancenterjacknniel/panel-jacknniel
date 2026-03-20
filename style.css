@@ -416,3 +416,7 @@ word-break:break-all;
 text-decoration:underline;
 
 }
+
+.top-logo{
+display:none;
+}
