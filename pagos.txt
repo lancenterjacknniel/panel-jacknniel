@@ -1,5 +1,10 @@
 Banco Unión | qr_banco.png
+
+Qr para clientes finales
+
 Yasta | qr_yasta.png
+
+Qr para reevendedores
 
 Tigo Money|
 💳 Pago por Tigo Money
