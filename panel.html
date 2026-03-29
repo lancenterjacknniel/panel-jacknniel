@@ -202,7 +202,6 @@ div.innerHTML="Error cargando archivo"
 
 function crearTarjeta(nombre,valor,descripcion,categoriaActual){
 
-/* IMAGEN */
 if(valor.match(/\.(png|jpg|jpeg|webp|gif)$/i)){
 
 let id="img_"+nombre.replaceAll(" ","")
@@ -235,7 +234,6 @@ onclick="event.stopPropagation(); zoomQR('${id}')">
 `
 }
 
-/* VIDEO */
 if(
 valor.includes("youtube.com") ||
 valor.includes("youtu.be") ||
@@ -280,7 +278,6 @@ onclick="window.open('${valor}','_blank')">
 `
 }
 
-/* TEXTO */
 return `
 <div class="card-pro" data-cat="${categoriaActual}">
 
@@ -314,6 +311,43 @@ contenedor.querySelectorAll(".card-pro").forEach(card=>{
 let texto = card.innerText.toLowerCase()
 
 card.style.display = texto.includes(input) ? "block" : "none"
+
+})
+
+}
+
+/* ============================ */
+/* COPIAR TARJETA (FIX) */
+/* ============================ */
+
+function copiarTarjeta(btn){
+
+let tarjeta = btn.closest(".card-pro")
+
+let texto = tarjeta.innerText
+
+texto = texto.replace("📋 Copiar","")
+texto = texto.replace("📋 Copiar link","")
+
+texto = texto.trim()
+
+navigator.clipboard.writeText(texto)
+
+.then(()=>{
+mostrarMensaje("📋 Copiado completo")
+})
+
+.catch(()=>{
+
+let area=document.createElement("textarea")
+area.value=texto
+
+document.body.appendChild(area)
+area.select()
+document.execCommand("copy")
+document.body.removeChild(area)
+
+mostrarMensaje("📋 Copiado")
 
 })
 
