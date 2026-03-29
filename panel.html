@@ -228,7 +228,7 @@ descripcion += linea + "\n"
 
 if(nombreActual){
 
-html+=crearTarjeta(nombreActual,valorActual,descripcion)
+html+=crearTarjeta(nombreActual,valorActual,descripcion,categoriaActual)
 
 }
 
@@ -243,7 +243,7 @@ div.innerHTML="Error cargando archivo"
 }
 
 
- function crearTarjeta(nombre,valor,descripcion){
+function crearTarjeta(nombre,valor,descripcion,categoriaActual){
 
 /* IMAGEN */
 
