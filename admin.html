@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>ADMIN PANEL</title>
+
+<style>
+body{
+background:#050b1a;
+color:white;
+font-family:Arial;
+text-align:center;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+padding:20px;
+}
+
+input, textarea{
+width:100%;
+padding:10px;
+margin:10px 0;
+border-radius:10px;
+border:none;
+}
+
+button{
+padding:12px 20px;
+margin:5px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.btn-add{background:lime;}
+.btn-save{background:cyan;}
+.btn-download{background:orange;}
+
+.lista{
+margin-top:20px;
+text-align:left;
+}
+
+.item{
+background:#0b1224;
+padding:10px;
+margin:10px 0;
+border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>⚡ Panel Admin</h1>
+
+<input id="nombre" placeholder="Nombre">
+<input id="valor" placeholder="Link / Imagen / Texto">
+
+<textarea id="desc" placeholder="Descripción"></textarea>
+
+<button class="btn-add" onclick="agregar()">➕ Agregar</button>
+<button class="btn-save" onclick="generarTXT()">💾 Generar TXT</button>
+<button class="btn-download" onclick="descargar()">⬇ Descargar</button>
+
+<div class="lista" id="lista"></div>
+
+</div>
+
+<script>
+
+let datos = []
+
+function agregar(){
+
+let nombre = document.getElementById("nombre").value
+let valor = document.getElementById("valor").value
+let desc = document.getElementById("desc").value
+
+if(!nombre || !valor) return alert("Faltan datos")
+
+datos.push({nombre,valor,desc})
+
+render()
+
+document.getElementById("nombre").value=""
+document.getElementById("valor").value=""
+document.getElementById("desc").value=""
+
+}
+
+function render(){
+
+let html=""
+
+datos.forEach((d,i)=>{
+
+html += `
+<div class="item">
+<b>${d.nombre}</b><br>
+${d.valor}<br>
+${d.desc}<br>
+
+<button onclick="eliminar(${i})">❌</button>
+</div>
+`
+
+})
+
+document.getElementById("lista").innerHTML = html
+
+}
+
+function eliminar(i){
+datos.splice(i,1)
+render()
+}
+
+let textoFinal=""
+
+function generarTXT(){
+
+textoFinal="### VIDEOS\n\n"
+
+datos.forEach(d=>{
+textoFinal += `${d.nombre} | ${d.valor}\n${d.desc}\n\n`
+})
+
+alert("TXT generado ✔")
+}
+
+function descargar(){
+
+if(!textoFinal) return alert("Primero genera el TXT")
+
+let blob = new Blob([textoFinal], {type:"text/plain"})
+let a = document.createElement("a")
+
+a.href = URL.createObjectURL(blob)
+a.download = "videoz.txt"
+
+a.click()
+
+}
+
+</script>
+
+</body>
+</html>
