@@ -1,9 +1,9 @@
-Lcj Qr | pagos.txt
-Lcj Mensajes Rápidos | mensajes_lan.txt
-Lcj Precios | precios.txt
-Lcj Galería | albun.txt
-Lcj Videos | videos.txt
-Lcj Promociones | promos.txt
+Qr | pagos.txt
+Mensajes Rápidos | mensajes_lan.txt
+Precios | precios.txt
+Galería | albun.txt
+Videos | videos.txt
+Promociones | promos.txt
 
 
 NOMBRE BOTON | ARCHIVO TXT
