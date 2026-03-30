@@ -324,17 +324,26 @@ function copiarTarjeta(btn){
 
 let tarjeta = btn.closest(".card-pro")
 
-let texto = tarjeta.innerText
+// 🔥 Clonar la tarjeta para modificar sin afectar la original
+let clon = tarjeta.cloneNode(true)
 
-texto = texto.replace("📋 Copiar","")
-texto = texto.replace("📋 Copiar link","")
+// ❌ eliminar título
+let titulo = clon.querySelector("h2")
+if(titulo) titulo.remove()
 
-texto = texto.trim()
+// ❌ eliminar botones
+clon.querySelectorAll("button").forEach(b=>b.remove())
+
+// ❌ eliminar iframes (videos si hay)
+clon.querySelectorAll("iframe").forEach(v=>v.remove())
+
+// obtener texto limpio
+let texto = clon.innerText.trim()
 
 navigator.clipboard.writeText(texto)
 
 .then(()=>{
-mostrarMensaje("📋 Copiado completo")
+mostrarMensaje("📋 Tarjeta copiada")
 })
 
 .catch(()=>{
@@ -352,6 +361,7 @@ mostrarMensaje("📋 Copiado")
 })
 
 }
+  
 
 /* ============================ */
 /* UTILIDADES */
