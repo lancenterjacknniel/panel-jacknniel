@@ -3,11 +3,11 @@ ENTREGAR|
 🦁🔥LAN CENTER JACKNNIEL🔥🦁
 
 🎬  – 1 MES
-📧 Correo:
-🔑 Contraseña:
-📺 Pantalla:
-🔐 PIN:
-📅 Vence:
+📧 Correo: 
+🔑 Contraseña: 
+📺 Pantalla: 
+🔐 PIN: 
+📅 Vence: 
 
 ⚠️ 1 solo dispositivo.
 ❌ 2 dispositivos = suspensión sin reembolso.
@@ -22,11 +22,11 @@ RENOVAR|
 
 ✅ ¡RENOVACIÓN CONFIRMADA!
 🎬  – 1 MES
-📧 Correo/Usuario:
-🔑 Contraseña:
-👤 Perfil:
-🔐 PIN:
-📅 Nuevo vencimiento:
+📧 Correo/Usuario: 
+🔑 Contraseña: 
+👤 Perfil: 
+🔐 PIN: 
+📅 Nuevo vencimiento: 
 
 ⚠️ 1 solo dispositivo.
 ❌ 2 dispositivos = suspensión sin reembolso.
@@ -40,9 +40,9 @@ RENOVAR CC|
 
 ✅ ¡CUENTA RENOVADA!
 🎬  – 1 MES
-📧 Correo:
-🔑 Contraseña:
-📅 Nuevo vencimiento:
+📧 Correo: 
+🔑 Contraseña: 
+📅 Nuevo vencimiento: 
 
 ❤️ ¡Gracias por renovar con nosotros!
 
@@ -53,9 +53,9 @@ DATOS ACTUALIZADOS|
 
 🔄 ¡DATOS ACTUALIZADOS!
 🎬 
-📧 Nuevo correo:
-🔑 Nueva contraseña:
-📅 Vence:
+📧 Nuevo correo: 
+🔑 Nueva contraseña: 
+📅 Vence: 
 
 ❤️ Ya puedes ingresar con tus nuevos datos.
 
